@@ -189,7 +189,7 @@
 	  write(6,*)' bzz=   ',bzz
 	  write(6,*)' bhard= ',bhard
 	  write(6,*)' total= ',bsoft+bhard
-	  write(6,*)' exp=   ',1.-dexp(-1.*(bsoft))*(1.-bhard)
+	  write(6,*)' exp=   ',1.-exp(-1.*(bsoft))*(1.-bhard)
 	  write(6,*)' '
 	  write(6,*)' ultra-relativistic limit'
 	  call srad(ak,akp,eang,q2,ame,am,ap,de,produce_output)
@@ -204,7 +204,7 @@
 ! ......... the derivative has dimension 1/[energy] --> convert back to MeV
 	dbsoft = dbsoft/1000.
 	if (exponentiate) then
-	  brem = -dbsoft/dexp(bsoft)
+	  brem = -dbsoft/exp(bsoft)
 	else
 	  brem = 1.-dbsoft
 	endif
@@ -293,7 +293,7 @@
 
 	real*8 ax,bx
 
-	bx= dabs(ax)
+	bx= abs(ax)
 
 ! ... N.B. Have replaced the former calculation (commented out) with an
 ! ... approximate expression -- saves a WHALE of CPU!
@@ -548,11 +548,11 @@ c	ami= ((p_i%e)**2-(p_i%x)**2-(p_i%y)**2-(p_i%z)**2)**0.5
 	  write(6,*)' bzz=     ',bzz
 	  write(6,*)' bhard=   ',bhard
 	  write(6,*)' total=   ',1-bsoft-bhard
-	  write(6,*)' exp=     ',dexp(-1.*(bsoft))*(1.-bhard)
+	  write(6,*)' exp=     ',exp(-1.*(bsoft))*(1.-bhard)
 	  write(6,*)' 1-bhard= ',1-bhard
-	  write(6,*)' exps=    ',dexp(-1.*(bsoft))
-	  write(6,*)' expse=   ',dexp(-1.*b)
-	  write(6,*)' expsp=   ',dexp(-1.*(bz+bzz))
+	  write(6,*)' exps=    ',exp(-1.*(bsoft))
+	  write(6,*)' expse=   ',exp(-1.*b)
+	  write(6,*)' expsp=   ',exp(-1.*(bz+bzz))
 	  write(6,*)' '
 	  write(6,*)'  Schwinger Result'
 	  bsch= 2.*e2/pi*((log(k_i%e/de)-13./12.)*(log(q2/ame**2)-1.)+17./36.)
@@ -564,7 +564,7 @@ c	ami= ((p_i%e)**2-(p_i%x)**2-(p_i%y)**2-(p_i%z)**2)**0.5
 ! ......... the derivative has dimension 1/[energy] --> convert back to MeV
 	dbsoft = dbsoft/1000.	!convert back to MeV
 	if (exponentiate) then
-	  bremos = -dbsoft/dexp(bsoft)
+	  bremos = -dbsoft/exp(bsoft)
 	else
 	  bremos = 1.-dbsoft
 	endif

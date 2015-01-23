@@ -257,7 +257,7 @@ c	  mtar_offshell = sqrt(efer**2-pfer**2)
 
 	cdeltatau = hbarc/(sqrt(vertex%nu**2+vertex%Q2+mrho2)-vertex%nu) !in fm!
 	if(cdeltatau.lt.2.0) then
-	   brho = 4.4679 + 8.6106*dlog10(cdeltatau)
+	   brho = 4.4679 + 8.6106*log10(cdeltatau)
 	else
 	   brho = 7.0
 	endif

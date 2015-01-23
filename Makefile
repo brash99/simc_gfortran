@@ -81,7 +81,7 @@ endif
 # Note that the CTP libraries still end up in the O.Linux directory...
 ifeq ($(MYOS),Darwin)
   LIBROOT = CTP/O.Linux/Linux/lib
-  CERN_ROOT = /apps/cernlib/i386_fc8/2005
+  #CERN_ROOT = /apps/cernlib/i386_fc8/2005
   FFLAGSA=-O -W -ffixed-line-length-132 -ff2c -fno-automatic -fdefault-real-8
   INCLUDES=-I.
   FFLAGS= $(INCLUDES) $(FFLAGSA)

@@ -97,7 +97,7 @@ C        put a warning for calling extra flavor.
          Ctq5Pdf = 0D0
          Return
       Endif
-
+      
       Ctq5Pdf = PartonX (Iparton, X, Q)
       if(Ctq5Pdf.lt.0.D0)  Ctq5Pdf = 0.D0
 
@@ -106,7 +106,7 @@ C        put a warning for calling extra flavor.
 C                             ********************
       End
 
-      real*8 FUNCTION PartonX (IPRTN, X, Q)
+      real*16 FUNCTION PartonX (IPRTN, X, Q)
 C
 C   Given the parton distribution function in the array Upd in
 C   COMMON / CtqPar1 / , this routine fetches u(fl, x, q) at any value of
