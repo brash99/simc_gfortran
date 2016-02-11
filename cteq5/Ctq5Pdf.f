@@ -67,7 +67,7 @@ C
 C===========================================================================
 
       real*8 Function Ctq5Pdf (Iparton, X, Q)
-      Implicit Double Precision (A-H,O-Z)
+c      Implicit Double Precision (A-H,O-Z)
       implicit integer (I-N)
       Logical Warn
       Common
@@ -106,11 +106,13 @@ C        put a warning for calling extra flavor.
 C                             ********************
       End
 
-      real*16 FUNCTION PartonX (IPRTN, X, Q)
+      real*8 FUNCTION PartonX (IPRTN, X, Q)
 C
 C   Given the parton distribution function in the array Upd in
 C   COMMON / CtqPar1 / , this routine fetches u(fl, x, q) at any value of
 C   x and q using Mth-order polynomial interpolation for x and Ln(Q/Lambda).
+C
+C      IMPLICIT DOUBLE PRECISION (A-H, O-Z)
       implicit integer (I-N)
 C
       PARAMETER (MXX = 105, MXQ = 25, MXF = 6)
@@ -200,7 +202,7 @@ C                        ****************************
       END
 
       Subroutine SetCtq5 (Iset)
-      Implicit Double Precision (A-H,O-Z)
+c      Implicit Double Precision (A-H,O-Z)
       implicit integer (I-N)
       Parameter (Isetmax=9)
 
@@ -246,7 +248,7 @@ C                             ********************
       End
 
       Subroutine ReadTbl (Nu)
-      Implicit Double Precision (A-H,O-Z)
+c      Implicit Double Precision (A-H,O-Z)
       implicit integer (I-N)
       Character Line*80
       PARAMETER (MXX = 105, MXQ = 25, MXF = 6)
@@ -310,7 +312,7 @@ C
 
       SUBROUTINE POLINT (XA,YA,N,X,Y,DY)
  
-      IMPLICIT DOUBLE PRECISION (A-H, O-Z)
+c      IMPLICIT DOUBLE PRECISION (A-H, O-Z)
 C                                        Adapted from "Numerical Recipes" 
       PARAMETER (NMAX=10)
       DIMENSION XA(N),YA(N),C(NMAX),D(NMAX)
