@@ -1,0 +1,5 @@
+current_low_uA,current_high_uA,mean_current_uA,elastic_core,isolated_outtime_amp_ge_5mV_events,isolated_outtime_amp_ge_5mV_fraction,isolated_outtime_amp_ge_10mV_events,isolated_outtime_amp_ge_10mV_fraction,isolated_outtime_amp_ge_20mV_events,isolated_outtime_amp_ge_20mV_fraction,isolated_outtime_amp_ge_50mV_events,isolated_outtime_amp_ge_50mV_fraction
+0.000000,15.000000,9.323836,404,28,0.069307,26,0.064356,21,0.051980,7,0.017327
+15.000000,22.500000,19.069542,337,46,0.136499,42,0.124629,32,0.094955,5,0.014837
+22.500000,26.500000,23.842999,257,45,0.175097,44,0.171206,38,0.147860,4,0.015564
+26.500000,30.000000,27.810984,179,35,0.195531,33,0.184358,29,0.162011,8,0.044693

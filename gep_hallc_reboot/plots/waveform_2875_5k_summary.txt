@@ -1,0 +1,12 @@
+input=nps_replay_develop/ROOTfiles/COIN/PRODUCTION/nps_hms_coin_2875_1_5000.root
+entries_examined=5000
+elastic_core_events=637
+candidate_pulses=446
+waveform_packet_found=446
+coherent_waveform_pulses=435
+packet_found_fraction=1.000000
+coherent_fraction_of_found=0.975336
+fitted_timing_offset_ns=10.250000
+malformed_waveform_packets=0
+coherent_definition=waveform peak >= 0.5 decoded amplitude; |timing residual - fitted offset| <= 8 ns; neighbor ratio > 0.05
+candidate_definition=decoded amplitude >= 10 mV; block separation >= 10 cm; |relative time| >= 8 ns

@@ -1,0 +1,8 @@
+input=nps_replay_develop/ROOTfiles/COIN/PRODUCTION/nps_hms_coin_6151_1_100000.root
+selected_candidates=33406
+global_core_mean_GeV=-0.225806
+global_core_sigma_GeV=0.202053
+global_core_low_GeV=-0.831964
+global_core_high_GeV=0.380353
+current_bins_uA=0,15,22.5,26.5,30,40
+caveat=event-latched scaler current and accepted triggered events; trends are diagnostic, not unbiased rates

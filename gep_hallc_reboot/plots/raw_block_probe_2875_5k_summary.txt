@@ -1,0 +1,17 @@
+input=nps_replay_develop/ROOTfiles/COIN/PRODUCTION/nps_hms_coin_2875_1_5000.root
+entries_examined=5000
+elastic_core_events=637
+usable_reference_events=637
+mean_current_uA=38.202617
+elastic_core_mean_GeV=0.085975
+elastic_core_sigma_GeV=0.248492
+mismatched_pulse_array_events=0
+invalid_adc_counter_entries=0
+max_pulses_seen=27
+all_pulses=7222
+comparison_pulses=6585
+amplitude_q10_q50_q90=2.150045,11.782178,148.551724
+integral_q10_q50_q90=20.679083,103.395415,186.111748
+pulse_time_q10_q50_q90=157.120000,169.573954,171.290090
+relative_time_q10_q50_q90=-4.040000,-0.161720,2.834091
+amplitude_fraction_q10_q50_q90=0.012312,0.026426,0.156563

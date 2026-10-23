@@ -1,0 +1,9 @@
+input=nps_replay_develop/ROOTfiles/COIN/PRODUCTION/nps_hms_coin_2875_1_100000.root
+beam_energy_GeV=10.539418
+nominal_elastic_energy_GeV=7.072000
+track_cluster_candidates=16519
+elastic_core_mean_GeV=0.108463
+elastic_core_sigma_GeV=0.227749
+elastic_core_low_GeV=-0.574785
+elastic_core_high_GeV=0.791712
+diagnostic_definitions=intime abs(dt)<4 ns; near dr<10 cm; energetic secondary E>=0.2 GeV

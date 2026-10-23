@@ -1,0 +1,22 @@
+input=nps_replay_develop/ROOTfiles/COIN/PRODUCTION/nps_hms_coin_6151_1_10000.root
+entries=10000
+ordinary_physics_events=2204
+edtm_events=7796
+scaler_time_min_s=0.014505
+scaler_time_max_s=194.235455
+elapsed_scaler_span_s=194.220950
+ordinary_physics_accepted_rate_hz=11.347900
+edtm_accepted_rate_hz=40.139851
+ordinary_physics_mean_bcm4a_uA=17.822872
+edtm_mean_bcm4a_uA=7.295801
+ordinary_physics_with_vtp=2204
+edtm_with_vtp=3541
+ordinary_physics_with_offline=2192
+edtm_with_offline=12
+energy_pair_selection=ordinary physics; both maxima >= 1.5 GeV
+energy_pairs=2186
+vtp_GeV_vs_offline_GeV_intercept=0.197691
+vtp_GeV_vs_offline_GeV_slope=0.913969
+vtp_offline_pearson_correlation=0.894946
+mean_vtp_over_offline=0.963767
+rms_vtp_over_offline=0.064613
