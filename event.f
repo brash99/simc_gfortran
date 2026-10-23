@@ -217,6 +217,14 @@ C modified 5/15/06 for poinct
 5	success = .false.
 	main%gen_weight = 1.0
 
+! The real-photon pi0 generator owns its phase-space generation and hard
+! bremsstrahlung weight.  Do not pass it through electron-scattering
+! kinematics or SIMC's ordinary radiative-tail machinery.
+	if (doing_pi0phot) then
+	  call generate_pi0phot(main,vertex,orig,success)
+	  return
+	endif
+
 ! Generated quantities: (phase_space NOT YET IMPLEMENTED).
 !
 ! phase_space: Generate electron E,yptar,xptar and hadron yptar,xptar??
@@ -1397,7 +1405,9 @@ cDJG	endif
 
 ! The spectral function weighting
 
-	if (doing_hyd_elast.or.doing_pion.or.doing_kaon.or.doing_delta.or.doing_phsp.or.doing_rho.or.doing_semi) then !no SF.
+	if (doing_hyd_elast.or.doing_pi0phot.or.doing_pion.or.
+     >      doing_kaon.or.doing_delta.or.doing_phsp.or.doing_rho.or.
+     >      doing_semi) then !no SF.
 	  main%SF_weight=1.0
 	else if (use_benhar_sf.and.doing_heavy) then ! Doing Spectral Functions
 	   call sf_lookup_diff(vertex%Em, vertex%Pm, weight)
@@ -1446,7 +1456,11 @@ cDJG	endif
 
 	tgtweight = 1.0
 
-	if (doing_phsp) then
+	if (doing_pi0phot) then
+! SIGCC was set by generate_pi0phot to photon flux times d sigma/dOmega_cm.
+	  main%sigcc_recon=main%sigcc
+
+	elseif (doing_phsp) then
 	  main%sigcc = 1.0
 	  main%sigcc_recon = 1.0
 
@@ -1533,7 +1547,7 @@ c	  ntup%dilu = semi_dilution(vertex,main)
 	endif
 
 C If using Coulomb corrections, include focusing factor
-	if(using_Coulomb) then
+	if(using_Coulomb .and. .not.doing_pi0phot) then
 	   main%sigcc = main%sigcc*(1.0+targ%Coulomb%ave/Ebeam)**2
 	endif
 

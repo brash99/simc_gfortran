@@ -69,6 +69,8 @@ c	include 'histograms.inc'
 	use_benhar_sf = .false.
 	random_state_file = ' '
 	random_seed = 0
+	pi0phot_radlen = 0.0175
+	pi0phot_scale_exponent = 7.0
 
 ! ... read the dbase file.
 
@@ -121,6 +123,13 @@ c
 C translate integers to logical
 	call convert_to_logical
 
+C The real-photon pi0 mode is independent of the electroproduction modes.
+	if (doing_pi0phot .and. (doing_pion.or.doing_kaon.or.doing_delta.or.
+     >      doing_semi.or.doing_rho.or.doing_nuc_elast))
+     >      stop 'doing_pi0phot cannot be combined with another reaction mode'
+	if (doing_pi0phot .and. using_rad)
+     >      stop 'doing_pi0phot includes its own bremsstrahlung flux; set using_rad=0'
+
 C DJG: Ugly hack! This must come before the test on doing_pion
 	if(doing_pion .and. doing_semi) then
 	   doing_semipi=.true.
@@ -135,7 +144,28 @@ C DJG: Ugly hack! This must come before the test on doing_pion
 C DJG:
 
 ! ... dbase field experiment.
-	if (doing_pion) then
+	if (doing_pi0phot) then
+	   if (nint(targ%A).ne.1 .or. nint(targ%Z).ne.1)
+     >        stop 'doing_pi0phot is currently implemented only for hydrogen'
+	   if (electron_arm.ne.7 .and. electron_arm.ne.8)
+     >        stop 'doing_pi0phot requires a calorimeter electron arm (7 or 8)'
+	   if (pizero_ngamma.ne.1 .and. pizero_ngamma.ne.2)
+     >        stop 'doing_pi0phot requires pizero_ngamma=1 or 2'
+	   if (pi0phot_egamma_min.le.0.0 .or.
+     >       pi0phot_egamma_max.le.pi0phot_egamma_min)
+     >        stop 'Bad pi0phot photon-energy generation limits'
+	   if (pi0phot_costh_min.lt.-1.0 .or. pi0phot_costh_max.gt.1.0 .or.
+     >       pi0phot_costh_max.le.pi0phot_costh_min)
+     >        stop 'Bad pi0phot cos(theta_cm) generation limits'
+	   if (pi0phot_phi_max.le.pi0phot_phi_min)
+     >        stop 'Bad pi0phot phi_cm generation limits'
+	   if (pi0phot_radlen.le.0.0)
+     >        stop 'pi0phot_radlen must be positive'
+	   Mh=Mp
+	   doing_eep=.false.
+	   doing_hyd_elast=.false.
+	   sign_hadron=1.0
+	else if (doing_pion) then
 	   Mh=Mpi
 	   if (doing_pizero) Mh=Mpi0
 	   if (nint(targ%A).eq.1 .and. which_pion.eq.1 .and. .not. doing_pizero) 
@@ -246,6 +276,10 @@ C DJG:
 	spec%p%theta=abs(spec%p%theta)/degrad
 	spec%p%cos_th=cos(spec%p%theta)
 	spec%p%sin_th=sin(spec%p%theta)
+	if (doing_pi0phot) then
+	  pi0phot_phi_min=pi0phot_phi_min/degrad
+	  pi0phot_phi_max=pi0phot_phi_max/degrad
+	endif
 
 ! ... Get phi for spectrometers.  HMS/HRSr are on right, phi=3*pi/2
 	if (electron_arm.eq.1 .or. electron_arm.eq.3 .or. electron_arm.eq.7) then
@@ -294,7 +328,11 @@ C DJG:
 
 
 ! ... set target/recoil masses.
-	if (doing_eep) then		!Strike proton, no 'recoil' particle
+	if (doing_pi0phot) then
+	  targ%Mtar_struck = Mp
+	  targ%Mrec_struck = Mpi0
+	  sign_hadron=1.0
+	else if (doing_eep) then		!Strike proton, no 'recoil' particle
 	  targ%Mtar_struck = Mp
 	  targ%Mrec_struck = 0.0
 	  sign_hadron=1.0
@@ -692,7 +730,14 @@ c	   endif
 
 ! ... some announcements
 
-	if (doing_eep) then
+	if (doing_pi0phot) then
+	  write(6,*) ' ****--------  H(gamma,pi0 p), bremsstrahlung beam  --------****'
+	  write(6,*) 'Egamma range (MeV): ',pi0phot_egamma_min,pi0phot_egamma_max
+	  write(6,*) 'cos(theta_pi_cm) range: ',pi0phot_costh_min,pi0phot_costh_max
+	  write(6,*) 'phi_pi_cm range (rad): ',pi0phot_phi_min,pi0phot_phi_max
+	  write(6,*) 'effective upstream radiator (X0): ',pi0phot_radlen
+	  write(6,*) 'fixed-angle scaling exponent: ',pi0phot_scale_exponent
+	else if (doing_eep) then
 	  if (doing_hyd_elast) then
 	    write(6,*) ' ****--------  H(e,e''p)  --------****'
 	  else if (doing_deuterium) then
@@ -1013,7 +1058,16 @@ c	      stop
 	ierr = regparmint('doing_semi', doing_semi_int,0)
 	ierr = regparmint('doing_hplus', doing_hplus_int,1)
 	ierr = regparmint('doing_pizero', doing_pizero_int,0)
+	ierr = regparmint('doing_pi0phot', doing_pi0phot_int,0)
 	ierr = regparmint('pizero_ngamma', pizero_ngamma,0)
+	ierr = regparmdouble('pi0phot_egamma_min',pi0phot_egamma_min,0.0)
+	ierr = regparmdouble('pi0phot_egamma_max',pi0phot_egamma_max,0.0)
+	ierr = regparmdouble('pi0phot_costh_min',pi0phot_costh_min,0.0)
+	ierr = regparmdouble('pi0phot_costh_max',pi0phot_costh_max,0.0)
+	ierr = regparmdouble('pi0phot_phi_min',pi0phot_phi_min,0.0)
+	ierr = regparmdouble('pi0phot_phi_max',pi0phot_phi_max,0.0)
+	ierr = regparmdouble('pi0phot_radlen',pi0phot_radlen,0.0)
+	ierr = regparmdouble('pi0phot_scale_exponent',pi0phot_scale_exponent,0.0)
 	ierr = regparmint('doing_rho',doing_rho_int,0)
 	ierr = regparmint('doing_decay',doing_decay_int,0)
 	ierr = regparmdouble('ctau',ctau,0.0)
@@ -1154,6 +1208,7 @@ ccc
 	if(doing_semi_int.gt.0) doing_semi=.true.
         if(doing_hplus_int.gt.0) doing_hplus=.true.
 	if(doing_pizero_int.gt.0) doing_pizero=.true.
+	if(doing_pi0phot_int.gt.0) doing_pi0phot=.true.
 	if(doing_nuc_elast_int.gt.0) doing_nuc_elast=.true.
         if(doing_rho_int.gt.0) doing_rho=.true.
         if(doing_decay_int.gt.0) doing_decay=.true.

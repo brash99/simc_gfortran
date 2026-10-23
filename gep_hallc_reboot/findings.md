@@ -20,6 +20,10 @@ The core executable now builds locally on Apple Silicon macOS, and a reproducibl
 
 A separate [PAC37 elastic-baseline reconstruction](pac37_elastic_baseline.md) gives 41.936699 events/mC with the current radiated implementation and reconstructed 2011 HMS+BigCal settings. The raw Table 1 comparison is 30.1% low, but the difference is 9.6% relative to the proposal's 3σ-cut yield and 18.4% relative to its alternative 6σ-cut yield. BigCal's rectangular extent rejects only 7 of 9,782 calorimeter trials, so it is not the dominant source of the discrepancy. The original deck, cut convention, radiation configuration, and code revision are still needed for an exact reproduction.
 
+The current radiative convention is now defined in [radiative_convention.md](radiative_convention.md). The working settings retain SIMC radiation, the repository-standard peaked/off-shell correction configuration, and all three radiation tails. At the 10.7 GeV working point, disabling radiation raises the fixed-seed yield by 21.34%, while the older Schwinger internal prescription raises it by 3.38%. The quoted 41.481955 events/mC is specifically a radiated, transport-accepted, configured-SPedge yield before realistic reconstructed elastic-selection and detector efficiencies.
+
+A [π⁰ background channel audit](pi0_background_channel_audit.md) establishes that the present checkout lacks the normalized hard-bremsstrahlung real-photon generator used for PAC37; the available π⁰ examples are different electroproduction topologies, and the proton-detected `doing_delta` cross section is a placeholder. Independent endpoint kinematics nevertheless show essentially exact overlap with the current elastic central setting: a 10.7 GeV photon produces a 6.7286 GeV/c proton at 18.797° and a 4.8446 GeV π⁰ at 26.596°. Absolute contamination remains unverified until a real-photon flux and full photoproduction model are supplied.
+
 ## Selected kinematics
 
 The spreadsheet on page 4 contains the main measurement and a possible commissioning setting:
@@ -79,11 +83,11 @@ He discusses retaining S2 if possible, avoiding material upstream of the drift c
 
 ## Yield estimate and comparison with SBS
 
-The reproducible local SIMC run is the working yield baseline: 41.481955 events/mC, corresponding to 3.111147 events/s at 75 μA and 12,096,138 elastic events for 45 full 24-hour beam-on days.
+The reproducible local SIMC run is the working yield baseline: 41.481955 events/mC, corresponding to 3.111147 events/s at 75 μA and 12,096,138 gross elastic events for 45 PAC days.
 
 A dedicated [beam-time and elastic-yield check](beam_time_yield_check.md) reconstructs the exposure ledger. Andrew's 3.25 events/s and 12,636,000-event estimate is retained only as an external comparison pending reproduction of his exact setup; it is not used as an input to continuing projections.
 
-The conversion from the local rate to a 45-day total is arithmetic only. Beam availability, DAQ live time, tracking, trigger, analysis-cut and polarimeter efficiencies remain to be applied explicitly before interpreting the number as a usable experimental sample. The local simulated rate also needs a weighted Monte Carlo uncertainty before it becomes a production projection.
+The conversion from the local rate to a 45-PAC-day total is arithmetic under the standard convention that a PAC day contains 24 hours of beam on target at the stated current. Accelerator availability is not applied to this physics yield; it is used later to convert approved PAC days into scheduled floor time. Target boiling/density, DAQ live time, tracking, trigger, analysis-cut and polarimeter efficiencies remain to be applied explicitly before interpreting the number as a usable experimental sample. The local simulated rate also needs a weighted Monte Carlo uncertainty before it becomes a production projection.
 
 The email quotes an SBS best-case recovered sample of approximately 9.3 million events. This is Andrew's preliminary comparison, not an independently verified SBS result. For equal information per event:
 
@@ -200,7 +204,7 @@ The last column is our arithmetic illustration, assuming Table 1's rate precedes
 
 Andrew's 3.25 Hz corresponds to 43.33 events/mC. It is of the same order as the historical rate after plausible losses, but agreement at that level does not establish identical normalization, cuts or acceptance. The 10.7 versus 11 GeV beam energies and NPS versus BigCal geometry must be disentangled first.
 
-A separate exposure ambiguity needs resolution. The BigCal radiation-damage discussion explicitly assumes 50% running efficiency and 3.25 C/day at 75 μA (p. 38). Table 4 gives a 0.8 loss factor but does not provide a complete charge-to-PAC-day conversion. Andrew's spreadsheet uses 45 full 24-hour days at the quoted rate. Do not automatically apply both 50% and 0.8 to every yield: establish whether each quantity describes delivered beam time, calendar/floor time, DAQ live time, or independent losses. Keep a ledger in charge, seconds, and efficiency factors.
+The BigCal radiation-damage discussion explicitly assumes 50% running efficiency and 3.25 C/day at 75 μA (p. 38). That historical operational assumption should not redefine a PAC day or be applied to the current PAC-day physics yield. Table 4 also gives a 0.8 loss factor. Do not automatically apply both factors: identify which experiment-side losses, if any, are already represented by the 0.8 factor. Keep a ledger in charge, PAC-day seconds, and experiment-side efficiency factors.
 
 ### FPP design and projected precision
 
@@ -285,15 +289,15 @@ The historical proposal supports a credible starting hypothesis for the reboot. 
 
 ## Recommended next studies
 
-1. Define the current radiative treatment and signal convention. Document which corrections are generated, which are reconstructed or unfolded, and where elastic-selection cuts and efficiencies enter; quantify the yield and distribution sensitivity to each defensible choice.
+1. Use the radiative and yield convention defined in the dedicated note. Carry the observed 3.4% internal-prescription shift as an initial model sensitivity, and replace it when a modern calculation or data benchmark supports a better estimate.
 2. Archive Andrew's current decks, source commit, report and event files when available. Record all rates as events/mC as well as Hz, with the applied cuts and efficiencies beside each number.
 3. Treat the reconstructed PAC37 elastic comparison as a passed scale benchmark: its cut-level yields agree within the accepted 20% tolerance. Recovery of old decks and source revisions is useful if convenient, but is no longer on the critical path.
 4. Use the 10.7 GeV current configuration as the working baseline, with correlated elastic settings and NPS geometry. Change one group of assumptions at a time so radiation, acceptance, energy loss and resolution effects can be separated.
 5. Quantify full electron-envelope coverage conditional on HMS acceptance, using an enlarged/uncut reference and practical shower fiducials. Scan detector distance and position, retaining the finite target and beam raster.
-6. Repeat the radiative elastic plus bremsstrahlung π0 study, including resolution, thresholds and cut-width scans. Treat aluminum and accidentals separately; compare the final information gain after cuts, not only elastic acceptance.
+6. Implement the missing normalized hard-bremsstrahlung `gamma p -> pi0 p` channel using the Anderson wide-angle baseline in `pi0_cross_section_model.md`, including the explicit `s^-6`, `s^-7`, and `s^-8` weights. Then repeat the radiative elastic plus π⁰ study with common detector response, thresholds and cut-width scans. Treat aluminum and accidentals separately; compare the final information gain after cuts, not only elastic acceptance.
 7. Confirm present FPP hardware and viable trigger layouts, and obtain contemporary HMS/NPS rates and DAQ limits. Assess one versus two analyzers jointly with trigger efficiency, tracking, background and analyzing power.
 8. Establish event-by-event spin transport and a likelihood/covariance estimate of absolute uncertainty on the explicitly defined ratio. Resolve Table 4's μp normalization ambiguity, and include alignment and instrumental-asymmetry systematics.
-9. Define the exposure ledger explicitly in delivered charge, beam-on time, running efficiency, target-density correction, DAQ live time, tracking/selection and polarimeter efficiency; avoid applying any factor twice. Compare old, reboot and SBS sensitivities using the same observable and conventions.
+9. Define the exposure ledger explicitly in PAC days, charge at the stated current, target-density correction, DAQ live time, tracking/selection and polarimeter efficiency; exclude accelerator availability and avoid applying any experiment-side factor twice. Compare old, reboot and SBS sensitivities using the same observable and conventions.
 
 ## Verification boundaries
 

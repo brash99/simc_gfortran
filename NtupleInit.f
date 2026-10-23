@@ -8,7 +8,7 @@
 	include  'simulate.inc'
 
 	character*80 filename,directory
-	character*16 NtupleTag(80),name,title
+	character*16 NtupleTag(96),name,title
 	integer*4 m,io,recl,bank,id,status,i
 c	parameter(recl = 1024)
 c	parameter(bank = 8000)
@@ -112,7 +112,7 @@ c	endif
 	NtupleTag(m) = 'Emi'	        ! 39
 	m = m+1
 	NtupleTag(m) = 'Pmi'	        ! 40
-	if (doing_pion .or. doing_kaon .or. doing_delta .or. doing_semi .or.doing_rho) then
+	if (doing_pi0phot .or. doing_pion .or. doing_kaon .or. doing_delta .or. doing_semi .or.doing_rho) then
 	  m = m+1
 	  NtupleTag(m) = 'missmass'	! 41
 	  m = m+1
@@ -179,7 +179,7 @@ c	endif
 	     m = m+1
 	     NtupleTag(m) = 'mmnuc' ! 67
 	  endif          
-	  if(doing_pizero) then
+	  if(doing_pizero .or. doing_pi0phot) then
 	     m = m+1
 	     NtupleTag(m) = 'xcal_gamma1' ! 68 
 	     m = m+1
@@ -204,6 +204,30 @@ c	endif
 	     NtupleTag(m) = 'Pgamma2y' ! 78
 	     m = m+1
 	     NtupleTag(m) = 'Pgamma2z' ! 79
+	     if (doing_pi0phot) then
+	       m = m+1
+	       NtupleTag(m) = 'phot_Egamma'
+	       m = m+1
+	       NtupleTag(m) = 'phot_costhcm'
+	       m = m+1
+	       NtupleTag(m) = 'phot_phicm'
+	       m = m+1
+	       NtupleTag(m) = 'phot_pelastic'
+	       m = m+1
+	       NtupleTag(m) = 'phot_dpelastic'
+	       m = m+1
+	       NtupleTag(m) = 'phot_xpred'
+	       m = m+1
+	       NtupleTag(m) = 'phot_ypred'
+	       m = m+1
+	       NtupleTag(m) = 'phot_dx1'
+	       m = m+1
+	       NtupleTag(m) = 'phot_dy1'
+	       m = m+1
+	       NtupleTag(m) = 'phot_dx2'
+	       m = m+1
+	       NtupleTag(m) = 'phot_dy2'
+	     endif
 	  endif
 	  if(using_tgt_field) then
 	     m = m+1
@@ -250,6 +274,20 @@ c	endif
 	   NtupleTag(m) = 'theta_e' ! 52
 	   m = m+1
 	   NtupleTag(m) = 'theta_p' ! 53
+	   if (doing_hyd_elast) then
+	     m = m+1
+	     NtupleTag(m) = 'el_pelastic'
+	     m = m+1
+	     NtupleTag(m) = 'el_dpelastic'
+	     m = m+1
+	     NtupleTag(m) = 'el_xpred'
+	     m = m+1
+	     NtupleTag(m) = 'el_ypred'
+	     m = m+1
+	     NtupleTag(m) = 'el_dx'
+	     m = m+1
+	     NtupleTag(m) = 'el_dy'
+	   endif
 	endif
 
 !	else		!used to be the if (doing_phsp) option.

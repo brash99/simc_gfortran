@@ -4,7 +4,7 @@ Checked: 2026-10-22.
 
 ## Scope
 
-This note verifies the arithmetic behind Andrew Puckett's preliminary Q² = 11 event estimate and compares it with the normalization from the local fixed-seed SIMC smoke run. It does not validate detector efficiencies, PAC-day accounting, the underlying cross-section model, or Andrew's unavailable exact input deck.
+This note verifies the arithmetic behind Andrew Puckett's preliminary Q² = 11 event estimate and compares it with the normalization from the local fixed-seed SIMC smoke run. It uses the collaboration's PAC-day convention defined below. It does not validate detector efficiencies, the underlying cross-section model, or Andrew's unavailable exact input deck.
 
 ## Working convention
 
@@ -12,7 +12,7 @@ All continuing studies will use the reproducible local SIMC normalization as the
 
 - 41.481955 weighted events/mC;
 - 3.111147 events/s at 75 μA; and
-- 12,096,138 elastic events for 45 full 24-hour beam-on days.
+- 12,096,138 gross elastic events for 45 PAC days.
 
 Andrew's 3.25 Hz and 12.636 million events are retained only as an external comparison. They are not inputs to projections unless his exact configuration is later reproduced.
 
@@ -32,7 +32,7 @@ The embedded spreadsheet gives 12,636,000 events. Its calculation is exactly
 
     3.25 events/s × 45 days × 86,400 s/day = 12,636,000 events.
 
-Thus the displayed estimate treats every one of the 45 PAC days as 24 hours of exposure at the quoted 3.25 Hz. It does not visibly apply a separate factor for accelerator availability, target boiling, DAQ live time, trigger efficiency, tracking efficiency, analysis cuts, or polarimeter reconstruction.
+Thus the displayed estimate correctly treats every one of the 45 PAC days as 24 hours of beam on target at the quoted 3.25 Hz. Accelerator availability is not an experiment-side correction to a PAC-day request. The displayed estimate does not visibly apply separate factors for target boiling, DAQ live time, trigger efficiency, tracking efficiency, analysis cuts, or polarimeter reconstruction.
 
 At 75 μA, the same exposure corresponds to
 
@@ -60,20 +60,23 @@ For 45 full 24-hour days:
 | Rate at 75 μA | 3.111 Hz | 3.250 Hz | -4.27% |
 | Events in 45 full days | 12,096,138 | 12,636,000 | -539,862 (-4.27%) |
 
-At the local working rate, 12 million events require 44.64 full beam-on days; Andrew's exact 12.636 million total requires 47.01 full beam-on days.
+At the local working rate and before experiment-side losses, 12 million events require 44.64 PAC days; Andrew's exact 12.636 million total requires 47.01 PAC days.
 
 This agreement is encouraging but not a reproduction of Andrew's calculation. His exact input deck, generated ranges, target details, radiative settings, cuts, source commit, and run report remain unavailable. The local deck also emitted low-energy-loss warnings whose weighted contribution has not yet been quantified.
 
 ## PAC-day efficiency ledger
 
-If 45 PAC days means floor allocation rather than delivered live exposure, introduce a single combined efficiency factor
+By convention, one PAC day is 24 hours of beam on target at the stated current. Accelerator availability is used later by the laboratory to convert approved PAC days into scheduled floor time; it does not reduce the physics yield assigned to a PAC day.
 
-    f = beam availability × usable-current fraction × density factor
-        × DAQ live time × trigger/tracking/selection efficiency.
+To estimate the usable experimental sample, introduce a combined experiment-side efficiency factor
+
+    f_exp = target-density/boiling factor × DAQ live time
+            × trigger efficiency × detector/tracking efficiency
+            × elastic-selection efficiency × FPP efficiency.
 
 Do not apply a factor already included in the quoted SIMC rate a second time. The resulting totals are:
 
-| Combined exposure/efficiency factor | Local working baseline | Andrew comparison |
+| Combined experiment-side efficiency | Local working baseline | Andrew comparison |
 | ---: | ---: | ---: |
 | 100% | 12,096,138 | 12,636,000 |
 | 90% | 10,886,524 | 11,372,400 |
@@ -82,7 +85,7 @@ Do not apply a factor already included in the quoted SIMC rate a second time. Th
 | 60% | 7,257,683 | 7,581,600 |
 | 50% | 6,048,069 | 6,318,000 |
 
-The email's displayed 12.636 million corresponds to the 100% row. Until the meaning of "PAC day" and the contents of the 3.25 Hz rate are specified, 12.636 million is best described as the full-exposure elastic yield, not a verified final-analysis sample.
+The email's displayed 12.636 million corresponds to the 100% experiment-side-efficiency row. It is the correct gross elastic yield for 45 PAC days under the quoted 3.25 Hz rate, but it is not yet a verified final-analysis sample.
 
 ## Comparison with the quoted SBS sample
 
@@ -100,7 +103,6 @@ The local working baseline implies approximately 12.3% smaller statistical uncer
 To convert this arithmetic check into a verified beam-time projection, obtain:
 
 1. Andrew's exact SIMC deck, checkout commit, report, and definition of the 3.25 Hz rate.
-2. Whether 45 PAC days denotes floor time, scheduled beam time, delivered beam-on time, or already efficiency-corrected time.
-3. Separate accelerator availability, current/target-density, DAQ live-time, trigger, tracking, elastic-selection, and FPP reconstruction factors.
-4. A weighted Monte Carlo uncertainty on the simulated rate.
-5. The event-level FPP coefficient of merit needed to translate elastic yield into form-factor precision.
+2. Separate target-density/boiling, DAQ live-time, trigger, detector/tracking, elastic-selection, and FPP reconstruction factors.
+3. A weighted Monte Carlo uncertainty on the simulated rate.
+4. The event-level FPP coefficient of merit needed to translate elastic yield into form-factor precision.

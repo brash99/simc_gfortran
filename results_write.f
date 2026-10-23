@@ -7,7 +7,7 @@
 	include 'simulate.inc'
 
 	integer i,m
-	real*8	ntu(80)
+	real*8	ntu(96)
 	type(event_main):: main
 	type(event):: vertex, orig, recon
 
@@ -175,7 +175,7 @@
 	ntu(m) = vertex%Emiss/1000. ! 39 GeV
 	m=m+1
 	ntu(m) = vertex%Pmiss/1000. ! 40 GeV/c
-	if (doing_pion .or. doing_kaon .or. doing_delta .or. doing_semi .or. doing_rho) then
+	if (doing_pi0phot .or. doing_pion .or. doing_kaon .or. doing_delta .or. doing_semi .or. doing_rho) then
 	  m=m+1
 	  ntu(m) = ntup%mm/1000. ! 41 missmass (nucleon)
 	  m=m+1
@@ -240,7 +240,7 @@
 	     m=m+1
 	     ntu(m) = ntup%mmA/1000 !67
 	  endif
-	  if(doing_pizero) then
+	  if(doing_pizero .or. doing_pi0phot) then
 	     m=m+1
 	     ntu(m) = ntup%xcal_gamma1 ! 68
 	     m=m+1
@@ -265,6 +265,30 @@
 	     ntu(m) = ntup%gamma2(3) ! 78
 	     m=m+1
 	     ntu(m) = ntup%gamma2(4) ! 79
+	     if (doing_pi0phot) then
+	       m=m+1
+	       ntu(m) = ntup%pi0phot_egamma/1000.0
+	       m=m+1
+	       ntu(m) = ntup%pi0phot_costh
+	       m=m+1
+	       ntu(m) = ntup%pi0phot_phicm
+	       m=m+1
+	       ntu(m) = ntup%pi0phot_pelastic/1000.0
+	       m=m+1
+	       ntu(m) = ntup%pi0phot_dpelastic
+	       m=m+1
+	       ntu(m) = ntup%pi0phot_xpred
+	       m=m+1
+	       ntu(m) = ntup%pi0phot_ypred
+	       m=m+1
+	       ntu(m) = ntup%pi0phot_dx1
+	       m=m+1
+	       ntu(m) = ntup%pi0phot_dy1
+	       m=m+1
+	       ntu(m) = ntup%pi0phot_dx2
+	       m=m+1
+	       ntu(m) = ntup%pi0phot_dy2
+	     endif
 	  endif
 	  if(using_tgt_field) then
 	     m=m+1
@@ -311,6 +335,20 @@
 	   ntu(m) = recon%e%theta ! 52
 	   m=m+1
 	   ntu(m) = recon%p%theta ! 53
+	   if (doing_hyd_elast) then
+	     m=m+1
+	     ntu(m) = ntup%pi0phot_pelastic/1000.0
+	     m=m+1
+	     ntu(m) = ntup%pi0phot_dpelastic
+	     m=m+1
+	     ntu(m) = ntup%pi0phot_xpred
+	     m=m+1
+	     ntu(m) = ntup%pi0phot_ypred
+	     m=m+1
+	     ntu(m) = ntup%pi0phot_dx1
+	     m=m+1
+	     ntu(m) = ntup%pi0phot_dy1
+	   endif
 	endif
 
 c	call HFN(NtupleID,ntu)

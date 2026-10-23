@@ -1,0 +1,119 @@
+; Hard-bremsstrahlung gamma p -> pi0 p background at the exploratory
+; GEp-IV 10.7 GeV / Q2 approximately 11 setting.
+; The effective upstream radiator is initially half of the approximately
+; 3.5% X0 full 30 cm LH2 target.  This is an uncertainty-banded study deck,
+; not yet a final thick-target photon-flux treatment.
+
+begin parm experiment
+  ngen = -100000
+  EXPER%charge = 1.0
+  doing_pi0phot = 1
+  doing_pion = 0
+  doing_kaon = 0
+  doing_delta = 0
+  doing_semi = 0
+  doing_rho = 0
+  doing_pizero = 0
+  pizero_ngamma = 1
+  pi0phot_egamma_min = 9500.0
+  pi0phot_egamma_max = 10699.0
+  pi0phot_costh_min = -0.25
+  pi0phot_costh_max = 0.00
+  pi0phot_phi_min = 80.0
+  pi0phot_phi_max = 100.0
+  pi0phot_radlen = 0.0175
+  pi0phot_scale_exponent = 7.0
+  doing_decay = 0
+  random_seed = 110012
+end parm experiment
+
+begin parm kinematics_main
+  Ebeam = 10700.0
+  dEbeam = 0.05
+  electron_arm = 8
+  hadron_arm = 1
+  spec%e%P = 4838.0
+  spec%e%theta = 26.651
+  spec%p%P = 6735.0
+  spec%p%theta = 18.797
+end parm kinematics_main
+
+begin parm target
+  targ%A = 1.0
+  targ%Z = 1.0
+  targ%mass_amu = 1.007276
+  targ%mrec_amu = 0.0
+  targ%rho = 0.0723
+  targ%thick = 2169.0
+  targ%angle = 0.0
+  targ%abundancy = 100.0
+  targ%can = 3
+end parm target
+
+begin parm debug
+  debug(1) = 0
+  debug(2) = 0
+  debug(3) = 0
+  debug(4) = 0
+  debug(5) = 0
+end parm debug
+
+begin parm e_arm_accept
+  SPedge%e%delta%min = -15.0
+  SPedge%e%delta%max = 15.0
+  SPedge%e%yptar%min = -500.0
+  SPedge%e%yptar%max = 500.0
+  SPedge%e%xptar%min = -500.0
+  SPedge%e%xptar%max = 500.0
+end parm e_arm_accept
+
+begin parm p_arm_accept
+  SPedge%p%delta%min = -15.0
+  SPedge%p%delta%max = 15.0
+  SPedge%p%yptar%min = -90.0
+  SPedge%p%yptar%max = 90.0
+  SPedge%p%xptar%min = -50.0
+  SPedge%p%xptar%max = 50.0
+end parm p_arm_accept
+
+begin parm beamandtargetinfo
+  gen%xwid = 0.008868
+  gen%ywid = 0.004235
+  targ%fr_pattern = 1.0
+  targ%fr1 = 0.1
+  targ%fr2 = 0.1
+  targ%xoffset = 0.0
+  targ%yoffset = 0.0
+  targ%zoffset = 0.0
+end parm beamandtergetinfo
+
+begin parm spect_offset
+  spec%e%offset%x = 0.0
+  spec%e%offset%y = 0.0
+  spec%e%offset%z = 0.0
+  spec%e%offset%xptar = 0.0
+  spec%e%offset%yptar = 0.0
+  spec%p%offset%x = 0.0
+  spec%p%offset%y = 0.0
+  spec%p%offset%z = 0.0
+  spec%p%offset%xptar = 0.0
+  spec%p%offset%yptar = 0.0
+end parm spect_offset
+
+begin parm simulate
+  hard_cuts = 0
+  using_rad = 0
+  spect_mode = 0
+  cuts%Em%min = 0.0
+  cuts%Em%max = 0.0
+  using_Eloss = 1
+  correct_Eloss = 0
+  correct_raster = 1
+  mc_smear = 1
+  Nntu = 0
+  using_Coulomb = 0
+  using_tgt_field = 0
+  drift_to_cal = 300.0
+  calo_half_width = 30.75
+  calo_half_height = 36.9
+end parm simulate

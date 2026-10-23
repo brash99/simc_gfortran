@@ -3,7 +3,7 @@ C     Program to convert simc .bin file to root tree
       implicit none
 
       character*80 rawname,filename,treefilename
-      character*16 NtupleTag(80),varname
+      character*16 NtupleTag(96),varname
       
 
       integer i,j,nev,check
@@ -12,8 +12,8 @@ C     Program to convert simc .bin file to root tree
       integer GetNumBranches
       external GetNumBranches
 
-      real*8 ntup(80)
-      real*4 ntup_out(80)
+      real*8 ntup(96)
+      real*4 ntup_out(96)
 
       parameter(nev=10000000)
       io=99

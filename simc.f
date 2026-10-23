@@ -93,7 +93,11 @@ c	call hlimit(PawSize)
 
 ! ... compute some quantities for a central event
 
-	call calculate_central(central,vertex0)
+	if (doing_pi0phot) then
+	  call calculate_pi0phot_central(central,vertex0)
+	else
+	  call calculate_central(central,vertex0)
+	endif
 	if (debug(2)) write(6,*)'sim: done with calc_central'
 	if (debug(2)) write(6,*)'central%sigcc=',central%sigcc
 	if (debug(4)) write(6,*)'sim: at 1'
@@ -223,7 +227,7 @@ cdg	call time (timestring1(11:23))
 
 ! ... calculate everything else about the event
 
-	  if (success) then
+	  if (success .and. .not.doing_pi0phot) then
 	    call complete_recon_ev(recon,success)
 	  endif
 
@@ -387,12 +391,18 @@ c	call time (timestring2(11:23))
 	   domega_p=(gen%p%yptar%max-gen%p%yptar%min)*(gen%p%xptar%max-gen%p%xptar%min)
 	endif
 
-	genvol = domega_e
+	if (doing_pi0phot) then
+	  genvol=(pi0phot_egamma_max-pi0phot_egamma_min)*
+     >      (pi0phot_costh_max-pi0phot_costh_min)*
+     >      (pi0phot_phi_max-pi0phot_phi_min)
+	else
+	  genvol = domega_e
+	endif
 !	genvol_inclusive = genvol	!may want dOmega, or dE*dOmega
 
 ! ... 2-fold to 5-fold.
-	if (doing_deuterium.or.doing_heavy.or.doing_pion.or.doing_kaon
-     >      .or.doing_delta.or.doing_rho .or. doing_semi) then
+	if (.not.doing_pi0phot .and. (doing_deuterium.or.doing_heavy.or.
+     >      doing_pion.or.doing_kaon.or.doing_delta.or.doing_rho.or.doing_semi)) then
 	  genvol = genvol * domega_p * (gen%e%E%max-gen%e%E%min)
 	endif
 
@@ -672,7 +682,9 @@ c	include 'histograms.inc'
 
 ! Kinematics
 	write(iun,*) 'KINEMATICS:'
-	if (doing_eep) then
+	if (doing_pi0phot) then
+	  write(iun,*) '              ****--------  H(gamma,pi0 p)  --------****'
+	else if (doing_eep) then
 	  if (doing_hyd_elast) then
 	    write(iun,*) '              ****--------  H(e,e''p)  --------****'
 	  else if (doing_deuterium) then
@@ -1355,6 +1367,7 @@ c	enddo
 ! Prepare the event for the Monte Carlo's and/or spectrometer cuts
 
 	success = .false.
+	if (doing_pi0phot) recon=orig
 	ntup%resfac = 0.0			!resfac (see simulate.inc)
 	if (correct_raster) then
 	  fry = -main%target%rastery
@@ -1657,6 +1670,13 @@ C DJG Should not correct delta for Eloss - delta is a SPECTROMETER variable
 C	  recon%p%delta = (recon%p%P-spec%p%P)/spec%p%P*100.
 	endif
 
+! The real-photon mode transports the pion decay photons, rather than a
+! scattered electron, through the E-side calorimeter.
+	if (doing_pi0phot) then
+	  call transport_pi0phot_calo(main,recon,success)
+	  return
+	endif
+
 !___ E arm ______________
 
 ! Go from TRUE to SPECTROMETER quantities by computing target distortions
@@ -1860,6 +1880,15 @@ C variable!!
 c	recon.e.delta = (recon.e.P-spec.e.P)/spec.e.P*100.
 
 ! Made it!
+	if (doing_hyd_elast) then
+	  ntup%pi0phot_pelastic=-1.0d10
+	  ntup%pi0phot_dpelastic=-1.0d10
+	  ntup%pi0phot_xpred=-1.0d10
+	  ntup%pi0phot_ypred=-1.0d10
+	  call pi0phot_elastic_prediction(main,recon)
+	  ntup%pi0phot_dx1=main%FP%e%x-ntup%pi0phot_xpred
+	  ntup%pi0phot_dy1=main%FP%e%y-ntup%pi0phot_ypred
+	endif
 	success = .true.
 
 	return
