@@ -1111,6 +1111,8 @@ c	      stop
 	ierr = regparmint('using_tgt_field',using_tgt_field_int,0)
 	ierr = regparmstring('tgt_field_file',tgt_field_file,0)
 	ierr = regparmdouble('drift_to_cal',drift_to_cal,0.0)
+	ierr = regparmdouble('calo_half_width',calo_half_width,30.75)
+	ierr = regparmdouble('calo_half_height',calo_half_height,36.9)
 
 *	E_ARM_ACCEPT
 

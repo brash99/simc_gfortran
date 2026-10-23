@@ -82,7 +82,9 @@ endif
 ifeq ($(MYOS),Darwin)
   LIBROOT = CTP/O.Linux/Linux/lib
   CERN_ROOT = /apps/cernlib/i386_fc8/2005
-  FFLAGSA=-O -W -ffixed-line-length-132 -ff2c -fno-automatic -fdefault-real-8
+  DARWIN_SDK = $(shell xcrun --show-sdk-path)
+  DARWIN_VERSION = $(shell sw_vers -productVersion | cut -d. -f1,2)
+  FFLAGSA=-O -W -ffixed-line-length-132 -ff2c -fno-automatic -fdefault-real-8 -mmacosx-version-min=$(DARWIN_VERSION) -isysroot $(DARWIN_SDK)
   INCLUDES=-I.
   FFLAGS= $(INCLUDES) $(FFLAGSA)
   FFLAG1=$(FFLAGS) -c
@@ -129,7 +131,7 @@ all: mods simc  $(my_deps)
 include $(my_deps)
 
 mods: 
-	$(F77) -c -ffixed-line-length-132 $(MODULES)
+	$(F77) $(FFLAGS) -c $(MODULES)
 
 simc: simc.o $(my_objs) Makefile CTP/O.Linux/Linux/lib/libctp.a
 	$(F77) $(OSF_SHARED) -o $@ $(FFLAGS) $(my_objs) simc.o $(OTHERLIBS)

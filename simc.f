@@ -1529,7 +1529,8 @@ c first photon
      >		y_p_arm, z_p_arm, dx_p_arm, dy_p_arm, xfp, dxfp, yfp, dyfp,
      >		m2, mc_smear, mc_smear, doing_decay,
      >		ntup%resfac, frx, fry, ok_gamma1, pathlen, using_tgt_field,
-     >          zhadron,hadron_arm,drift_to_cal)
+     >          zhadron,hadron_arm,drift_to_cal,
+     >          calo_half_width,calo_half_height)
 
 	       ntup%xcal_gamma1=-1.0d10
 	       ntup%ycal_gamma1=-1.0d10
@@ -1546,7 +1547,8 @@ c second photon
      >		y_p_arm, z_p_arm, dx_p_arm, dy_p_arm, xfp, dxfp, yfp, dyfp,
      >		m2, mc_smear, mc_smear, doing_decay,
      >		ntup%resfac, frx, fry, ok_gamma2, pathlen, using_tgt_field,
-     >          zhadron,hadron_arm,drift_to_cal)
+     >          zhadron,hadron_arm,drift_to_cal,
+     >          calo_half_width,calo_half_height)
 
 	       ntup%xcal_gamma2=-1.0d10
 	       ntup%ycal_gamma2=-1.0d10
@@ -1569,7 +1571,8 @@ c needs to initialize here since not initialized in mc_calo (like in other singl
      >		y_p_arm, z_p_arm, dx_p_arm, dy_p_arm, xfp, dxfp, yfp, dyfp,
      >		m2, mc_smear, mc_smear, doing_decay,
      >		ntup%resfac, frx, fry, ok_P_arm, pathlen, using_tgt_field,
-     >          zhadron,hadron_arm,drift_to_cal)
+     >          zhadron,hadron_arm,drift_to_cal,
+     >          calo_half_width,calo_half_height)
 	    endif
 	 endif
 
@@ -1772,7 +1775,8 @@ C	  recon%p%delta = (recon%p%P-spec%p%P)/spec%p%P*100.
      >		y_e_arm, z_e_arm, dx_e_arm, dy_e_arm, xfp, dxfp, yfp, dyfp,
      >		m2, mc_smear, mc_smear, doing_decay,
      >		ntup%resfac, frx, fry, ok_e_arm, pathlen, using_tgt_field,
-     >          zhadron,electron_arm,drift_to_cal)
+     >          zhadron,electron_arm,drift_to_cal,
+     >          calo_half_width,calo_half_height)
 	  endif
 	  ntup%resfac=ntup%resfac+tmpfact
 

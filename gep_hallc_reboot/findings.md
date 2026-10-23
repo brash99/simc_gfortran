@@ -14,6 +14,12 @@ These are preliminary internal study notes. Andrew explicitly describes his esti
 
 The selected elastic kinematics are internally consistent and provide a sensible starting configuration for an HMS proton polarimeter plus NPS electron calorimeter study at Q² = 11 GeV². They justify further investigation. The 2011 proposal provides a concrete HMS+FPP baseline, including SIMC elastic/background estimates and separate polarimeter modeling. It also considered a compact PbWO4 calorimeter, making its connection to the present NPS idea stronger than the BigCal baseline alone suggests. Geometric acceptance losses, operation at the proposed luminosity, and the acceptance-weighted polarization figure of merit remain unresolved for NPS.
 
+## Local smoke test
+
+The core executable now builds locally on Apple Silicon macOS, and a reproducible one-million-trial smoke run at the preliminary Q² ≈ 11 setting found 11,013 contributing events with no modeled NPS rectangular-extent rejection. See the dedicated [fixed-seed smoke-test report](q11_smoke_test.md) for the build changes, configuration, counters, reproducibility hashes, limitations, and required follow-up.
+
+A separate [PAC37 elastic-baseline reconstruction](pac37_elastic_baseline.md) gives 41.936699 events/mC with the current radiated implementation and reconstructed 2011 HMS+BigCal settings. The raw Table 1 comparison is 30.1% low, but the difference is 9.6% relative to the proposal's 3σ-cut yield and 18.4% relative to its alternative 6σ-cut yield. BigCal's rectangular extent rejects only 7 of 9,782 calorimeter trials, so it is not the dominant source of the discrepancy. The original deck, cut convention, radiation configuration, and code revision are still needed for an exact reproduction.
+
 ## Selected kinematics
 
 The spreadsheet on page 4 contains the main measurement and a possible commissioning setting:
@@ -73,15 +79,17 @@ He discusses retaining S2 if possible, avoiding material upstream of the drift c
 
 ## Yield estimate and comparison with SBS
 
-The spreadsheet gives a SIMC elastic rate of 3.25 events/s. Multiplying by 45 × 24 × 3600 s gives 12,636,000 events, consistent with the email's approximately 12 million.
+The reproducible local SIMC run is the working yield baseline: 41.481955 events/mC, corresponding to 3.111147 events/s at 75 μA and 12,096,138 elastic events for 45 full 24-hour beam-on days.
 
-This checks arithmetic only. The PDF does not establish which beam availability, DAQ live time, tracking, trigger, analysis-cut or polarimeter efficiencies are already included, or how PAC days were converted to effective exposure. These factors must be reconciled before interpreting the number as a usable experimental sample. A 10,000-event simulation also needs weighted statistical uncertainties before extrapolation to production exposure.
+A dedicated [beam-time and elastic-yield check](beam_time_yield_check.md) reconstructs the exposure ledger. Andrew's 3.25 events/s and 12,636,000-event estimate is retained only as an external comparison pending reproduction of his exact setup; it is not used as an input to continuing projections.
+
+The conversion from the local rate to a 45-day total is arithmetic only. Beam availability, DAQ live time, tracking, trigger, analysis-cut and polarimeter efficiencies remain to be applied explicitly before interpreting the number as a usable experimental sample. The local simulated rate also needs a weighted Monte Carlo uncertainty before it becomes a production projection.
 
 The email quotes an SBS best-case recovered sample of approximately 9.3 million events. This is Andrew's preliminary comparison, not an independently verified SBS result. For equal information per event:
 
-    δR_HallC / δR_SBS = sqrt(9.3 / 12.636) ≈ 0.858
+    δR_HallC / δR_SBS = sqrt(9.3 / 12.096) ≈ 0.877
 
-Thus the quoted event counts alone imply about 14% smaller statistical uncertainty. A factor-of-two precision improvement would require four times the effective statistical information, through a different recovered SBS sample, improved polarimetry, or other gains. It does not follow from these two event totals alone.
+Thus the local working yield and quoted SBS count alone imply about 12% smaller statistical uncertainty. A factor-of-two precision improvement would require four times the effective statistical information, through a different recovered SBS sample, improved polarimetry, or other gains. It does not follow from these two event totals alone.
 
 ## Spin precession and form-factor sensitivity
 
@@ -277,10 +285,10 @@ The historical proposal supports a credible starting hypothesis for the reboot. 
 
 ## Recommended next studies
 
-1. Recover the old SIMC primary/extra input decks, π0 photoproduction routines and empirical fit, cut/response code, FPP GEANT3 model and COM calculation, COSY spin matrices, and rate-to-error/time spreadsheet. Identify versions rather than assuming today's executable reproduces the old study.
-2. Archive Andrew's current decks, source commit, report and event files. Record all rates as events/mC as well as Hz, with the applied cuts and efficiencies beside each number.
-3. Reproduce the old Q² = 11, E = 11 GeV HMS+BigCal baseline: Table 1's 60 events/mC, 77.3%/85.7% cut retention, 0.15%/0.61% π0 fractions, and Figure 25's 10 m footprint. Recover enough configuration to distinguish real disagreements from missing assumptions; do not tune solely to force numerical agreement.
-4. Change beam energy to 10.7 GeV with correlated elastic settings recalculated, then substitute NPS geometry and detector response. Change one group of assumptions at a time so acceptance, energy and resolution effects can be separated.
+1. Define the current radiative treatment and signal convention. Document which corrections are generated, which are reconstructed or unfolded, and where elastic-selection cuts and efficiencies enter; quantify the yield and distribution sensitivity to each defensible choice.
+2. Archive Andrew's current decks, source commit, report and event files when available. Record all rates as events/mC as well as Hz, with the applied cuts and efficiencies beside each number.
+3. Treat the reconstructed PAC37 elastic comparison as a passed scale benchmark: its cut-level yields agree within the accepted 20% tolerance. Recovery of old decks and source revisions is useful if convenient, but is no longer on the critical path.
+4. Use the 10.7 GeV current configuration as the working baseline, with correlated elastic settings and NPS geometry. Change one group of assumptions at a time so radiation, acceptance, energy loss and resolution effects can be separated.
 5. Quantify full electron-envelope coverage conditional on HMS acceptance, using an enlarged/uncut reference and practical shower fiducials. Scan detector distance and position, retaining the finite target and beam raster.
 6. Repeat the radiative elastic plus bremsstrahlung π0 study, including resolution, thresholds and cut-width scans. Treat aluminum and accidentals separately; compare the final information gain after cuts, not only elastic acceptance.
 7. Confirm present FPP hardware and viable trigger layouts, and obtain contemporary HMS/NPS rates and DAQ limits. Assess one versus two analyzers jointly with trigger efficiency, tracking, background and analyzing power.
@@ -293,4 +301,4 @@ Completed: text review of all 45 PAC37 pages, rendered overview of every page, d
 
 The historical SIMC/GEANT/COSY results are reported proposal results, not newly reproduced or independently validated simulations. Page/figure/table references above distinguish source evidence from our calculations and interpretations. The original PAC34 document and references were not independently reviewed in full; no claim of current theory completeness or current hardware performance is made.
 
-Not completed: reproduction of old or new simulation decks, confirmation of exact old/new cut normalization, detailed detector/background modeling, full HMS spin transport, a new statistical precision projection, or independent validation of SBS yields. No simulation source or input decks were modified for this review.
+Not completed: exact reproduction of the original historical deck, confirmation of its exact cut normalization, detailed detector/background modeling, full HMS spin transport, a new statistical precision projection, or independent validation of SBS yields. Subsequent work has added reproducible current and reconstructed-historical input decks and input-configurable calorimeter dimensions; those changes are documented in the dedicated simulation notes.

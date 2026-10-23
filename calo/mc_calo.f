@@ -2,7 +2,8 @@
      >		x_fp, dx_fp, y_fp, dy_fp, m2,
      >		ms_flag, wcs_flag, decay_flag, resmult, frx,fry, ok_spec, 
      >          pathlen,using_tgt_field,
-     >          prot_zbeam,spect_side,drift_to_cal)
+     >          prot_zbeam,spect_side,drift_to_cal,
+     >          calo_half_width,calo_half_height)
 
 C+______________________________________________________________________________
 !
@@ -28,24 +29,6 @@ C-______________________________________________________________________________
 	integer*4 spectr
 	parameter (spectr = 7)		!calo is spec #7.
 	integer*4 spect_side ! 7 (HMS side) or 8 (SOS side)
-
-! Collimator (octagon) dimensions.
-
-	real*8 h_entr,v_entr,h_exit,v_exit
-
-
-
-! No collimator, but use collimator dimensions to define calo
-c	parameter (h_entr = 64.0)
-c	parameter (v_entr = 109.0)
-c	parameter (h_exit = 64.0)
-c	parameter (v_exit = 109.0)
-
-c Use size of NPS	
-	parameter (h_entr = 30.75) ! calorimeter 1/2 width: (30 blocks * 2.05 cm)/2.0
-	parameter (v_entr = 36.9) ! calorimeter 1/2 height: (36 blocks * 2.05 cm)/2.0
-	parameter (h_exit = 30.75)
-	parameter (v_exit = 36.9)
 
 ! Math constants
 
@@ -95,6 +78,7 @@ c Use size of NPS
 	real*8 delta_z,delta_y
 
 	real*8 drift_to_cal
+	real*8 calo_half_width,calo_half_height
 
 	save		!Remember it all!
 
@@ -128,11 +112,11 @@ c Use size of NPS
 
 	  zdrift = drift_to_cal
 	  call project(xs,ys,zdrift,decay_flag,dflag,m2,p,pathlen)
-	  if (abs(ys).gt.h_entr) then
+	  if (abs(ys).gt.calo_half_width) then
 	    caloSTOP_slit_hor = caloSTOP_slit_hor + 1
 	    goto 500
 	  endif
-	  if (abs(xs).gt.v_entr) then
+	  if (abs(xs).gt.calo_half_height) then
 	    caloSTOP_slit_vert = caloSTOP_slit_vert + 1
 	    goto 500
 	  endif
