@@ -1,0 +1,13 @@
+observable,target_proton_efficiency,threshold_GeV,passing,total,measured_efficiency
+H.cal.etot,0.9,0.02814931640625,1500,1666,0.900360144057623
+H.cal.etot,0.95,0,1666,1666,1
+H.cal.etot,0.98,0,1666,1666,1
+H.cal.etot,0.99,0,1666,1666,1
+H.cal.etot,0.995,0,1666,1666,1
+H.cal.etot,0.997,0,1666,1666,1
+H.cal.1pr.eplane,0.9,0,1666,1666,1
+H.cal.1pr.eplane,0.95,0,1666,1666,1
+H.cal.1pr.eplane,0.98,0,1666,1666,1
+H.cal.1pr.eplane,0.99,0,1666,1666,1
+H.cal.1pr.eplane,0.995,0,1666,1666,1
+H.cal.1pr.eplane,0.997,0,1666,1666,1

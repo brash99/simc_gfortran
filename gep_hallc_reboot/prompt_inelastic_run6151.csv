@@ -1,0 +1,4 @@
+threshold_GeV,prompt_center_ns,elapsed_s,central_all,side_all_total,side_bucket_count,random_all_per_bucket,prompt_excess_all,central_elastic,side_elastic_total,random_elastic_per_bucket,prompt_excess_elastic,prompt_excess_inelastic,inelastic_to_elastic_ratio,recorded_inelastic_excess_Hz
+3.4,157.5,1543.330862,25030,17,16,1.0625,25028.9375,23159,14,0.875,23158.125,1870.8125,0.080784281974469,1.21219146591523
+3.6,157.5,1543.330862,24321,15,16,0.9375,24320.0625,23141,14,0.875,23140.125,1179.9375,0.0509909734714052,0.764539561187107
+3.9,157.5,1543.330862,22285,12,16,0.75,22284.25,21714,12,0.75,21713.25,571,0.0262973069439167,0.369978994173707

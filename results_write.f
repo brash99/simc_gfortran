@@ -373,6 +373,8 @@ c	call HFN(NtupleID,ntu)
 	character*(*) filename
 	integer hybrid_io
 	parameter (hybrid_io=42)
+	integer hybrid_truth_io
+	parameter (hybrid_truth_io=43)
 
 	if (.not.doing_hyd_elast) then
 	  write(6,*) 'hybrid_export currently supports elastic H(e,e''p) only'
@@ -389,6 +391,13 @@ c	call HFN(NtupleID,ntu)
      > 'rad_tail,rad1_GeV,rad2_GeV,rad3_GeV,target_eloss_GeV,target_teff_X0,'//
      > 'primary_x_cm,primary_y_cm,primary_z_cm,primary_E_GeV,'//
      > 'primary_px_GeV,primary_py_GeV,primary_pz_GeV'
+	open(unit=hybrid_truth_io,file=trim(filename)//'.truth.csv',
+     > status='replace',form='formatted')
+	write(hybrid_truth_io,'(a)') '# simc_geant4_hybrid_truth_v1'
+	write(hybrid_truth_io,'(a)') '# energies_and_momenta_GeV'
+	write(hybrid_truth_io,'(a)')
+     > 'event_id,vertex_p_E_GeV,vertex_p_px_GeV,'//
+     > 'vertex_p_py_GeV,vertex_p_pz_GeV'
 	return
 	end
 
@@ -400,8 +409,9 @@ c	call HFN(NtupleID,ntu)
 	implicit none
 	include 'simulate.inc'
 	include 'radc.inc'
-	integer event_id,hybrid_io,rad_tail
+	integer event_id,hybrid_io,hybrid_truth_io,rad_tail
 	parameter (hybrid_io=42)
+	parameter (hybrid_truth_io=43)
 	type(event_main) main
 	type(event) vertex,orig
 	logical success
@@ -438,6 +448,10 @@ c	call HFN(NtupleID,ntu)
      > main%target%Eloss(2)/1000.0d0,main%target%teff(2),
      > main%target%x,main%target%y,main%target%z,post_E/1000.0d0,
      > post_px/1000.0d0,post_py/1000.0d0,post_pz/1000.0d0
+	write(hybrid_truth_io,'(*(g0,:,","))') event_id,
+     > vertex%p%E/1000.0d0,vertex%p%P*vertex%up%x/1000.0d0,
+     > vertex%p%P*vertex%up%y/1000.0d0,
+     > vertex%p%P*vertex%up%z/1000.0d0
 	return
 	end
 
@@ -446,9 +460,11 @@ c	call HFN(NtupleID,ntu)
 	subroutine hybrid_export_close
 
 	implicit none
-	integer hybrid_io
+	integer hybrid_io,hybrid_truth_io
 	parameter (hybrid_io=42)
+	parameter (hybrid_truth_io=43)
 	close(hybrid_io)
+	close(hybrid_truth_io)
 	return
 	end
 

@@ -1,0 +1,5 @@
+/control/verbose 0
+/run/verbose 0
+/testhadr/Physics QBBC
+/run/initialize
+/run/beamOn 2514
