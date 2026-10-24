@@ -1151,6 +1151,7 @@ c	      stop
 	ierr = regparmdoublearray('lambda',lambda,3,0.0)
 	ierr = regparmint('using_cit_generation',using_cit_generation_int,0)
 	ierr = regparmint('Nntu',Nntu,0)
+	ierr = regparmint('hybrid_export',hybrid_export,0)
 	ierr = regparmint('using_Coulomb',using_Coulomb_int,0)
 	ierr = regparmdouble('dE_edge_test',dE_edge_test,0.0)
 	ierr = regparmint('use_offshell_rad',use_offshell_rad_int,0)

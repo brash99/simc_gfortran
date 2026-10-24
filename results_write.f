@@ -363,6 +363,95 @@ c	call HFN(NtupleID,ntu)
 	return
 	end
 
+!--------------------------------------------------------------------------
+
+	subroutine hybrid_export_init(filename)
+
+	USE structureModule
+	implicit none
+	include 'simulate.inc'
+	character*(*) filename
+	integer hybrid_io
+	parameter (hybrid_io=42)
+
+	if (.not.doing_hyd_elast) then
+	  write(6,*) 'hybrid_export currently supports elastic H(e,e''p) only'
+	  stop
+	endif
+
+	open(unit=hybrid_io,file=filename,status='replace',form='formatted')
+	write(hybrid_io,'(a)') '# simc_geant4_hybrid_v1'
+	write(hybrid_io,'(a)') '# energies_and_momenta_GeV positions_cm directions_Hall_xyz'
+	write(hybrid_io,'(a)') '# Hall_axes: x_down y_left z_downstream'
+	write(hybrid_io,'(a)') 'event_id,weight,vertex_x_cm,vertex_y_cm,vertex_z_cm,'//
+     > 'vertex_beam_E_GeV,'//
+     > 'vertex_e_E_GeV,vertex_e_px_GeV,vertex_e_py_GeV,vertex_e_pz_GeV,'//
+     > 'rad_tail,rad1_GeV,rad2_GeV,rad3_GeV,target_eloss_GeV,target_teff_X0,'//
+     > 'primary_x_cm,primary_y_cm,primary_z_cm,primary_E_GeV,'//
+     > 'primary_px_GeV,primary_py_GeV,primary_pz_GeV'
+	return
+	end
+
+!--------------------------------------------------------------------------
+
+	subroutine hybrid_export_write(event_id,main,vertex,orig,success)
+
+	USE structureModule
+	implicit none
+	include 'simulate.inc'
+	include 'radc.inc'
+	integer event_id,hybrid_io,rad_tail
+	parameter (hybrid_io=42)
+	type(event_main) main
+	type(event) vertex,orig
+	logical success
+	real*8 theta,phi,post_E,post_P
+	real*8 post_px,post_py,post_pz
+	real*8 rad1,rad2,rad3
+
+	if (.not.success) return
+
+	call physics_angles(spec%e%theta,spec%e%phi,main%SP%e%xptar,
+     >     main%SP%e%yptar,theta,phi)
+	post_E=spec%e%P*(1.0d0+main%SP%e%delta/100.0d0)
+	post_P=sqrt(max(0.0d0,post_E**2-Me**2))
+	post_px=post_P*sin(theta)*cos(phi)
+	post_py=post_P*sin(theta)*sin(phi)
+	post_pz=post_P*cos(theta)
+
+	rad1=0.0d0
+	rad2=0.0d0
+	rad3=0.0d0
+	rad_tail=0
+	if (using_rad) then
+	  rad1=phot1
+	  rad2=phot2
+	  rad3=phot3
+	  rad_tail=nint(ntup%radarm)
+	endif
+
+	write(hybrid_io,'(*(g0,:,","))') event_id,main%weight,
+     > main%target%x,main%target%y,main%target%z,vertex%Ein/1000.0d0,
+     > vertex%e%E/1000.0d0,vertex%e%P*vertex%ue%x/1000.0d0,
+     > vertex%e%P*vertex%ue%y/1000.0d0,vertex%e%P*vertex%ue%z/1000.0d0,
+     > rad_tail,rad1/1000.0d0,rad2/1000.0d0,rad3/1000.0d0,
+     > main%target%Eloss(2)/1000.0d0,main%target%teff(2),
+     > main%target%x,main%target%y,main%target%z,post_E/1000.0d0,
+     > post_px/1000.0d0,post_py/1000.0d0,post_pz/1000.0d0
+	return
+	end
+
+!--------------------------------------------------------------------------
+
+	subroutine hybrid_export_close
+
+	implicit none
+	integer hybrid_io
+	parameter (hybrid_io=42)
+	close(hybrid_io)
+	return
+	end
+
 
 	subroutine results_ntu_write1(vertex,recon,main,success)
 

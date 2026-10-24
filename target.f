@@ -18,6 +18,9 @@
 	logical liquid
 
 	s_Al = 0.0
+	s_air = 0.0
+	s_kevlar = 0.0
+	s_mylar = 0.0
 	liquid = targ%Z.lt.2.4
 
 	if (abs(zpos) .gt. (targ%length/2.+1.e-5)) then
@@ -100,6 +103,16 @@
  	  s_kevlar = 0.0
 	  s_mylar = 0.0
 	  forward_path = (targ%length/2.-zpos) / abs(cos(theta-targ%angle))
+	else if (electron_arm.eq.7) then			!calorimeter, HMS side
+! In the SIMC--GEANT4 hybrid, SIMC owns only the liquid target and cell.
+! Downstream chamber/window material is transported by GEANT4.
+	  forward_path = (targ%length/2.-zpos) / abs(cos(theta+targ%angle))
+	else if (electron_arm.eq.8) then			!calorimeter, SHMS side
+! In the SIMC--GEANT4 hybrid, SIMC owns only the liquid target and cell.
+! Downstream chamber/window material is transported by GEANT4.
+	  forward_path = (targ%length/2.-zpos) / abs(cos(theta-targ%angle))
+	else
+	  stop 'trip_thru_target: unsupported electron arm'
 	endif
 	s_target = forward_path
 

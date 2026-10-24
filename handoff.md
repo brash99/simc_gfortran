@@ -2,6 +2,28 @@
 
 Reviewed 2026-10-22. This document records the initial repository orientation and static review; it is not a physics certification.
 
+## Latest GEp-IV hybrid status (2026-10-23)
+
+- The radiation/material boundary is documented in
+  `gep_hallc_reboot/simc_geant4_interface_contract.md`. The initial contract
+  keeps SIMC authoritative through target/cell radiation and transport, passes
+  an explicit post-target state, and vacuumizes matching GEANT4 volumes to
+  prevent double counting.
+- The missing calorimeter material path in `trip_thru_target` has been fixed.
+  Arms 7 and 8 now include only the liquid target and cell wall; optional
+  downstream material lengths are initialized to zero and remain GEANT4's
+  responsibility. The corrected fixed-seed Q2=11 result is 40.869596 events/mC,
+  2.54% below the earlier undefined-state result. A signaling-NaN/runtime-check
+  build and the optimized build produce identical reports apart from timestamps.
+- An opt-in elastic hybrid exporter is implemented with `hybrid_export=1`.
+  It writes the versioned 23-column file
+  `worksim/<input-stem>.hybrid.csv`, containing the raw SIMC weight, vertex and
+  pre-tail electron, separate radiation tails, target loss/thickness, and the
+  post-target on-shell electron four-vector in Hall coordinates. A 10,000-trial
+  smoke test produced 78 valid records with energy closure at 1.8e-15 GeV; the
+  disabled exporter leaves the million-trial baseline unchanged. The next step
+  is the matching reader in the private NPS GEANT4 checkout.
+
 ## Session context and baseline
 
 - User: this is a newly downloaded JLab Hall C SIMC repository. Requested a comprehensive review to learn the code and a persistent handoff for future sessions.
@@ -160,7 +182,7 @@ Key historical anchors: E = 11 GeV and Q² = 11 (current email uses E = 10.7); 6
 
 Local continuation on 2026-10-22 established a working Apple Silicon macOS build. The Darwin Makefile now supplies GNU Fortran with the active SDK and host deployment version, and compiles modules with the common Fortran flags. `make all` exits 0. A new fixed-seed deck, `infiles/gep_reboot_q11_smoke.inp`, ran twice for one million fixed trials at the preliminary 10.7 GeV/Q²≈11 setting. Both runs were byte-for-byte reproducible in the generated diagnostics and RNG state. There were 11,013 contributing/HMS-successful events and zero modeled NPS horizontal or vertical extent rejections, implying a rule-of-three upper bound near 0.027% for the rectangular-aperture loss within this provisional sample. This is not detector-response or production-yield validation. The run emitted low-energy `Eloss>Total KE` warnings that require follow-up. Full details and limitations are in [gep_hallc_reboot/q11_smoke_test.md](gep_hallc_reboot/q11_smoke_test.md).
 
-The current checkout now also has input-configurable calorimeter half-width and half-height, with the existing NPS dimensions preserved as defaults. This enabled a fixed-seed reconstruction of the PAC37 Q² = 11 HMS+BigCal elastic baseline without changing the NPS model. The radiated result is 41.936699 events/mC; BigCal rejects only 7 of 9,782 calorimeter trials. This is 30.1% below the proposal's raw 60 events/mC, 9.6% below its 3σ-cut comparator, and 18.4% below its alternative 6σ-cut comparator. A no-radiation diagnostic gives 50.510831 events/mC. The checked-in deck is radiated. See [gep_hallc_reboot/pac37_elastic_baseline.md](gep_hallc_reboot/pac37_elastic_baseline.md). The user accepts agreement within 20% of the cut-level historical yields as sufficient, so this benchmark is closed and recovery of the original artifacts is optional. The critical path now begins with selecting and documenting the best current radiative treatment and signal/cut convention. Repository commit `7896ebc` documents a June 2011 radiative-initialization bug fix that remains useful historical context.
+The current checkout now also has input-configurable calorimeter half-width and half-height, with the existing NPS dimensions preserved as defaults. This enabled a fixed-seed reconstruction of the PAC37 Q² = 11 HMS+BigCal elastic baseline without changing the NPS model. After correcting the undefined arm-8 target-material path, the radiated result is 40.869596 events/mC. This is 31.9% below the proposal's raw 60 events/mC, 11.9% below its 3σ-cut comparator, and 20.5% below its alternative 6σ-cut comparator. A no-radiation diagnostic gives 50.510831 events/mC. The checked-in deck is radiated. See [gep_hallc_reboot/pac37_elastic_baseline.md](gep_hallc_reboot/pac37_elastic_baseline.md). The user accepts agreement at approximately 20% of the cut-level historical yields as sufficient, so this benchmark is closed and recovery of the original artifacts is optional. The critical path now begins with selecting and documenting the best current radiative treatment and signal/cut convention. Repository commit `7896ebc` documents a June 2011 radiative-initialization bug fix that remains useful historical context.
 
 [gep_hallc_reboot/beam_time_yield_check.md](gep_hallc_reboot/beam_time_yield_check.md) verifies Andrew's displayed exposure arithmetic. His 3.25 Hz for 45 full 24-hour days gives exactly 12.636 million events and implies 43.333 events/mC at 75 μA. The local provisional smoke normalization is 41.482 events/mC, or 3.111 Hz and 12.096 million events over the same full exposure, 4.27% lower. The displayed spreadsheet applies no separate floor-time or detector-efficiency factor; those conventions and the contents of the quoted rate remain unresolved.
 
@@ -217,3 +239,111 @@ The first private GEANT4 milestone is now working under `/work/hallc/gep/brash/g
 The centered samples now contain 1,000 events each, with a documented comparison plot in `gep_hallc_reboot/plots/nps_geant4_centered_1000.{png,pdf}`. At 4.598 GeV, 989/1000 primaries enter an active crystal, 23/1000 fall below 90% deposited energy, and the 977-event contained core has mean 4.50626 GeV with 45.45 MeV RMS (1.009%). At 7.072 GeV, the corresponding values are 993/1000, 9/1000, and a 991-event core mean of 6.93007 GeV with 66.18 MeV RMS (0.955%). The unrestricted RMS is dominated by rare upstream/non-entry tails and must not be called the calorimeter resolution. Preserve those tails for trigger-efficiency modeling, and check the SIMC/GEANT4 radiation boundary to avoid double counting. The next run set should be the controlled face/edge scan.
 
 The controlled face/gap scan is complete at five local positions with 200 correlated events per point and both energies; results, CSV, ROOT macro, and PNG/PDF are documented in `gep_hallc_reboot/nps_geant4_survey.md`. From crystal center to the four-crystal corner, the sub-90% deposit fraction rises from 0.5% to 32.5% at 4.598 GeV and from 0.5% to 49.0% at 7.072 GeV. Primary active-crystal entry falls from 100.0% to 81.5% and from 99.5% to 64.0%. The surviving core shifts down by about 1.4% and 2.2% and broadens to 1.84% and 1.99%. A position-independent Gaussian response is therefore inadequate for trigger-threshold work. Next define the SIMC-to-GEANT4 event/radiation boundary explicitly, then exercise outer-face and dead-block geometry as part of the external-event adapter validation.
+
+The first elastic SIMC-to-GEANT4 adapter is now implemented. SIMC can opt in
+to a versioned 23-column post-target CSV with `hybrid_export=1`; the private
+GEANT4 `gep-external-primary` branch accepts it with `--simc-events`, validates
+the exact schema and every electron, preserves the SIMC weight, and vacuumizes
+the target liquid/cell to prevent double counting. Slurm job `13493645`
+transported the first ten Q2=11 records successfully at 25.486 degrees and
+3.0 m. Its ten-entry ROOT tree reproduces the CSV weights, post-target
+vertices, and momenta. See
+`gep_hallc_reboot/simc_geant4_interface_contract.md`. Next complete the
+component material ledger and controlled material-boundary tests, then run a
+larger weighted elastic sample through the raw-deposit response analysis.
+
+The first material-boundary closure test then exposed a coordinate defect that
+the serialization-only smoke test could not reveal: SIMC uses Hall `(down,
+left, downstream)` axes while this GEANT4 geometry uses `(left, up,
+downstream)`. The adapter now maps GEANT4 `(x,y,z) = SIMC (y,-x,z)`. Corrected
+Slurm job `13494160` transported all 78 records twice with identical truth and
+seeds. The production vacuum boundary gives 75.61% weighted active-crystal
+entry and 27.62% below 90% energy; deliberately restoring the already-counted
+target/cell gives 74.10% and 29.14%, respectively. One event changes entry
+classification. Details and a plot are in
+`gep_hallc_reboot/simc_geant4_material_closure.md`. Next generate a larger
+current-geometry hybrid sample; do not treat these 78 PAC37-derived events as a
+precision acceptance estimate.
+
+The first large current-geometry hybrid run is complete. The new fixed-seed
+deck `infiles/gep_reboot_q11_hybrid.inp` generated 10,923 accepted electrons
+from one million trials at 10.7 GeV; after the arm-8 material correction its
+SIMC normalization is 41.341739 events/mC, superseding the older pre-correction
+41.481955 value for continued work. GEANT4 Slurm job `13494409` completed all
+events in 9 minutes 20 seconds with exit `0:0`. Raw weighted results are 75.62%
+primary active-crystal entry, 98.69% with at least 1 MeV deposited, and
+threshold retentions of 76.71%, 73.99%, 72.77%, and 69.76% above 50%, 70%, 80%,
+and 90% of primary energy. The response map shows a sharp low-response band on
+the negative-horizontal side even though the SIMC footprint is largely inside
+the nominal NPS rectangle. Treat this as a likely inherited run-6151
+sweeper/passive-geometry effect, not yet a GEp-IV acceptance loss. Details and
+plots are in `gep_hallc_reboot/gep_q11_hybrid_response.md`; next perform a
+correlated obstruction/sweeper geometry diagnostic.
+
+A geometry-only fiducial scan now shows that the combined threshold yield is
+flat while the negative-horizontal boundary moves through the poorest-response
+region. With one crystal pitch removed from the outer edges, the provisional
+good-response choice is `-140 < local x < 303.66 mm` and
+`|local y| < 368.73 mm`. At an 80% deposited-energy threshold it retains
+84.67% geometrically, has 85.09% conditional threshold efficiency, and yields
+29.78 events/mC (2.234 Hz at 75 microampere; 8.685 million raw events in 45 PAC
+days). This is only about 1% below the threshold-only 30.08 events/mC. Use
+`x > -120 mm` as a tighter systematic variation, not the default. See the
+fiducial section of `gep_hallc_reboot/gep_q11_hybrid_response.md`.
+
+A first data-anchored occupancy envelope is documented in
+`gep_hallc_reboot/nps_occupancy_projection.md`. A Poisson-through-origin fit to
+the populated run-6151 bands and stable run-2875 point projects to 75
+microampere: 48.64% with any extra cluster, 20.76% with an energetic/far/out-of-
+time cluster, 4.26% with an in-time/near cluster, and 45.36% with an isolated
+out-of-time decoded pulse above 10 mV. Statistical errors are small but do not
+cover the dominant cross-setting and factor-of-two current extrapolation
+systematics. Treat 4.3% as an overlap scale, not an inefficiency, and 45-49% as
+an event-environment/DAQ scale. Next build an event-level block-energy-time
+library and apply common trigger-sum/clustering logic for a literal overlay.
+
+The hybrid threshold calculation now uses a verified hottest-block 3x3 crystal
+sum rather than all 1,080 crystals. GEANT4's deposit array is column-major,
+`vertical + 36*horizontal`; an initial row-major adjacency trial was rejected.
+At an 80% fractional threshold the inclusive 3x3 retention is 70.55%; combined
+with the `x > -140 mm` fiducial it is 69.95%, or 28.92 events/mC. Conditional
+efficiency inside the fiducial is 82.62%, corresponding to 2.169 Hz and 8.432
+million raw events in 45 PAC days. This local-sum baseline excludes distant
+accidentals by construction but is not yet the full VTP seed/time/local-maximum
+algorithm. See the 3x3 section of
+`gep_hallc_reboot/gep_q11_hybrid_response.md`.
+
+Event-level measured-cluster overlay is complete and documented in
+`gep_hallc_reboot/nps_cluster_overlay.md`. New libraries contain 19,025
+run-6151 elastic-core events at 22.5-30 microampere and 10,825 run-2875 events
+at 35-40 microampere, with every additional cluster's energy, position, and
+relative time. After scaling multiplicity to 75 microampere, no distinct
+measured secondary enters the elastic 3x3 window; a conservative 5x5, 4 ns
+window affects 1.736% of fiducial events but changes the 80%-threshold
+retention by only +0.018 percentage points (28.917 to 28.925 events/mC).
+Resolved clusters therefore do not degrade the elastic threshold. The next
+paragraph records the follow-up decoded-pulse test of same-area pileup.
+
+The decoded-pulse part of that same-area uncertainty is now tested in
+`gep_hallc_reboot/nps_edtm_pulse_overlay.md`. Run 6151 provides 22,646 EDTM
+readout windows at mean current 25.988 microampere. EDTM is an electronically
+forced dead-time measurement trigger, not a physics event, and its configured
+rate is not used or assumed for GEp-IV. Superposing detector activity per
+window to represent 75 microampere gives a 0.00375% same-3x3 overlap within 4
+ns and no observed change to the 70% or 80% elastic threshold efficiency over
+100 replicas. This strongly constrains decoded accidental-pulse pileup;
+subthreshold analog charge hidden by run-6151 cluster-mask sparsification,
+baseline shifts, and pulse-shape effects still require unsparsified random
+windows or a validated electronics simulation.
+
+The first raw trigger-rate envelope is complete in
+`gep_hallc_reboot/nps_trigger_rate_study.md`. The `TSH` tree contains 775
+snapshots; run-specific configuration plus NPSlib identify `hTRIG1` as NPS VTP
+singles, `hTRIG3` as HMS 3/4, and `hTRIG4` as HMS EL-REAL. Fits over 15--30
+microampere project 76.1 kHz NPS and 607 Hz HMS 3/4 at 75 microampere. For
+independent inputs this gives 0.924 Hz of accidental coincidence in a 20 ns
+full window (1.849 Hz at 40 ns). This is a loose-threshold envelope, not the
+final GEp-IV rate: run 6151's 1,600-unit threshold was only 34.8% of its
+elastic energy, whereas GEp-IV aims for 70--80%. The next rate task is an
+absolute threshold-dependent NPS local-sum spectrum from threshold-scan data
+or a validated inclusive data/simulation model.

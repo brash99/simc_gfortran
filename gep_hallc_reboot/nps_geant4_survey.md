@@ -81,6 +81,14 @@ The maintained workflow was inspected directly on ifarm after the data-driven ra
 
 That topology is not directly appropriate for GEp-IV. In the present GEp-IV chain, SIMC already generates the physics event, applies its event weight, and transports the proton through HMS. GEANT4 should receive only the NPS-bound electromagnetic particles—one scattered electron for elastic events or the accepted pi0-decay photons for the hard-bremsstrahlung background—and return the crystal response. Running the separate HMS Monte Carlo would duplicate proton transport and break the existing normalization.
 
+The source-level radiation and material boundary is specified in
+[`simc_geant4_interface_contract.md`](simc_geant4_interface_contract.md).
+That audit also identified and corrected a defect in the SIMC calorimeter path:
+`trip_thru_target` previously had no defined scattered-electron material branch
+for `electron_arm=8`, although the GEp deck uses arm 8. Calorimeter arms 7 and 8
+now include the liquid target and cell only; downstream material is deliberately
+reserved for GEANT4.
+
 ### Minimal external-event contract
 
 The smallest useful adapter should read one SIMC event at a time and provide:
@@ -264,3 +272,34 @@ The [vector PDF](plots/nps_geant4_face_scan_200.pdf),
 reproduction. The scan is a local single-cell study; a full active-face scan
 must additionally include outer calorimeter boundaries and known dead-block
 masks.
+
+### SIMC event-stream adapter
+
+The private `gep-external-primary` branch now has a strict reader for the
+versioned 23-column SIMC hybrid CSV. Its `--simc-events` mode preserves each
+SIMC event weight and post-target electron vector, uses explicit NPS angle and
+distance, and replaces target-liquid and cell materials with vacuum only for
+this mode. The historical DVCS and mono-electron paths remain available.
+
+The first serialization/primary-transfer ten-event Slurm test completed as job
+`13493645`. Its ROOT tree contains ten entries, and the recorded weights,
+vertices, and electron momenta reproduce the first ten SIMC rows. Full command,
+resource, and contract details are in
+[`simc_geant4_interface_contract.md`](simc_geant4_interface_contract.md).
+
+The next interception test found that SIMC Hall axes must be mapped into this
+GEANT4 geometry as `(x,y,z) = (y,-x,z)`. After correction, paired 78-event job
+`13494160` produced physical NPS entries and demonstrated migration in the
+entry and low-energy-tail categories when the already-counted target/cell
+material is deliberately restored. The production mode remains vacuumized.
+See the dedicated
+[`material-boundary closure`](simc_geant4_material_closure.md).
+
+The first statistically useful current-geometry hybrid sample is documented in
+[`gep_q11_hybrid_response.md`](gep_q11_hybrid_response.md). Slurm job
+`13494409` transported all 10,923 fixed-seed SIMC events in 9 minutes 20
+seconds. The raw weighted primary-entry fraction is 75.62%, while 98.69% make
+at least 1 MeV of deposit. A sharp negative-horizontal low-response band is
+visible despite the projected footprint lying mostly inside NPS. Audit the
+inherited run-6151 sweeper/passive geometry before interpreting that entry
+fraction as GEp-IV acceptance.

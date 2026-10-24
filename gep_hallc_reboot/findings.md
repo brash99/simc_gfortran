@@ -18,7 +18,7 @@ The selected elastic kinematics are internally consistent and provide a sensible
 
 The core executable now builds locally on Apple Silicon macOS, and a reproducible one-million-trial smoke run at the preliminary Q² ≈ 11 setting found 11,013 contributing events with no modeled NPS rectangular-extent rejection. See the dedicated [fixed-seed smoke-test report](q11_smoke_test.md) for the build changes, configuration, counters, reproducibility hashes, limitations, and required follow-up.
 
-A separate [PAC37 elastic-baseline reconstruction](pac37_elastic_baseline.md) gives 41.936699 events/mC with the current radiated implementation and reconstructed 2011 HMS+BigCal settings. The raw Table 1 comparison is 30.1% low, but the difference is 9.6% relative to the proposal's 3σ-cut yield and 18.4% relative to its alternative 6σ-cut yield. BigCal's rectangular extent rejects only 7 of 9,782 calorimeter trials, so it is not the dominant source of the discrepancy. The original deck, cut convention, radiation configuration, and code revision are still needed for an exact reproduction.
+A separate [PAC37 elastic-baseline reconstruction](pac37_elastic_baseline.md) gives 40.869596 events/mC with the corrected radiated implementation and reconstructed 2011 HMS+BigCal settings. The raw Table 1 comparison is 31.9% low, but the difference is 11.9% relative to the proposal's 3σ-cut yield and 20.5% relative to its alternative 6σ-cut yield. The correction gives calorimeter arms 7 and 8 an explicit target/cell-only material path instead of relying on undefined local state. The original deck, cut convention, radiation configuration, and code revision are still needed for an exact reproduction.
 
 The current radiative convention is now defined in [radiative_convention.md](radiative_convention.md). The working settings retain SIMC radiation, the repository-standard peaked/off-shell correction configuration, and all three radiation tails. At the 10.7 GeV working point, disabling radiation raises the fixed-seed yield by 21.34%, while the older Schwinger internal prescription raises it by 3.38%. The quoted 41.481955 events/mC is specifically a radiated, transport-accepted, configured-SPedge yield before realistic reconstructed elastic-selection and detector efficiencies.
 
@@ -298,6 +298,91 @@ The historical proposal supports a credible starting hypothesis for the reboot. 
 7. Confirm present FPP hardware and viable trigger layouts, and obtain contemporary HMS/NPS rates and DAQ limits. Assess one versus two analyzers jointly with trigger efficiency, tracking, background and analyzing power.
 8. Establish event-by-event spin transport and a likelihood/covariance estimate of absolute uncertainty on the explicitly defined ratio. Resolve Table 4's μp normalization ambiguity, and include alignment and instrumental-asymmetry systematics.
 9. Define the exposure ledger explicitly in PAC days, charge at the stated current, target-density correction, DAQ live time, tracking/selection and polarimeter efficiency; exclude accelerator availability and avoid applying any experiment-side factor twice. Compare old, reboot and SBS sensitivities using the same observable and conventions.
+
+The first strict SIMC-to-GEANT4 elastic event path is operational. The SIMC
+export has 23 explicit fields, including vertex beam energy, individual
+radiative-tail quantities, post-target state, and event weight. The private
+maintained GEANT4 branch validates the version/schema and electron mass shell,
+transports the post-target electron with explicit NPS geometry, and vacuumizes
+its target liquid/cell in hybrid mode. Slurm job `13493645` completed ten
+events with exit code `0:0`; its ROOT truth records reproduce the input
+weights, positions, and momenta. This verifies serialization and primary
+transfer, not yet complete material or detector-response closure.
+
+The subsequent interception test found and corrected the required coordinate
+mapping from SIMC Hall axes into this GEANT4 geometry:
+`(x,y,z)_G4 = (y,-x,z)_SIMC`. Corrected paired job `13494160` gives physical
+NPS entries, identical input truth in both passes, and direct evidence that
+restoring the already-counted target/cell material migrates events between
+active-entry and low-energy-tail categories. The production hybrid path keeps
+those volumes vacuum. See
+[`simc_geant4_material_closure.md`](simc_geant4_material_closure.md).
+
+The first 10,923-event current-geometry hybrid sample is complete. Its corrected
+SIMC normalization is 41.341739 events/mC. Raw GEANT4 results give 75.62%
+weighted active-crystal entry and 98.69% with at least 1 MeV deposited. The
+large difference is localized in a sharp negative-horizontal low-response band
+despite nominal face containment, pointing to inherited run-6151 passive or
+sweeper geometry. The dedicated
+[`hybrid response report`](gep_q11_hybrid_response.md) therefore treats the
+threshold curve as provisional pending a correlated obstruction audit.
+
+The geometry-only fiducial scan identifies a practical elbow at local
+`x > -140 mm`, with one crystal pitch removed from all outer edges. Combined
+with an 80% deposited-energy threshold, this retains 29.78 events/mC—about 1%
+below the inclusive threshold yield—while raising conditional threshold
+efficiency to 85.09%. The tighter `x > -120 mm` variant yields 28.91 events/mC
+and is retained as a systematic check. No response variable enters the
+fiducial definition.
+
+The first data-anchored 75-microampere occupancy envelope projects 48.64% of
+events with any extra reconstructed cluster and 45.36% with an isolated
+out-of-time decoded pulse above 10 mV, but only 4.26% with an extra cluster both
+near the elastic shower and in time. The Poisson/current extrapolation uses
+run 6151 and the stable run-2875 point; its small statistical errors do not
+represent dominant cross-setting and extrapolation systematics. These results
+reinforce the distinction between elastic-response degradation and the much
+larger trigger/DAQ environment. See
+[`nps_occupancy_projection.md`](nps_occupancy_projection.md).
+
+A verified hottest-block 3x3 crystal sum now replaces the all-calorimeter sum
+for trigger-like thresholds. GEANT4 crystal IDs are column-major,
+`vertical + 36*horizontal`. At an 80% threshold the working fiducial retains
+69.95% of the weighted SIMC sample, giving 28.92 events/mC, 2.169 Hz at 75
+microampere, and 8.432 million raw events in 45 PAC days. Conditional threshold
+efficiency inside the fiducial is 82.62%. This remains a local-sum baseline,
+not a complete VTP emulator.
+
+The first data-shaped cluster overlay finds negligible coupling between
+resolved extra clusters and the elastic local sum. No exported run-6151
+secondary cluster enters the elastic 3x3 window under 2 or 4 ns timing cuts.
+A deliberately broader 5x5, 4 ns overlay changes the 80%-threshold retention
+by only +0.018 percentage points. This is encouraging for signal efficiency;
+the follow-up decoded-pulse test below addresses the same-area component that
+cannot be represented by distinct clusters. See
+[`nps_cluster_overlay.md`](nps_cluster_overlay.md).
+
+The remaining decoded-pulse component has now been tested with the 22,646
+run-6151 EDTM readout windows in the 22.5--30 microampere interval. EDTM events
+are electronically forced dead-time probes, not physics events; their
+experiment-configured trigger rate is not used in the GEp-IV projection. The
+detector activity per window is superposed according to the current ratio
+`75/25.988`. Only 0.00375% of fiducial simulated showers receive a decoded
+pulse in their hottest-block 3x3 within 4 ns, and no event crosses the 70% or
+80% energy threshold in 100 overlay replicas. This closes the decoded-pulse
+piece but not subthreshold analog activity hidden by sparsification. See
+[`nps_edtm_pulse_overlay.md`](nps_edtm_pulse_overlay.md).
+
+The first raw trigger-rate envelope is now established directly from the 775
+run-6151 scaler snapshots. Run-specific configuration and maintained NPSlib
+identify `hTRIG1` as the NPS VTP trigger, `hTRIG3` as HMS 3/4, and `hTRIG4` as
+HMS EL-REAL. Over 15--30 microampere, the NPS rate has correlation 0.9944 with
+current. A free-intercept extrapolation gives 76.1 kHz NPS and 607 Hz HMS 3/4
+at 75 microampere; their independent accidental rate is 0.924 Hz for a 20 ns
+full coincidence window. This is deliberately a loose-threshold envelope:
+run 6151 used a 1,600-unit threshold, only 34.8% of its elastic energy, rather
+than the proposed 70--80% GEp-IV threshold. See
+[`nps_trigger_rate_study.md`](nps_trigger_rate_study.md).
 
 ## Verification boundaries
 

@@ -1,0 +1,8 @@
+edtm_events=22646
+mean_current_uA=25.98825366
+decoded_pulses=15521
+csv_rows=33511
+elastic_calibration_events=19025
+local_3x3_GeV_per_mV=0.01278389994
+elastic_core_mean_GeV=-0.2273052362
+elastic_core_sigma_GeV=0.2037374166

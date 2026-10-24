@@ -1,0 +1,14 @@
+metric,value
+events,10923
+simc_yield_events_per_mC,41.341739
+weighted_active_entry_fraction,0.7561919806
+weighted_any_deposit_fraction,0.9868896809
+weighted_mean_deposit_fraction,0.7500136238
+weighted_below_50pct_fraction,0.232865843
+weighted_below_70pct_fraction,0.2600834048
+weighted_below_80pct_fraction,0.2723415982
+weighted_below_90pct_fraction,0.3024253424
+yield_above_50pct_events_per_mC,31.7146601
+yield_above_70pct_events_per_mC,30.58943876
+yield_above_80pct_events_per_mC,30.08266373
+yield_above_90pct_events_per_mC,28.83894943

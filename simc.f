@@ -29,7 +29,7 @@
 	logical		success
 	logical		pass_cuts
 	logical         exst
-	character	filename*80, genfile*80, histfile*80, timestring1*30
+	character	filename*80, hybridfile*80, genfile*80, histfile*80, timestring1*30
 	character	timestring2*30,genifile*80
 	type(event)::		vertex, vertex0, orig, recon
 	type(event_main)::	main
@@ -78,6 +78,10 @@ c	call hlimit(PawSize)
 	  endif
 	  filename = 'worksim/'//base(1:i-1)//'.bin'
 	  call NtupleInit(filename)
+	endif
+	if (hybrid_export.gt.0) then
+	  hybridfile = 'worksim/'//base(1:i-1)//'.hybrid.csv'
+	  call hybrid_export_init(hybridfile)
 	endif
 
 ! ... set up some quantities that the radiative corrections routines will need
@@ -348,6 +352,8 @@ cdg	call time (timestring1(11:23))
 
 ! ... write out line to diagnostic ntuple file, if requested
 	  if (Nntu.gt.0) call results_ntu_write(main,vertex,orig,recon,success)
+	  if (hybrid_export.gt.0) call hybrid_export_write(ntried,main,
+     >       vertex,orig,success)
 ! END of LOOP over events
 ! Cute thing here, if ngen < 0, then just make |ngen| ATTEMPTS rather than
 ! insisting on ngen good events ... this is suitable for tests with new
@@ -417,6 +423,7 @@ c	call time (timestring2(11:23))
 ! Close diagnostic ntuple file, if used
 
 	if (Nntu.gt.0) call NtupleClose(filename)
+	if (hybrid_export.gt.0) call hybrid_export_close
 
 ! Calculate resolutions
 

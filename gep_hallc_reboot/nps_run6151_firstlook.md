@@ -113,7 +113,13 @@ The replay report quotes 1,231,001 `hTRIG1` scaler counts at 12.808 kHz, 13,667 
 
 The partial replay's reported computer-live-time diagnostics are internally unphysical: several per-trigger values are negative, while the EDTM value is 100.45%. This most likely reflects applying report formulas intended for a complete run to an event-limited replay, not a physical negative dead time. Therefore the report's raw scaler rates may be used as descriptive operating conditions, but its partial-run live-time corrections must not be used in a GEp-IV projection.
 
-The embedded VTP configuration sets trigger prescales 0, 3, and 4 to one and the others to zero. Mapping those firmware trigger indices onto the Hall C trigger-supervisor channels still needs to be established before interpreting `hTRIG1`, `hTRIG3`, or `hTRIG4` as a particular NPS singles or coincidence rate.
+The embedded VTP configuration sets trigger prescales 0, 3, and 4 to one and
+the others to zero. The subsequent source/configuration and scaler audit in
+[`nps_trigger_rate_study.md`](nps_trigger_rate_study.md) establishes the Hall C
+channel meanings: `hTRIG1` is the NPS VTP trigger, `hTRIG3` is HMS 3/4, and
+`hTRIG4` is HMS EL-REAL. Stable-current scaler snapshots, rather than the
+partial-run live-time calculation, are used there for the first 75-microampere
+envelope.
 
 ## Next checks before a GEp-IV rate projection
 

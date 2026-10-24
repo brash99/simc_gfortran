@@ -28,24 +28,26 @@ With radiative effects enabled, the current checkout reports:
 
 | Quantity | Result |
 | --- | ---: |
-| Weighted elastic yield | 41.936699 events/mC |
-| Equivalent rate at 75 μA | 3.145252 Hz |
-| Contributing events | 9,775 |
-| HMS trials / HMS successes | 488,717 / 9,782 |
-| BigCal trials / successes | 9,782 / 9,775 |
-| BigCal horizontal / vertical extent rejects | 7 / 0 |
+| Weighted elastic yield | 40.869596 events/mC |
+| Equivalent rate at 75 μA | 3.065220 Hz |
+| Contributing events | 9,610 |
 
 The PAC37 proposal's Table 1 gives 60 events/mC before quoting alternative elastic-selection retentions of 77.3% for 3σ cuts and 85.7% for 6σ cuts. Those alternatives must not be multiplied together. The resulting comparisons are:
 
 | Historical convention | Historical yield | Current reconstruction difference |
 | --- | ---: | ---: |
-| Table 1 raw value | 60.000 events/mC | -30.1% |
-| Table 1 × 3σ retention | 46.380 events/mC | -9.6% |
-| Table 1 × 6σ retention | 51.420 events/mC | -18.4% |
+| Table 1 raw value | 60.000 events/mC | -31.9% |
+| Table 1 × 3σ retention | 46.380 events/mC | -11.9% |
+| Table 1 × 6σ retention | 51.420 events/mC | -20.5% |
 
-Only 7 of 9,782 calorimeter trials fail the reconstructed BigCal rectangle. The rate difference is therefore not explained by BigCal's finite rectangular aperture in this run.
+The arm-8 material path was subsequently found to be undefined in the legacy
+`trip_thru_target` implementation. The corrected calorimeter path includes only
+the liquid target and cell wall, reserving downstream material for GEANT4. This
+changes the fixed-seed weighted yield by -2.54% relative to the earlier result;
+it does not change the conclusion that the reconstruction agrees with the
+historical, cut-retained scale at approximately the accepted 20% level.
 
-As a diagnostic only, the same deck was run once with radiative effects disabled. It yielded 50.510831 events/mC, 20.5% above the radiated result and 15.8% below the raw Table 1 value. The checked-in deck was then restored to radiative mode and rerun. This sensitivity shows that the historical radiation configuration and yield/cut convention are necessary inputs to an exact comparison.
+As a diagnostic only, the same deck was run once with radiative effects disabled. It yielded 50.510831 events/mC, 23.6% above the corrected radiated result and 15.8% below the raw Table 1 value. The checked-in deck was then restored to radiative mode and rerun. This sensitivity shows that the historical radiation configuration and yield/cut convention are necessary inputs to an exact comparison.
 
 ## Historical-code caution
 
@@ -53,6 +55,6 @@ The repository contains a June 29, 2011 correction (`7896ebc`) to an event-order
 
 ## Interpretation and disposition
 
-This reconstruction passes the agreed historical scale check. Depending on the proposal's cut convention, the difference is approximately 10–18%, rather than the 30% suggested by comparing directly with the raw 60 events/mC. The finite BigCal aperture is ruled out as the dominant cause in the reconstructed setup.
+This reconstruction passes the agreed historical scale check. Depending on the proposal's cut convention, the difference is approximately 12–21%, rather than the 32% suggested by comparing directly with the raw 60 events/mC.
 
 No further historical-deck archaeology is required before continuing. The active task is to define the most defensible current configuration—beginning with radiative treatment and the precise signal/cut convention—and to record each choice and sensitivity explicitly. The present deck remains an explicitly reconstructed historical benchmark. If an original deck or report later becomes available, it can be checked without holding up the current study.

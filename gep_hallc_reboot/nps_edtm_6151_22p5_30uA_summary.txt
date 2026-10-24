@@ -1,0 +1,13 @@
+input=nps_replay_develop/ROOTfiles/COIN/PRODUCTION/nps_hms_coin_6151_1_100000.root
+current_range_uA=22.5,30
+edtm_events=22646
+events_with_decoded_pulse=4656
+fraction_with_decoded_pulse=0.2055992228
+decoded_pulses=15521
+mean_pulses_per_event=0.6853749006
+mismatched_arrays=0
+invalid_blocks=0
+fraction_event_pulse_amp_ge_5mV_absdt4ns=0.001545526804
+fraction_event_pulse_amp_ge_10mV_absdt4ns=0.00132473726
+fraction_event_pulse_amp_ge_20mV_absdt4ns=0.001103947717
+fraction_event_pulse_amp_ge_50mV_absdt4ns=0.0003974211781
