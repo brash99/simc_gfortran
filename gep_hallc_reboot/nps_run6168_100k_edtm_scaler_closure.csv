@@ -1,0 +1,2 @@
+run,nps_angle_deg,minimum_current_uA,vtp_threshold_GeV,all_edtm_windows,selected_edtm_windows,windows_above,edtm_occupancy,edtm_rate_Hz,edtm_stat_error_Hz,mean_event_current_uA,selected_scaler_snapshots,mean_scaler_current_uA,ptrig1_scaler_rate_Hz,ptrig1_scaler_rms_Hz,edtm_over_scaler
+6168,18.56000000,20.00000000,1.60000000,44221,37151,1873,0.05041587,51731.14851261,1195.45066137,25.50591684,469,25.50568487,52604.93093753,1359.74002005,0.98338972

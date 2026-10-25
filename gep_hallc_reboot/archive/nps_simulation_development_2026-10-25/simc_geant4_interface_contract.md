@@ -116,6 +116,17 @@ documented downstream handoff.
 The same rule applies to pi0 photons: the SIMC state and upstream material
 already included must be declared explicitly before GEANT4 transport.
 
+## Pi0 two-photon extension
+
+The `simc_geant4_pi0_v1` record extends the strict interface to the
+`doing_pi0phot` hard-bremsstrahlung channel.  Each accepted record contains the
+event weight and vertex, both decay-photon four-vectors, and recoil-proton
+truth.  GEANT4 launches both photons in the same event.  Unlike the elastic
+electron interface, this mode retains the physical target and cell: SIMC
+generates the photons at the interaction vertex but does not transport them
+through the downstream target material.  Run-6151 Slurm job 13557800 exercised
+all 6,065 accepted records with the NPS at 20.58 degrees and 9.5 m.
+
 ## Required closure tests
 
 1. The GEANT4 CSV reader and first field-by-field primary transfer are complete

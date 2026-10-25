@@ -1,0 +1,9 @@
+quantity,value
+input_candidates,1134
+selected_candidates,798
+simc_selected_prediction,1034.33894022
+selected_data_over_simc,0.771507258375
+dpe_mean_percent,-0.0190832000722
+dpe_sigma_percent,0.321127512058
+dphi_mean_rad,0.00672798099114
+dphi_sigma_rad,0.00592303332141

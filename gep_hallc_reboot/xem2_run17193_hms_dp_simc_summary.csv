@@ -1,0 +1,7 @@
+quantity,value
+data_candidates,1124
+simc_predicted,1200.94632082
+data_over_simc,0.935928592742
+beam_cut_charge_mC,150.465145
+simc_normfac,58841800
+simc_trials,1000000

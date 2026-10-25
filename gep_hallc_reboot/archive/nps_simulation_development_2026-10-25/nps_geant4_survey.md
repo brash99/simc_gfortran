@@ -69,7 +69,7 @@ The present evidence therefore supports the following bounded conclusion:
 5. Resolve the EDTM/TI livetime discrepancy and establish an NPS-specific deadtime measurement before assigning a DAQ efficiency.
 6. Feed the GEp-IV SIMC signal and inclusive-background samples into the maintained GEANT4/reconstruction chain and scan the actual 3x3 trigger near 70-80% of the elastic energy.
 
-The public hcana/NPSlib code paths that enable this recovery are mapped in [`nps_hcana_trigger_audit.md`](nps_hcana_trigger_audit.md).
+The public hcana/NPSlib code paths that enable this recovery are mapped in the archived [`nps_hcana_trigger_audit.md`](archive/dvcs_benchmark_exploration_2026-10-24/nps_hcana_trigger_audit.md).
 
 ## Maintained-workflow integration audit
 

@@ -1,0 +1,21 @@
+quantity,value,units_or_note
+beam_energy,10.551,GeV
+hms_central_angle,19.52,degrees
+hms_central_momentum,6.476,GeV/c
+shms_central_angle,26.0,degrees
+shms_central_momentum,4.935,GeV/c
+simc_trials_10cm,1000000,events
+simc_trials_30cm,1000000,events
+simc_accepted_entries_10cm,175115,events
+simc_accepted_entries_30cm,113589,events
+simc_weighted_yield_10cm,8.3579429,events/mC
+simc_weighted_yield_30cm,15.765569,events/mC
+target_yield_ratio_30cm_over_10cm,1.886297764,dimensionless
+fraction_of_ideal_linear_scaling,0.628765921,ratio divided by 3
+data_selected_events_10cm,800,run 17193
+data_charge_10cm,150.465145,mC
+projected_charge_75uA_45days,291600,mC at 100 percent beam delivery
+projected_selected_elastics_30cm_45days,2924502,events at 100 percent beam delivery
+projected_selected_elastics_80pct,2339601,events
+projected_selected_elastics_70pct,2047151,events
+projected_selected_elastics_60pct,1754701,events

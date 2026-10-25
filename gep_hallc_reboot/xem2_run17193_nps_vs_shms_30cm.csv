@@ -1,0 +1,7 @@
+quantity,shms,nps_physical,nps_one_crystal_margin,nps_two_crystal_margin,units_or_note
+simc_trials,1000000,1000000,1000000,1000000,events
+accepted_tree_entries,113589,9778,9778,9778,unweighted; not comparable across generator phase spaces
+weighted_yield_common_hms_window,14.8495,61.2019,61.0496,60.1109,events/mC
+nps_over_shms_ratio,1.0,4.12149,4.11122,4.04802,dimensionless
+data_anchored_45_pac_day_yield,2924502,12053304,12023269,11838441,selected elastic events
+data_anchored_rate_at_75uA,0.75219,3.10013,3.09240,3.04487,Hz

@@ -376,12 +376,23 @@ c	call HFN(NtupleID,ntu)
 	integer hybrid_truth_io
 	parameter (hybrid_truth_io=43)
 
-	if (.not.doing_hyd_elast) then
-	  write(6,*) 'hybrid_export currently supports elastic H(e,e''p) only'
+	if (.not.(doing_hyd_elast.or.doing_pi0phot)) then
+	  write(6,*) 'hybrid_export supports elastic H(e,e''p) and pi0phot only'
 	  stop
 	endif
 
 	open(unit=hybrid_io,file=filename,status='replace',form='formatted')
+	if (doing_pi0phot) then
+	  write(hybrid_io,'(a)') '# simc_geant4_pi0_v1'
+	  write(hybrid_io,'(a)') '# energies_and_momenta_GeV positions_cm directions_Hall_xyz'
+	  write(hybrid_io,'(a)') '# Hall_axes: x_down y_left z_downstream'
+	  write(hybrid_io,'(a)') 'event_id,weight,vertex_x_cm,vertex_y_cm,'//
+     > 'vertex_z_cm,beam_E_GeV,gamma1_E_GeV,gamma1_px_GeV,'//
+     > 'gamma1_py_GeV,gamma1_pz_GeV,gamma2_E_GeV,gamma2_px_GeV,'//
+     > 'gamma2_py_GeV,gamma2_pz_GeV,proton_E_GeV,proton_px_GeV,'//
+     > 'proton_py_GeV,proton_pz_GeV'
+	  return
+	endif
 	write(hybrid_io,'(a)') '# simc_geant4_hybrid_v1'
 	write(hybrid_io,'(a)') '# energies_and_momenta_GeV positions_cm directions_Hall_xyz'
 	write(hybrid_io,'(a)') '# Hall_axes: x_down y_left z_downstream'
@@ -420,6 +431,18 @@ c	call HFN(NtupleID,ntu)
 	real*8 rad1,rad2,rad3
 
 	if (.not.success) return
+	if (doing_pi0phot) then
+	  write(hybrid_io,'(*(g0,:,","))') event_id,main%weight,
+     > main%target%x,main%target%y,main%target%z,vertex%Ein/1000.0d0,
+     > ntup%gamma1(1)/1000.0d0,ntup%gamma1(2)/1000.0d0,
+     > ntup%gamma1(3)/1000.0d0,ntup%gamma1(4)/1000.0d0,
+     > ntup%gamma2(1)/1000.0d0,ntup%gamma2(2)/1000.0d0,
+     > ntup%gamma2(3)/1000.0d0,ntup%gamma2(4)/1000.0d0,
+     > vertex%p%E/1000.0d0,vertex%p%P*vertex%up%x/1000.0d0,
+     > vertex%p%P*vertex%up%y/1000.0d0,
+     > vertex%p%P*vertex%up%z/1000.0d0
+	  return
+	endif
 
 	call physics_angles(spec%e%theta,spec%e%phi,main%SP%e%xptar,
      >     main%SP%e%yptar,theta,phi)

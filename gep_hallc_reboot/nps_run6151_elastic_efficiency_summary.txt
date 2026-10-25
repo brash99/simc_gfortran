@@ -1,0 +1,11 @@
+input=nps_replay_develop/ROOTfiles/COIN/PRODUCTION/nps_hms_coin_6151_1_100000.root
+entries=100000
+beam_energy_GeV=6.37042664
+nominal_elastic_energy_GeV=4.59800000
+elastic_residual_fit_mean_GeV=-0.22580563
+elastic_residual_fit_sigma_GeV=0.20205293
+elastic_core_low_GeV=-0.83196441
+elastic_core_high_GeV=0.38035315
+elastic_core_events=28456
+elastic_core_without_vtp=0
+efficiency_denominator=all offline-selected elastic-core events, including missing VTP as failures

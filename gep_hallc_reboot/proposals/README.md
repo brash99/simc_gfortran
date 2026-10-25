@@ -15,4 +15,4 @@ The original cites an earlier Letter of Intent, LOI12-06-103, presented to PAC30
 
 The [PAC37 report](https://www.jlab.org/exp_prog/PACpage/PAC37/PAC37_Report.pdf) lists C12-09-001 as deferred and unrated, following conditional approval at PAC34. Hall A GEp-V is the distinct E12-07-109 proposal.
 
-The PAC37 revision has now received a full-document review; see [the findings](../findings.md) for page-indexed simulation results, assumptions and implications for HMS+FPP+NPS. The PAC34 original has only been checked for identification and historical scope, not reviewed in full.
+The PAC37 revision received a full-document review during the initial DVCS-benchmark exploration; see the [archived findings](../archive/dvcs_benchmark_exploration_2026-10-24/findings.md) for page-indexed simulation results, assumptions, and implications for HMS+FPP+NPS. The current synthesis is the [proposal-readiness summary](../proposal_readiness_summary.md). The PAC34 original has only been checked for identification and historical scope, not reviewed in full.

@@ -1,0 +1,2 @@
+nps_rate_Hz,hms_rate_Hz,bucket_ns,window_ns,buckets,hms_trials,coincidences,analytic_rate_Hz,continuous_limit_Hz,simulated_rate_Hz,simulation_sigma_Hz
+24565.8087,233.8063538,4.0,20.0,5,10000000,4875,0.11484462838397659,0.11487284320590638,0.1139805974775,0.0016382373004941897
