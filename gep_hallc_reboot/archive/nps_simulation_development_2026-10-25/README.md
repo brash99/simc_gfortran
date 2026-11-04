@@ -21,7 +21,7 @@ The current synthesis is maintained in:
 ## What has been superseded
 
 - The 8.43-million-event GEp projection in `gep_q11_hybrid_response.md` has been superseded by the XEM2-data-anchored projection of approximately 12.0 million selected elastic events in 45 PAC days.
-- The few-hertz accidental-background calculations in the development chain do not predict raw online accidental coincidences. Current raw estimates use measured HMS hardware primitives and `R_NPS x R_HMS x coincidence_width`.
+- The few-hertz accidental-background calculations in the development chain do not predict raw online accidental coincidences. Current raw estimates use measured HMS hardware triggers and `R_NPS x R_HMS x coincidence_width`.
 - Statements that a larger hybrid sample, pi0 generator, response convolution, or common elastic/pi0 scan still needs to be created are historical; those milestones were subsequently completed.
 - The 3 m NPS distance is a current design standard, not an optimized final location.
 

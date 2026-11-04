@@ -1,0 +1,3 @@
+run,hardware_threshold_GeV,minimum_current_uA,maximum_current_uA,selected_scaler_snapshots,mean_current_uA,ptrig1_scaler_rate_Hz,ptrig1_scaler_rms_Hz,ptrig1_scaler_sem_Hz
+6885,1.6,25,35,127,29.5288758757,1393268.39469,42066.2125142,3732.7727501
+6887,0.5,25,35,124,29.4399743495,1370645.73598,47819.7387106,4294.33930698

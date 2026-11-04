@@ -4,7 +4,7 @@ Archived on 25 October 2026.
 
 These notes document the useful but superseded exploration based mainly on NPS/DVCS runs 1918, 2875, and 6151. They remain part of the audit trail: they established the SIMC-to-GEANT4 workflow, tested elastic closure, and clarified NPS response and occupancy. They are no longer the current proposal-rate baseline.
 
-The central correction is conceptual. Several early estimates described backgrounds that survived analysis selections; they were subsequently discussed as though they were raw online trigger rates. Raw accidental rates must instead be formed from the measured hardware singles rates and the online coincidence width. The XEM2 HMS data show that an S1X AND S1Y primitive is of order 0.8--1 MHz after simple GEp luminosity scaling, so MHz-scale NPS singles would give kHz-to-tens-of-kHz accidentals, not a few hertz.
+The central correction is conceptual. Several early estimates described backgrounds that survived analysis selections; they were subsequently discussed as though they were raw online trigger rates. Raw accidental rates must instead be formed from the measured hardware singles rates and the online coincidence width. The XEM2 HMS data show that an S1X AND S1Y trigger signal is of order 0.8--1 MHz after simple GEp luminosity scaling, so MHz-scale NPS singles would give kHz-to-tens-of-kHz accidentals, not a few hertz.
 
 Current documents:
 

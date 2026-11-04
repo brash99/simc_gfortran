@@ -1,0 +1,2 @@
+threshold_GeV,data_windows,simulated_events,data_rate_Hz,data_stat_error_Hz,electron_rate_Hz,electron_mc_error_Hz,residual_rate_Hz,data_column_mean,data_column_rms,electron_column_mean,electron_column_rms,data_row_mean,data_row_rms,electron_row_mean,electron_row_rms
+3.87,511,5798,57664.2761668772,2571.5420584584995,28424.234680336365,550.024864166641,29240.041486540813,8.89041095890411,4.634141785219342,7.640918791044237,4.401926234513593,19.099804305283758,9.438845287062025,17.431800103279436,9.14611403610073

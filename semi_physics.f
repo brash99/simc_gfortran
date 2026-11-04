@@ -111,7 +111,7 @@ C parameters for PB fit of 9/20/2021
      >                 0.1518,  -1.2923,  -1.5710,   3.0305,
      >                 1.1995,   1.3553,   2.5868,   8.0666/
 
-	real*8 xp,zp,yf,yu
+	real*8 xp,zp,yf,yu,zp_radicand
 	real*8 Mpi_gev, Mp_gev, wsq,w, mmpi2,z8, a8
 	real*8 d1,db,u1,ub, s1, sb, dsigdzn, dsigdzp
 
@@ -255,6 +255,11 @@ C DJG: I can just ignore it.
 	if(xbj.gt.1.0) then
 	   write(6,*) 'XBj is too large!', xbj
 	   xbj=1.0
+	endif
+	if(Q2.le.0.0 .or. nu.le.0.0 .or. xbj.le.0.0 .or.
+     >     xbj.ge.1.0 .or. zhad.le.0.0 .or. zhad.ge.1.0) then
+	   peepiX=0.0
+	   return
 	endif
 
 c	if(do_fermi) then ! y = P.q/P.k_beam
@@ -463,9 +468,17 @@ c (see Accardi et al https://arxiv.org/abs/0907.2395)
 c new PB fit using zp for pions. This is z * D
 	if (doing_semipi) then
 	   xp = 2.*xbj / (1. + sqrt(1. + 4. * xbj**2 * Mp_gev**2 / q2gev))
-	   zp = (zhad / 2.) * (xp / xbj) *(1. + 
-     >           sqrt(1 - 4 * xbj**2 * Mp_gev**2 *  
-     >           (Mpi_gev**2 + pt2gev) / zhad**2 / q2gev**2))
+	   zp_radicand = 1 - 4 * xbj**2 * Mp_gev**2 *
+     >           (Mpi_gev**2 + pt2gev) / zhad**2 / q2gev**2
+	   if(zp_radicand.le.0.0) then
+	      peepiX=0.0
+	      return
+	   endif
+	   zp = (zhad / 2.) * (xp / xbj) *(1. + sqrt(zp_radicand))
+	   if(zp.le.0.0 .or. zp.ge.1.0) then
+	      peepiX=0.0
+	      return
+	   endif
 	   sv = log(q2gev/2.)
 	   yf = pf(1) * zp**(pf(2) + pf(4)*sv + pf(9)/w) * 
      >          (1.-zp)**(pf(3) + pf(5)*sv + pf(10)/w) 

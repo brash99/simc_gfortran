@@ -114,7 +114,7 @@ def main() -> None:
         np.asarray(data_rate) / 1e3,
         "s-",
         label=(
-            "Run-1918 measured EDTM primitive rate"
+            "Run-1918 measured EDTM cluster-trigger rate"
             if args.comparison == "run1918"
             else "Run-1918 data, conservatively scaled"
         ),

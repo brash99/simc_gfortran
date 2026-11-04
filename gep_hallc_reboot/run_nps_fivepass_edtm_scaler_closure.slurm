@@ -22,8 +22,11 @@ macro="$private/analyze_nps_electron_edtm_scaler_closure.C"
 
 runs=(2855 5183 3888)
 angles=(16.58 15.57 14.76)
+thresholds=(1.4 1.6 1.4)
 run=${runs[$SLURM_ARRAY_TASK_ID]}
 angle=${angles[$SLURM_ARRAY_TASK_ID]}
+threshold=${thresholds[$SLURM_ARRAY_TASK_ID]}
 
-# These five-pass electron runs used the nominal 1.4-GeV VTP threshold.
-root -l -b -q "$macro(\"$roots/nps_hms_coin_${run}_1_100000.root\",\"$private/nps_run${run}_100k_edtm_scaler_closure.csv\",${run},${angle},20.0,1.4)"
+# Use the hardware threshold recorded in each run report. Run 5183 used
+# 1.6 GeV; runs 2855 and 3888 used 1.4 GeV.
+root -l -b -q "$macro(\"$roots/nps_hms_coin_${run}_1_100000.root\",\"$private/nps_run${run}_100k_edtm_scaler_closure.csv\",${run},${angle},20.0,${threshold})"

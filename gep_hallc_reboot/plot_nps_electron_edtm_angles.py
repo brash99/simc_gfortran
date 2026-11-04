@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Plot unbiased NPS electron primitive rates for runs 6158, 6165, and 6168."""
+"""Plot unbiased NPS cluster-trigger rates for runs 6158, 6165, and 6168."""
 
 from __future__ import annotations
 
@@ -103,8 +103,8 @@ def main() -> None:
         axes[0].text(threshold + 0.015, axes[0].get_ylim()[1] * 0.78,
                      f"{fraction:.0%}", rotation=90, va="top", fontsize=9, color="0.3")
 
-    axes[0].set_title("Measured electron-run primitive rate")
-    axes[0].set_ylabel("NPS primitive rate (kHz)")
+    axes[0].set_title("Measured electron-run cluster-trigger rate")
+    axes[0].set_ylabel("NPS cluster-trigger rate (kHz)")
     axes[1].set_title("Naive luminosity-scaled reference only")
     axes[1].set_ylabel("Rate x (75 uA / I) x (30 cm / 10 cm) (kHz)")
     for axis in axes:

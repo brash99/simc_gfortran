@@ -1,0 +1,192 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{dolphin}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{itemize item}{\color{blue!65!black}$\blacktriangleright$}
+\setbeamertemplate{itemize subitem}{\color{blue!65!black}$\bullet$}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{xcolor}
+
+\definecolor{hallcblue}{RGB}{22,74,112}
+\definecolor{hallcorange}{RGB}{218,112,41}
+\definecolor{hallcgreen}{RGB}{37,126,84}
+\setbeamercolor{structure}{fg=hallcblue}
+\setbeamercolor{frametitle}{fg=white,bg=hallcblue}
+\setbeamercolor{title}{fg=hallcblue}
+\setbeamercolor{block title}{fg=white,bg=hallcblue}
+\setbeamercolor{block body}{bg=blue!4}
+\setbeamercolor{alerted text}{fg=hallcorange!85!black}
+
+\newcommand{\qval}{\ensuremath{Q^2 \simeq 11~\mathrm{GeV}^2}}
+\newcommand{\rate}[1]{\ensuremath{#1~\mathrm{kHz}}}
+
+\title{GEp-4 Reboot Feasibility Study}
+\subtitle{Data anchors, present assessment, and critical-path questions}
+\author{Edward J. Brash}
+\institute{Christopher Newport University and Jefferson Lab}
+\date{4 November 2026}
+
+\begin{document}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[plain]
+  \titlepage
+  \vspace{-0.7cm}
+  \begin{center}
+    \colorbox{blue!5}{\parbox{0.91\textwidth}{\centering
+      \textbf{Working configuration:} 10.7 GeV beam, 75 $\mu$A, 30 cm LH$_2$,\\
+      positive-polarity HMS proton arm, and NPS electron arm near 3 m.}}
+  \end{center}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{What we set out to establish}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.49\textwidth}
+      \begin{block}{Physics reach}
+        Does the HMS--NPS configuration provide enough accepted elastic events
+        at \qval{} for a competitive form-factor measurement?
+      \end{block}
+      \begin{block}{Trigger and DAQ}
+        What are the real HMS and NPS singles rates, the accidental-coincidence
+        rate, and the required Hall~C DAQ capability?
+      \end{block}
+    \column{0.49\textwidth}
+      \begin{block}{NPS response and backgrounds}
+        Can a high NPS threshold retain elastic efficiency while controlling
+        electron, photon, and charged-hadron backgrounds?
+      \end{block}
+      \begin{block}{Experimental design}
+        Are the NPS distance, FPP configuration, HMS trigger logic, and
+        coincidence timing mutually compatible?
+      \end{block}
+  \end{columns}
+
+  \vfill
+  \begin{center}
+    \alert{Approach: anchor SIMC and GEANT4 to real Hall C data before extrapolating.}
+  \end{center}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[shrink=10]{Elastic yield: a close HMS benchmark supports the proposal}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.52\textwidth}
+      \includegraphics[width=\linewidth]{../plots/xem2_run17193_hms_dp_simc.png}
+      \vspace{-0.2cm}
+      {\scriptsize XEM2 run 17193: HMS $+6.476$ GeV/$c$ at $19.52^\circ$;
+      proposed HMS $+6.735$ GeV/$c$ at $18.80^\circ$.}
+    \column{0.46\textwidth}
+      \begin{itemize}
+        \item Broad HMS acceptance: data/SIMC $=0.936$.
+        \item Tight elastic selection: $800/1034.34=0.7734$.
+        \item NPS at 3 m gains a factor $4.11$ over SHMS-like electron acceptance.
+        \item Transfer from the XEM2 setting to \qval{}: SIMC ratio $=0.8865$.
+      \end{itemize}
+
+      \begin{block}{45 PAC-day projection}
+        \begin{tabular}{@{}lr@{}}
+          \toprule
+          Before NPS response & \textbf{10.69 M} \\
+          70\% threshold + fiducial & \textbf{7.70 M} \\
+          80\% threshold + fiducial & \textbf{7.51 M} \\
+          \bottomrule
+        \end{tabular}
+      \end{block}
+      {\scriptsize The response-reduced values remain provisional because of
+      the 3$\times$3 convention, final-state radiative photons, and inherited
+      sweeper/passive geometry.}
+  \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[shrink=18]{HMS trigger: the practical S1 rate is 40--60 kHz}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.56\textwidth}
+      \includegraphics[width=\linewidth]{../plots/xem2_hms_paddle_good_edtm.png}
+      \vspace{-0.15cm}
+      {\scriptsize Run 17193 unbiased EDTM windows. A valid plane hit requires
+      both PMTs on one physical paddle; valid X and Y paddle numbers are independent.}
+    \column{0.42\textwidth}
+      \begin{itemize}
+        \item The branch previously labeled ``S1X AND S1Y'' is actually
+        \textbf{S1X OR S1Y}; its GEp-scaled rate is about 810 kHz.
+        \item EDTM plane rates reproduce direct scalers to 3--4\%.
+        \item Requiring a double-ended paddle hit in both planes gives
+        12.73--14.84 kHz at the run conditions.
+        \item Naive GEp scaling gives \alert{51--60 kHz}; scaler
+        inclusion--exclusion gives 39.9 kHz.
+        \item HMS 3-of-4 scales to about \textbf{2.9 kHz} if it is compatible
+        with the FPP configuration.
+      \end{itemize}
+
+      \begin{block}{Accidental scale}
+        For 50 kHz HMS and 1 MHz NPS:
+        \[R_{\rm acc}=R_HR_N\Delta t =
+        \begin{cases}1~\mathrm{kHz},&20~\mathrm{ns}\\2~\mathrm{kHz},&40~\mathrm{ns}.\end{cases}\]
+      \end{block}
+  \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[shrink=10]{NPS singles: the inclusive-electron component is data anchored}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.57\textwidth}
+      \includegraphics[width=\linewidth]{../plots/nps_inclusive_generator_six_run_validation.png}
+    \column{0.41\textwidth}
+      \begin{itemize}
+        \item Three-pass NPS electron data: generator/data $=0.95$--$1.35$.
+        \item Five-pass NPS electron data: trend reproduced; most discrepancies
+        are conservative overpredictions.
+        \item XEM2 SHMS electron-enriched trigger: 447.7 Hz predicted versus
+        592 Hz measured, or 74.8\%.
+      \end{itemize}
+
+      \begin{block}{GEp full-face prediction}
+        \centering
+        \begin{tabular}{ccc}
+          \toprule
+          Threshold & Inclusive $e^-$ & + radiated elastic \\
+          \midrule
+          70\% & 14.34 kHz & \textbf{14.42 kHz} \\
+          75\% & 10.26 kHz & \textbf{10.30 kHz} \\
+          80\% & 7.05 kHz & \textbf{7.08 kHz} \\
+          \bottomrule
+        \end{tabular}
+      \end{block}
+      \alert{These are genuine-electron rates, not the total NPS trigger rate.}
+  \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Run 6887 establishes a large non-electron excess}
+  \begin{center}
+    \includegraphics[width=0.56\linewidth]{../trigger_particle_composition/nps_run6887_measured_vs_geant4_electrons_slide.png}
+  \end{center}
+  \vspace{-0.27cm}
+  \begin{center}
+    \scriptsize
+    \textbf{Run 6887:} DVCS production, NPS on the photon arm; 8.456 GeV beam,
+    29.4 $\mu$A, 10 cm LH$_2$; NPS at $16.57^\circ$ and 3.57 m.\\[-0.02cm]
+    VTP single-cluster trigger/readout settings: 0.50/0.25 GeV; 8,972 unbiased
+    1-$\mu$s EDTM windows after the 25--35 $\mu$A current selection.
+  \end{center}
+  \vspace{-0.18cm}
+  \begin{block}{What the data establish}
+    \small
+    At 70--80\% threshold, detector-level inclusive electrons explain only
+    about 25--50\% of the measured rate.  Target-on Wiser $\pi^0$ adds only
+    2.55, 1.09, and 0.46 kHz at the marked thresholds; transported $\pi^-$ is
+    below 0.04 kHz.  \textbf{These modeled channels do not close the excess.}
+  \end{block}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,33 @@
+# XEM2 coincidence production reconstruction with EDTM windows retained.
+# This mirrors coin_production_cuts.def, changing only the stage masters from
+# ALL_events_NO_EDTM to ALL_events.
+
+Block: RawDecode
+#include "DEF-files/COIN/PRODUCTION/CUTS/coin_rawdecode_cuts.def"
+RawDecode_master ALL_events
+
+Block: Decode
+#include "DEF-files/COIN/PRODUCTION/CUTS/coin_decode_cuts.def"
+Decode_master ALL_events
+
+Block: CoarseTracking
+#include "DEF-files/SHMS/PRODUCTION/CUTS/pstackana_coarsetracking_cuts.def"
+#include "DEF-files/HMS/PRODUCTION/CUTS/hstackana_coarsetracking_cuts.def"
+CoarseTracking_master ALL_events
+
+Block: CoarseReconstruct
+CoarseReconstruct_master ALL_events
+
+Block: Tracking
+Tracking_master ALL_events
+
+Block: Reconstruct
+#include "DEF-files/SHMS/PRODUCTION/CUTS/pstackana_reconstruct_cuts.def"
+#include "DEF-files/HMS/PRODUCTION/CUTS/hstackana_reconstruct_cuts.def"
+#include "DEF-files/COIN/PRODUCTION/CUTS/coin_reconstruct_cuts.def"
+Reconstruct_master ALL_events
+
+Block: Physics
+#include "DEF-files/HMS/PRODUCTION/CUTS/hstackana_physics_cuts.def"
+#include "DEF-files/SHMS/PRODUCTION/CUTS/pstackana_physics_cuts.def"
+Physics_master ALL_events

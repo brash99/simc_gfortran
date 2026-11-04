@@ -16,14 +16,14 @@ The run-6151 scaler tree contains direct measurements of `S1X`, `S1Y`, and a
 channel named `S1XS1Y` in the ROOT tree and `S1T` in the scaler map. Fits over
 15--30 microampere extrapolate to 75 microampere as follows:
 
-| Primitive | Rate at 75 microampere |
+| Trigger condition | Rate at 75 microampere |
 | --- | ---: |
 | S1Y plane | 20.0 kHz |
 | S1X plane | 23.1 kHz |
 | S1T = S1X OR S1Y | 41.3 kHz |
 
 Hall C trigger documentation defines the existing front-pair signal as
-`S1 = S1X OR S1Y` (and the standard time-of-flight primitive as
+`S1 = S1X OR S1Y` (and the standard time-of-flight trigger signal as
 `STOF = (S1X OR S1Y) AND (S2X OR S2Y)`). This resolves the scaler behavior:
 the `S1XS1Y` ROOT branch / `S1T` scaler-map channel is the S1 OR, not an X--Y
 coincidence.
@@ -38,7 +38,7 @@ R(S1X AND S1Y) = R(S1X) + R(S1Y) - R(S1X OR S1Y)
 
 Linear target-length scaling gives 5.32 kHz for the proposed 30 cm target. The
 proton-tagged run-6151 sample has both S1 TDC signals in 98.64% of events, so
-this is already a plausible efficient proton primitive, subject to a proper
+this is already a plausible efficient proton-arm trigger, subject to a proper
 timing-aligned trigger-efficiency measurement.
 
 A timing-aligned measurement on 28,327 elastic-core events from the full
@@ -92,7 +92,7 @@ kHz at 75 microampere and 30 cm. Its measured three-of-four rate scales to
 0.929 kHz. Compared with the corresponding run-6151 projections of 5.32 and
 1.82 kHz, the two proton settings define practical HMS-rate brackets:
 
-| Proton primitive | Run-2875 projection | Run-6151 projection |
+| Proton trigger signal | Run-2875 projection | Run-6151 projection |
 | --- | ---: | ---: |
 | S1X AND S1Y | 7.43 kHz | 5.32 kHz |
 | S1/S2 three-of-four | 0.929 kHz | 1.82 kHz |
@@ -167,7 +167,7 @@ At a 20 ns full window:
 | 3.6 GeV | 11.0 Hz (39.1 Hz upper check) | 1.38 Hz (4.9 Hz) |
 | 3.9 GeV | 8.8 Hz (28.9 Hz upper check) | 1.10 Hz (3.6 Hz) |
 
-The table uses the run-2875 proton primitive for the central calculation. The
+The table uses the run-2875 proton-arm trigger for the central calculation. The
 rates scale linearly with the effective coincidence width: halve these values
 for 10 ns and double them for 40 ns. Applying the full run-6151/run-2875 HMS
 bracket moves the ambient estimates to approximately 6--13 Hz for S1X AND S1Y
@@ -208,11 +208,11 @@ hardware gate.
 
 The same scaler data give 75-microampere extrapolations of approximately 165
 Hz for `PRLO`, 121 Hz for `PRHI`, and 120 Hz for `SHLO`. If an S1-plus-calorimeter
-primitive had a rate no larger than 165 Hz at the run-6151 target, scaling it
+trigger rate was no larger than 165 Hz at the run-6151 target, scaling it
 linearly to 495 Hz for 30 cm would give less than approximately 0.6--3.2 Hz of
 accidentals across the data-driven NPS-rate bracket in 20 ns.
 
-The presently configured calorimeter primitives are not acceptable proton
+The presently configured calorimeter trigger signals are not acceptable proton
 triggers. In the run-6151 proton-tagged elastic core, event-level TDC presence
 is only 15.2% for `PRLO`, 10.4% for `PRHI`, and 12.1% for `SHWR`.
 
@@ -240,7 +240,7 @@ were based only on the run-6151 HMS extrapolation. They are superseded by the
 two-setting proton bracket and the direct run-2875 coincidence check above.
 The result remains well below a kilohertz because the 3.4--3.9 GeV NPS
 threshold reduces the projected NPS singles rate from roughly 4 MHz at the
-loose 500 MeV threshold to 59--89 kHz, and because the proton primitive is an
+loose 500 MeV threshold to 59--89 kHz, and because the proton-arm trigger is an
 X--Y or three-of-four coincidence rather than a single plane or S1 OR. At the
 loose NPS threshold, the same 20 ns product already approaches 0.6 kHz for
 S1X AND S1Y; an S1 OR or a longer effective gate can readily produce
@@ -261,7 +261,7 @@ The most important remaining measurements and refinements are:
    VTP output width;
 3. measure the timing-aligned efficiency of S1X AND S1Y for elastic protons;
 4. document Andrew's proposed FPP configuration for retaining an S1/S2
-   three-of-four primitive and evaluate its proton efficiency;
+   three-of-four trigger signal and evaluate its proton efficiency;
 5. pass the pi0 photons through the maintained crystal-level Geant4/VTP-like
    trigger-sum model; and
 6. treat an HMS calorimeter condition as a fallback only if a modified detector
@@ -273,7 +273,7 @@ The most important remaining measurements and refinements are:
   extracts the scaler fits into
   [`hms_trigger_primitive_fits.csv`](hms_trigger_primitive_fits.csv).
 - [`analyze_hms_proton_trigger_efficiency.C`](analyze_hms_proton_trigger_efficiency.C)
-  checks primitive presence in the proton-tagged elastic core; results are in
+  checks trigger-signal presence in the proton-tagged elastic core; results are in
   [`hms_proton_trigger_efficiency.csv`](hms_proton_trigger_efficiency.csv).
 - [`analyze_hms_s1xy_timing.C`](analyze_hms_s1xy_timing.C) measures the
   timing-aligned X--Y efficiency; the full result is in

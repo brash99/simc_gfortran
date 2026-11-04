@@ -80,7 +80,7 @@ void analyze_hms_trigger_primitives(
   }
 
   std::ofstream csv(output);
-  csv << "primitive,branch,snapshots,slope_Hz_per_uA,intercept_Hz,rate_75uA_Hz\n";
+  csv << "trigger_signal,branch,snapshots,slope_Hz_per_uA,intercept_Hz,rate_75uA_Hz\n";
   csv << std::setprecision(15);
   for (size_t i = 0; i < channels.size(); ++i) {
     csv << channels[i].name << ',' << channels[i].branch << ',' << fits[i].n << ','

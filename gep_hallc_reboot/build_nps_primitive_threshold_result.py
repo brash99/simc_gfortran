@@ -221,7 +221,7 @@ for fraction, color in ((0.70, "tab:green"), (0.80, "tab:red")):
         label=f"{int(100 * fraction)}% physical threshold",
     )
 ax.set_xlabel("Nominal VTP cluster threshold (GeV)")
-ax.set_ylabel("Raw NPS primitive rate (kHz)")
+ax.set_ylabel("Raw NPS cluster-trigger rate (kHz)")
 ax.set_xlim(0.8, 4.0)
 ax.grid(True, which="both", alpha=0.25)
 ax.legend(fontsize=9)
@@ -298,11 +298,11 @@ for fraction, color in ((0.70, "tab:green"), (0.80, "tab:red")):
         label=f"{int(100 * fraction)}% physical threshold",
     )
 rate_ax.set_xlabel("Nominal VTP cluster threshold (GeV)")
-rate_ax.set_ylabel("Raw NPS primitive rate (kHz)")
+rate_ax.set_ylabel("Raw NPS cluster-trigger rate (kHz)")
 rate_ax.set_xlim(0.8, 4.0)
 rate_ax.grid(True, which="both", alpha=0.25)
 rate_ax.legend(fontsize=9)
-rate_ax.set_title("NPS primitive rate from unbiased run-1918 EDTM windows")
+rate_ax.set_title("NPS cluster-trigger rate from unbiased run-1918 EDTM windows")
 rate_secondary = rate_ax.secondary_xaxis(
     "top", functions=(run1918_offline_from_vtp, run1918_vtp_from_offline)
 )

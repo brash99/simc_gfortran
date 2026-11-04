@@ -1,0 +1,4 @@
+threshold_GeV,measured_rate_kHz,inclusive_electron_kHz,residual_kHz,wiser_pi0_incident_kHz,wiser_pi0_stat_kHz,exclusive_pi0_kHz,high_Q2_SIDIS_pi0_kHz
+3.387,95.08,47.00,48.08,77.279,2.840,0.3981,1.214
+3.629,73.65,37.19,36.47,44.110,1.670,0.2843,0.788
+3.870,57.66,28.42,29.24,25.614,1.020,0.2072,0.519

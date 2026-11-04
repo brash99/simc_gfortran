@@ -32,6 +32,11 @@ void analyze_nps_electron_edtm_scaler_closure(
   double event_current_uA = 0.0;
   int n_vtp = 0;
   std::array<double, kMaxObjects> vtp_energy{};
+  events->SetBranchStatus("*", 0);
+  events->SetBranchStatus("T.hms.hEDTM_tdcTimeRaw", 1);
+  events->SetBranchStatus("H.BCM4A.scalerCurrent", 1);
+  events->SetBranchStatus("Ndata.NPS.cal.vtpClusE", 1);
+  events->SetBranchStatus("NPS.cal.vtpClusE", 1);
   events->SetBranchAddress("T.hms.hEDTM_tdcTimeRaw", &edtm_time_raw);
   events->SetBranchAddress("H.BCM4A.scalerCurrent", &event_current_uA);
   events->SetBranchAddress("Ndata.NPS.cal.vtpClusE", &n_vtp);
@@ -63,6 +68,9 @@ void analyze_nps_electron_edtm_scaler_closure(
 
   double scaler_current_uA = 0.0;
   double ptrig1_rate_Hz = 0.0;
+  scaler->SetBranchStatus("*", 0);
+  scaler->SetBranchStatus("H.BCM4A.scalerCurrent", 1);
+  scaler->SetBranchStatus("H.pTRIG1.scalerRate", 1);
   scaler->SetBranchAddress("H.BCM4A.scalerCurrent", &scaler_current_uA);
   scaler->SetBranchAddress("H.pTRIG1.scalerRate", &ptrig1_rate_Hz);
   long long selected_snapshots = 0;

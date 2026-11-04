@@ -1,0 +1,6 @@
+/control/verbose 0
+/run/verbose 0
+/testhadr/Physics QBBC
+/run/initialize
+/run/printProgress 1
+/run/beamOn 10

@@ -1,4 +1,4 @@
-primitive,branch,snapshots,slope_Hz_per_uA,intercept_Hz,rate_75uA_Hz
+trigger_signal,branch,snapshots,slope_Hz_per_uA,intercept_Hz,rate_75uA_Hz
 S1X,H.S1X.scalerRate,431,307.499947560992,49.1369601128549,23111.6330271872
 S1Y,H.S1Y.scalerRate,431,265.468155254088,60.8773411794797,19970.9889852361
 S1XS1Y,H.S1XS1Y.scalerRate,431,550.097054859315,53.3162584461449,41310.5953728948

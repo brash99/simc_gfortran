@@ -18,7 +18,7 @@ program nps_inclusive_singles_generator
   real(dp) :: energy_min, energy_max, energy_range, area_cm2
   real(dp) :: luminosity, areal_density, electron_flux, phase_weight
   real(dp) :: r1, r2, r3, r4, vertex_z, face_x, face_y, eprime
-  real(dp) :: theta0, nx, nz, ux, uz, hit_x, hit_y, hit_z
+  real(dp) :: theta0, ny, nz, uy, uz, hit_x, hit_y, hit_z
   real(dp) :: dx, dy, dz, distance, dir_x, dir_y, dir_z, cos_incidence
   real(dp) :: theta, q2, nu, w2, w, f1, f2, w1, w2_response
   real(dp) :: sin2_half, cos2_half, sigma_gev2, sigma_ub_per_gev_sr
@@ -46,16 +46,85 @@ program nps_inclusive_singles_generator
   if (command_argument_count() >= 2) call get_command_argument(2, output_path)
   if (command_argument_count() >= 3) then
     call get_command_argument(3, preset)
-    if (trim(preset) == 'run1918') then
+    select case (trim(preset))
+    case ('run1918')
       beam_energy = 10.538_dp
       beam_current_ua = 28.787_dp
       target_length_cm = 10.0_dp
       nps_angle_deg = 18.72_dp
       nps_distance_cm = 300.0_dp
       energy_max = beam_energy - 0.05_dp
-    else if (trim(preset) /= 'gep') then
-      error stop 'preset must be gep or run1918'
-    end if
+    case ('run6887')
+      beam_energy = 8.456_dp
+      beam_current_ua = 29.41712856_dp
+      target_length_cm = 10.0_dp
+      nps_angle_deg = 16.57_dp
+      nps_distance_cm = 357.0_dp
+      energy_max = beam_energy - 0.05_dp
+    case ('run6158')
+      beam_energy = 6.370_dp
+      beam_current_ua = 25.64163059_dp
+      target_length_cm = 10.0_dp
+      nps_angle_deg = 21.17_dp
+      nps_distance_cm = 950.0_dp
+      energy_max = beam_energy - 0.05_dp
+    case ('run6165')
+      beam_energy = 6.370_dp
+      beam_current_ua = 25.59738280_dp
+      target_length_cm = 10.0_dp
+      nps_angle_deg = 19.87_dp
+      nps_distance_cm = 950.0_dp
+      energy_max = beam_energy - 0.05_dp
+    case ('run6168')
+      beam_energy = 6.370_dp
+      beam_current_ua = 25.50591684_dp
+      target_length_cm = 10.0_dp
+      nps_angle_deg = 18.56_dp
+      nps_distance_cm = 950.0_dp
+      energy_max = beam_energy - 0.05_dp
+    case ('run2855')
+      beam_energy = 10.5394_dp
+      beam_current_ua = 37.75349435_dp
+      target_length_cm = 10.0_dp
+      nps_angle_deg = 16.58_dp
+      nps_distance_cm = 950.0_dp
+      energy_max = beam_energy - 0.05_dp
+    case ('run5183')
+      beam_energy = 10.5394_dp
+      beam_current_ua = 29.21789060_dp
+      target_length_cm = 10.0_dp
+      nps_angle_deg = 15.57_dp
+      nps_distance_cm = 950.0_dp
+      energy_max = beam_energy - 0.05_dp
+    case ('run3888')
+      beam_energy = 10.5394_dp
+      beam_current_ua = 38.03485653_dp
+      target_length_cm = 10.0_dp
+      nps_angle_deg = 14.76_dp
+      nps_distance_cm = 950.0_dp
+      energy_max = beam_energy - 0.05_dp
+    case ('xem2_17193_shms')
+      ! Hard-edged SHMS target-angle and momentum envelope from the matched
+      ! run-17193 SIMC input.  The 3 m projection plane is only a convenient
+      ! way to integrate +/-90 mrad in-plane (yptar) and +/-50 mrad
+      ! Hall-vertical (xptar) target angles
+      ! target angles; it is not an NPS geometry.
+      beam_energy = 10.551_dp
+      beam_current_ua = 55.868051_dp
+      target_length_cm = 10.0_dp
+      nps_angle_deg = 26.0_dp
+      nps_distance_cm = 300.0_dp
+      nps_width_cm = 2.0_dp * nps_distance_cm * tan(0.090_dp)
+      nps_height_cm = 2.0_dp * nps_distance_cm * tan(0.050_dp)
+      ! Nominal hard-edged SHMS momentum-generation envelope.  This preset is
+      ! used for the scaler-rate comparison, not an energy-threshold scan.
+      energy_min = 4.935_dp * (1.0_dp - 0.15_dp)
+      energy_max = 4.935_dp * (1.0_dp + 0.25_dp)
+    case ('gep')
+      continue
+    case default
+      error stop 'unknown preset: use gep, xem2_17193_shms, run1918, or an electron-run preset'
+    end select
   end if
   if (n_events <= 0) error stop 'n_events must be positive'
 
@@ -67,9 +136,12 @@ program nps_inclusive_singles_generator
   call random_seed(put=seed)
 
   theta0 = nps_angle_deg * pi / 180.0_dp
-  nx = sin(theta0)
+  ! Hall coordinates are x=down, y=left, z=downstream.  The NPS central
+  ! ray lies in the horizontal y-z plane; face_x is horizontal across the
+  ! scattering-angle direction and face_y is vertical.
+  ny = sin(theta0)
   nz = cos(theta0)
-  ux = cos(theta0)
+  uy = cos(theta0)
   uz = -sin(theta0)
   area_cm2 = nps_width_cm * nps_height_cm
   energy_range = energy_max - energy_min
@@ -96,8 +168,8 @@ program nps_inclusive_singles_generator
     face_y = nps_height_cm * (r3 - 0.5_dp)
     eprime = energy_min + energy_range * r4
 
-    hit_x = nps_distance_cm * nx + face_x * ux
-    hit_y = face_y
+    hit_x = face_y
+    hit_y = nps_distance_cm * ny + face_x * uy
     hit_z = nps_distance_cm * nz + face_x * uz
     dx = hit_x
     dy = hit_y
@@ -106,7 +178,7 @@ program nps_inclusive_singles_generator
     dir_x = dx / distance
     dir_y = dy / distance
     dir_z = dz / distance
-    cos_incidence = max(0.0_dp, dir_x * nx + dir_z * nz)
+    cos_incidence = max(0.0_dp, dir_y * ny + dir_z * nz)
     domega_per_area = cos_incidence / (distance * distance)
 
     theta = acos(max(-1.0_dp, min(1.0_dp, dir_z)))
@@ -149,6 +221,7 @@ program nps_inclusive_singles_generator
   write(*, '(a,f10.4)') 'Beam current [uA]: ', beam_current_ua
   write(*, '(a,f10.4)') 'Target length [cm]: ', target_length_cm
   write(*, '(a,f10.4)') 'NPS angle [deg]: ', nps_angle_deg
+  write(*, '(a,f10.4)') 'NPS distance [cm]: ', nps_distance_cm
   write(*, '(a,es14.6)') 'Luminosity [cm^-2 s^-1]: ', luminosity
   write(*, '(a,es14.6)') 'Born inclusive-inelastic electron rate on full NPS face [Hz]: ', total_rate_hz
   write(*, '(a,a)') 'Output: ', trim(output_path)

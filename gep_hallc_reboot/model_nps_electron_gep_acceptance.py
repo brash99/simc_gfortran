@@ -177,7 +177,7 @@ def main() -> None:
     axis.set_xlabel("NPS central angle / sampled electron polar angle (deg)")
     axis.set_yscale("log")
     axis.grid(alpha=0.25)
-    axes[0].set_ylabel("Full-face primitive rate at 9.5 m (Hz/uA)")
+    axes[0].set_ylabel("Full-face trigger rate at 9.5 m (Hz/uA)")
     threshold_handles = [
         Line2D([0], [0], color=colors[fraction], marker="o", lw=2,
                markeredgecolor="black", markeredgewidth=0.5, label=f"{fraction:.0%}")
@@ -204,7 +204,7 @@ def main() -> None:
         axes[1].bar(x + offset, values, width, label=model.capitalize(), color=color)
     axes[1].set_xticks(x, [f"{value:.0%}" for value in THRESHOLD_FRACTIONS])
     axes[1].set_xlabel("GEp threshold / 4.838 GeV")
-    axes[1].set_ylabel("Projected full-face primitive rate (kHz)")
+    axes[1].set_ylabel("Projected full-face trigger rate (kHz)")
     axes[1].set_title("75 uA, 30 cm LH2, NPS at 3 m")
     axes[1].grid(axis="y", alpha=0.25)
     axes[1].legend(frameon=False)

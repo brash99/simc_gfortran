@@ -6,7 +6,7 @@
 
 ## Primary closure question
 
-Can the generator reproduce the measured run-1918 NPS primitive-rate curve under the actual run-1918 beam, target, angle, distance, and current conditions before any extrapolation to GEp?
+Can the generator reproduce the measured run-1918 NPS trigger-rate curve under the actual run-1918 beam, target, angle, distance, and current conditions before any extrapolation to GEp?
 
 This separated generator completeness and normalization from later changes in luminosity and kinematics. It is retained as a record of the exploratory generator test, not as the current empirical electron-trigger-rate anchor.
 
@@ -14,7 +14,7 @@ This separated generator completeness and normalization from later changes in lu
 
 The run-1918 preset uses 10.538 GeV beam energy, 28.787 microamperes, a 10 cm LH2 target, NPS at 18.72 degrees and 3.0 m, and the full NPS face. A one-million-trial calculation gives 159.47 kHz of Born inclusive-inelastic electrons geometrically directed at the NPS face before the sweeper magnet.
 
-| Physical threshold | Measured run-1918 primitive | Born inclusive electrons before sweeper | Simulation/data |
+| Physical threshold | Measured run-1918 trigger rate | Born inclusive electrons before sweeper | Simulation/data |
 |---:|---:|---:|---:|
 | 1.4 GeV | 365.1 kHz | 107.4 kHz | 0.29 |
 | 2.0 GeV | 128.4 kHz | 87.1 kHz | 0.68 |
@@ -37,7 +37,7 @@ delta theta = 0.2998 * (0.3 T m) / p[GeV]
 
 This corresponds to an NPS-face displacement of about 9.0 cm at 1.4 GeV, 4.2 cm at 3.0 GeV, and 3.1 cm at 4.0 GeV. The official Fall-2023 NPS settings identify KinC_x60_3, the run-1918 setting, as sweeper ON at +468 A. The accompanying field plot shows positive Bx in the NPS aperture. With the beam along +z, the Lorentz force on an electron is therefore toward negative Hall y: vertically downward on the NPS face. The calculation shifts each generated electron in y and retains it only if its shifted intercept remains within the 73.8 cm NPS height. The opposite sign is retained only as a symmetry check.
 
-| Threshold | No field | Run-1918 kick toward negative y | Opposite-sign kick | Measured primitive |
+| Threshold | No field | Run-1918 kick toward negative y | Opposite-sign kick | Measured cluster-trigger rate |
 |---:|---:|---:|---:|---:|
 | 1.4 GeV | 107.4 kHz | 102.3 kHz | 102.3 kHz | 365.1 kHz |
 | 2.0 GeV | 87.1 kHz | 83.8 kHz | 83.9 kHz | 128.4 kHz |
@@ -48,7 +48,7 @@ This corresponds to an NPS-face displacement of about 9.0 cm at 1.4 GeV, 4.2 cm 
 
 ![Run-1918 thin-kick sweeper test](nps_run1918_sweeper_thin_kick.png)
 
-The confirmed run-1918 polarity bends electrons downward. Because the generated distribution is nearly symmetric in vertical position and NPS is 73.8 cm high, simple loss across the calorimeter boundary removes only about 2--5% of the integrated rate over this threshold range. Thus the face-edge effect of the sweeper cannot explain the high-threshold discrepancy, and it certainly cannot generate the large measured low-threshold excess. A detailed aperture/field-map calculation is not presently justified for this closure exercise; the remaining disagreement should instead be treated as evidence that the measured primitive spectrum contains particle species and detector effects absent from the single primary-electron calculation.
+The confirmed run-1918 polarity bends electrons downward. Because the generated distribution is nearly symmetric in vertical position and NPS is 73.8 cm high, simple loss across the calorimeter boundary removes only about 2--5% of the integrated rate over this threshold range. Thus the face-edge effect of the sweeper cannot explain the high-threshold discrepancy, and it certainly cannot generate the large measured low-threshold excess. A detailed aperture/field-map calculation is not presently justified for this closure exercise; the remaining disagreement should instead be treated as evidence that the measured cluster-energy spectrum contains particle species and detector effects absent from the single primary-electron calculation.
 
 ## Radiated elastic electron-singles contribution
 
@@ -56,7 +56,7 @@ A separate one-million-attempt SIMC hydrogen-elastic calculation was run at the 
 
 SIMC's `rad2` photon is emitted along the outgoing electron in the peaking approximation. Two threshold interpretations were therefore checked: the post-radiation electron energy alone, and the electron energy plus the collinear final-state-radiation photon energy. The latter is the more appropriate idealized NPS trigger-energy proxy if both showers remain in the same local sum. The difference is less than one percent over the threshold range below, so final-state photon recovery does not materially change this particular singles-rate closure test.
 
-| Threshold | Measured primitive | Born inclusive | Radiated elastic, electron plus FSR | Inclusive plus elastic | Simulation/data |
+| Threshold | Measured cluster-trigger rate | Born inclusive | Radiated elastic, electron plus FSR | Inclusive plus elastic | Simulation/data |
 |---:|---:|---:|---:|---:|---:|
 | 1.4 GeV | 365.1 kHz | 107.4 kHz | 18.2 kHz | 125.6 kHz | 0.34 |
 | 2.0 GeV | 128.4 kHz | 87.1 kHz | 6.2 kHz | 93.2 kHz | 0.73 |
@@ -67,7 +67,7 @@ SIMC's `rad2` photon is emitted along the outgoing electron in the peaking appro
 
 ![Run-1918 inclusive plus radiated-elastic closure test](nps_run1918_inclusive_elastic_closure.png)
 
-Adding radiated elastic scattering improves the low-threshold closure only modestly: at 1.4 GeV the calculated electron total rises from 107.4 to 125.6 kHz, still a factor of 2.91 below the measured primitive rate. Above about 2.3 GeV the generator total remains larger than the measured curve. This confirms that the missing low-threshold rate is not ordinary elastic ep scattering or recovery of its final-state bremsstrahlung photon. The next useful component test is therefore photon and neutral production, together with pileup or detector-level mechanisms capable of preferentially enhancing the low-threshold end.
+Adding radiated elastic scattering improves the low-threshold closure only modestly: at 1.4 GeV the calculated electron total rises from 107.4 to 125.6 kHz, still a factor of 2.91 below the measured cluster-trigger rate. Above about 2.3 GeV the generator total remains larger than the measured curve. This confirms that the missing low-threshold rate is not ordinary elastic ep scattering or recovery of its final-state bremsstrahlung photon. The next useful component test is therefore photon and neutral production, together with pileup or detector-level mechanisms capable of preferentially enhancing the low-threshold end.
 
 ## Secondary GEp configuration
 
@@ -93,7 +93,7 @@ A one-million-trial calculation produced 431,383 positive-weight inelastic event
 | 75% = 3.629 GeV | 10.27 kHz |
 | 80% = 3.870 GeV | 7.07 kHz |
 
-For comparison, the conservatively scaled run-1918 full-face primitive rates are 175.5, 140.0, and 117.0 kHz at the same physical thresholds. At generator truth level, Born inclusive electrons account for only about 6--8% of those GEp projections. The direct run-1918 comparison above now takes priority over interpreting this scaled comparison.
+For comparison, the conservatively scaled run-1918 full-face trigger rates are 175.5, 140.0, and 117.0 kHz at the same physical thresholds. At generator truth level, Born inclusive electrons account for only about 6--8% of those GEp projections. The direct run-1918 comparison above now takes priority over interpreting this scaled comparison.
 
 ![Pre-GEANT4 inclusive-electron singles comparison](nps_inclusive_singles_truth_threshold.png)
 
@@ -107,7 +107,7 @@ This is not yet a simulated trigger curve. It presently omits:
 - full sweeper field-map transport and its physical aperture and iron (the
   run-1918 polarity and first-order 0.3 T m vertical kick are included above).
 
-GEANT4 response will generally move an electron's trigger-sum energy below its incident energy, so it is not expected to close the low-threshold gap by itself. The generator-level result now shows that the data-derived primitive curve cannot be interpreted as ordinary Born inclusive-electron plus radiated elastic scattering alone. The absolute inclusive cross-section normalization still warrants an independent check because the same calculation exceeds the measured high-energy tail.
+GEANT4 response will generally move an electron's trigger-sum energy below its incident energy, so it is not expected to close the low-threshold gap by itself. The generator-level result now shows that the data-derived trigger-rate curve cannot be interpreted as ordinary Born inclusive-electron plus radiated elastic scattering alone. The absolute inclusive cross-section normalization still warrants an independent check because the same calculation exceeds the measured high-energy tail.
 
 ## Next validation steps
 

@@ -22,23 +22,32 @@ ifeq ($(MYOS),Linux)
   OTHERLIBS = 
   FC  := gfortran
   F77 := gfortran
+  LINKER := $(F77)
 endif
 
-ROOTSYS=/cvmfs/oasis.opensciencegrid.org/jlab/scicomp/sw/el9/root/6.30.04-gcc11.4.0
+ifeq ($(MYOS),Darwin)
+  FFLAGS = -O3 -fno-automatic -mmacosx-version-min=27.0 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+  OTHERLIBS =
+  FC  := gfortran
+  F77 := gfortran
+  LINKER := g++
+  FORTRANLIBS := $(shell $(FC) -print-file-name=libgfortran.dylib) $(shell $(FC) -print-file-name=libquadmath.dylib)
+endif
+
+ROOTCONFIG ?= root-config
 CXX=g++
 CXXFLAGS0 = -O3 -std=c++17
 CXXFLAGS=$(CXXFLAGS0) $(DROOT)
-ROOTDIR=$(ROOTSYS)
 DMYROOT= -DMYROOT
-ROOTLIBS     := $(shell $(ROOTDIR)/bin/root-config --prefix=$(ROOTDIR)  --libs)
-ROOTINCLUDE  := -I $(shell $(ROOTDIR)/bin/root-config --prefix=$(ROOTDIR) --incdir)
+ROOTLIBS     := $(shell $(ROOTCONFIG) --libs)
+ROOTINCLUDE  := -I $(shell $(ROOTCONFIG) --incdir)
 
 none: make_root_tree
 
 all: make_root_tree
 
 make_root_tree: $(my_objs) froot.co
-	$(F77) $(LDFLAGS) -o make_root_tree $(my_objs) $(OTHERLIBS) froot.co $(ROOTLIBS) -lImt -lvdt -ltbb $(OTHERLIBS) $(CERNLIBS) -L/usr/lib64 -lstdc++
+	$(LINKER) $(LDFLAGS) -o make_root_tree $(my_objs) $(OTHERLIBS) froot.co $(ROOTLIBS) $(FORTRANLIBS) $(OTHERLIBS) $(CERNLIBS)
 
 %.o: %.f
 	$(FC) -c $(FFLAGS) $<

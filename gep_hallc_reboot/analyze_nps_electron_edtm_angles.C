@@ -9,7 +9,7 @@
 #include <iostream>
 #include <string>
 
-// Measure the NPS primitive rate in unbiased 1-us EDTM windows for an
+// Measure the NPS cluster-trigger rate in unbiased 1-us EDTM windows for an
 // electron-calibration run. Thresholds are expressed in offline-equivalent
 // physical energy and converted with the measured run-specific VTP relation.
 void analyze_nps_electron_edtm_angles(
@@ -39,7 +39,10 @@ void analyze_nps_electron_edtm_angles(
   tree->SetBranchAddress("Ndata.NPS.cal.vtpClusE", &n_vtp);
   tree->SetBranchAddress("NPS.cal.vtpClusE", vtp_energy.data());
 
-  constexpr int kNThresholds = 24;
+  // Cover 70--80% of the elastic endpoint in both the three-pass and
+  // five-pass validation runs.  The earlier 4.6-GeV ceiling was below that
+  // range for the 10.54-GeV data.
+  constexpr int kNThresholds = 48;
   std::array<double, kNThresholds> physical_threshold{};
   std::array<long long, kNThresholds> above{};
   for (int i = 0; i < kNThresholds; ++i)

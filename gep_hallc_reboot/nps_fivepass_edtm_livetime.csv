@@ -1,0 +1,4 @@
+run,replayed_events,scaler_time_s,accepted_edtm_events,edtm_scaler_counts,accepted_over_scaler,mean_edtm_scaler_rate_Hz
+2855,100000,665.714,26603,26598,1.000188,39.9387
+5183,100000,1891.64,75580,75579,1.000013,39.9572
+3888,100000,3766.29,18590,18590,1.000000,4.94216

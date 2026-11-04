@@ -43,7 +43,7 @@ estimate gives the following working hardware budget for a 20 ns coincidence:
 | 3.6 GeV | 2.23 Hz | 0.38 Hz | 11.0 Hz | 13.6 Hz | 1.38 Hz | 3.99 Hz |
 | 3.9 GeV | 2.18 Hz | 0.24 Hz | 8.8 Hz | 11.2 Hz | 1.10 Hz | 3.52 Hz |
 
-This table uses the positive-polarity run-2875 proton primitive as the central
+This table uses the positive-polarity run-2875 proton-arm trigger as the central
 HMS anchor. Run 6151 provides a second proton setting and brackets the central
 accidentals at approximately 6--13 Hz for S1X AND S1Y and 1--3 Hz for
 three-of-four. The corresponding accepted-physics NPS cross-check remains much

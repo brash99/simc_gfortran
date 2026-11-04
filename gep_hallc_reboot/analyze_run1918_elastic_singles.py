@@ -116,7 +116,7 @@ def main() -> None:
         measured_threshold,
         np.asarray(measured_rate) / 1e3,
         "s-",
-        label="Run-1918 measured EDTM primitive rate",
+        label="Run-1918 measured EDTM cluster-trigger rate",
     )
     ax.semilogy(threshold, inclusive / 1e3, "-", lw=2, label="Born inclusive electrons")
     ax.semilogy(

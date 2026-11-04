@@ -47,7 +47,7 @@ def main() -> None:
     axes[0].errorbar(angles, edtm, yerr=edtm_error, marker="o", ms=6, capsize=3,
                      color="#0072B2", label="1-us EDTM occupancy (stat.)")
     axes[0].set_xlabel("NPS central angle (deg)")
-    axes[0].set_ylabel("Primitive rate at 1.6 GeV VTP threshold (kHz)")
+    axes[0].set_ylabel("Cluster-trigger rate at 1.6 GeV VTP threshold (kHz)")
     axes[0].set_title("Independent rate comparison")
     axes[0].grid(alpha=0.25)
     axes[0].legend(frameon=False)
@@ -70,7 +70,7 @@ def main() -> None:
     axes[1].grid(alpha=0.25)
     axes[1].legend(frameon=False, loc="lower right")
 
-    fig.suptitle("NPS electron runs: EDTM occupancy reproduces the hardware primitive scaler", y=1.02)
+    fig.suptitle("NPS electron runs: EDTM occupancy reproduces the hardware trigger scaler", y=1.02)
     fig.tight_layout()
     output = HERE / "plots" / "nps_electron_edtm_scaler_closure"
     fig.savefig(output.with_suffix(".png"), dpi=180, bbox_inches="tight")
