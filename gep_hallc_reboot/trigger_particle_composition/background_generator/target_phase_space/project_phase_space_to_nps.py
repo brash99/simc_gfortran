@@ -77,12 +77,14 @@ def main() -> int:
         "track_id": make_branch(hits, "track_id", "i"),
         "parent_id": make_branch(hits, "parent_id", "i"),
         "pdg_id": make_branch(hits, "pdg_id", "i"),
+        "electronuclear_group": make_branch(hits, "electronuclear_group", "i"),
         "nps_x_cm": make_branch(hits, "nps_x_cm", "d"),
         "nps_y_cm": make_branch(hits, "nps_y_cm", "d"),
         "path_cm": make_branch(hits, "path_cm", "d"),
         "arrival_time_ns": make_branch(hits, "arrival_time_ns", "d"),
         "kinetic_GeV": make_branch(hits, "kinetic_GeV", "d"),
         "total_GeV": make_branch(hits, "total_GeV", "d"),
+        "particle_weight_Hz": make_branch(hits, "particle_weight_Hz", "d"),
     }
 
     event_accumulator = defaultdict(
@@ -95,6 +97,15 @@ def main() -> int:
     face_particle_weight_hz = 0.0
 
     for row in phase:
+        if normalization_mode == 2:
+            if (not phase.GetBranch("electronuclear_lineage") or
+                    not bool(row.electronuclear_lineage)):
+                continue
+            group_id = int(row.electronuclear_group)
+            if group_id < 0:
+                raise RuntimeError("electronuclear lineage row lacks a group")
+        else:
+            group_id = -1
         px, py, pz = float(row.px_GeV), float(row.py_GeV), float(row.pz_GeV)
         momentum = math.sqrt(px * px + py * py + pz * pz)
         if momentum <= 0.0:
@@ -120,8 +131,14 @@ def main() -> int:
             continue
         face_hits += 1
         track_weight = float(row.weight)
+        electron_flux_hz = args.current_uA * 1.0e-6 / ELECTRON_CHARGE_C
         if normalization_mode == 1:
-            face_particle_weight_hz += track_weight
+            particle_weight_hz = track_weight
+        elif normalization_mode == 2:
+            particle_weight_hz = electron_flux_hz * track_weight / completed_events
+        else:
+            particle_weight_hz = electron_flux_hz / completed_events
+        face_particle_weight_hz += particle_weight_hz
         total_energy = float(row.total_GeV)
         beta = momentum / total_energy if total_energy > 0.0 else 0.0
         arrival = float(row.time_ns)
@@ -130,21 +147,27 @@ def main() -> int:
         values = {
             "event_id": int(row.event_id), "track_id": int(row.track_id),
             "parent_id": int(row.parent_id), "pdg_id": int(row.pdg_id),
+            "electronuclear_group": group_id,
             "nps_x_cm": nps_x, "nps_y_cm": nps_y, "path_cm": path,
             "arrival_time_ns": arrival, "kinetic_GeV": float(row.kinetic_GeV),
             "total_GeV": total_energy,
+            "particle_weight_Hz": particle_weight_hz,
         }
         for name, value in values.items():
             hit_fields[name][0] = value
         hits.Fill()
         pdg = int(row.pdg_id)
         species[pdg] += 1
-        acc = event_accumulator[int(row.event_id)]
+        source_event_id = int(row.event_id)
+        accumulator_key = ((source_event_id, group_id)
+                           if normalization_mode == 2 else source_event_id)
+        acc = event_accumulator[accumulator_key]
         if acc["weight_Hz"] is None:
-            acc["weight_Hz"] = track_weight
-        elif normalization_mode == 1 and not math.isclose(
-                acc["weight_Hz"], track_weight, rel_tol=1.0e-10, abs_tol=1.0e-12):
-            raise RuntimeError("particles in one source event have unequal Hz weights")
+            acc["weight_Hz"] = particle_weight_hz
+        elif normalization_mode in (1, 2) and not math.isclose(
+                acc["weight_Hz"], particle_weight_hz,
+                rel_tol=1.0e-10, abs_tol=1.0e-300):
+            raise RuntimeError("particles in one correlated group have unequal weights")
         acc["n"] += 1
         acc["sum"] += total_energy
         acc["max"] = max(acc["max"], total_energy)
@@ -156,6 +179,7 @@ def main() -> int:
     events = ROOT.TTree("nps_events", "Incident-electron events intersecting NPS")
     event_fields = {
         "event_id": make_branch(events, "event_id", "q"),
+        "electronuclear_group": make_branch(events, "electronuclear_group", "i"),
         "n_particles": make_branch(events, "n_particles", "i"),
         "n_em_particles": make_branch(events, "n_em_particles", "i"),
         "sum_total_GeV": make_branch(events, "sum_total_GeV", "d"),
@@ -164,27 +188,28 @@ def main() -> int:
         "earliest_time_ns": make_branch(events, "earliest_time_ns", "d"),
         "event_weight_Hz": make_branch(events, "event_weight_Hz", "d"),
     }
-    for event_id in sorted(event_accumulator):
-        acc = event_accumulator[event_id]
+    for accumulator_key in sorted(event_accumulator):
+        if normalization_mode == 2:
+            event_id, group_id = accumulator_key
+        else:
+            event_id, group_id = accumulator_key, -1
+        acc = event_accumulator[accumulator_key]
         values = {
-            "event_id": event_id, "n_particles": acc["n"],
+            "event_id": event_id, "electronuclear_group": group_id,
+            "n_particles": acc["n"],
             "n_em_particles": acc["n_em"], "sum_total_GeV": acc["sum"],
             "sum_em_GeV": acc["sum_em"], "max_particle_GeV": acc["max"],
             "earliest_time_ns": acc["earliest"],
-            "event_weight_Hz": (acc["weight_Hz"]
-                                if normalization_mode == 1 else 0.0),
+            "event_weight_Hz": acc["weight_Hz"],
         }
         for name, value in values.items():
             event_fields[name][0] = value
         events.Fill()
 
-    electron_flux_hz = args.current_uA * 1.0e-6 / ELECTRON_CHARGE_C
-    if normalization_mode == 1:
-        event_rate_hz = sum(acc["weight_Hz"] for acc in event_accumulator.values())
-        particle_rate_hz = face_particle_weight_hz
-    else:
-        event_rate_hz = electron_flux_hz * len(event_accumulator) / completed_events
-        particle_rate_hz = electron_flux_hz * face_hits / completed_events
+    event_rate_hz = sum(acc["weight_Hz"] for acc in event_accumulator.values())
+    event_rate_variance_hz2 = sum(
+        acc["weight_Hz"] ** 2 for acc in event_accumulator.values())
+    particle_rate_hz = face_particle_weight_hz
     thresholds = sorted(set(
         [production_cut + 0.1 * i for i in range(
             int(round((beam_energy - production_cut) / 0.1)) + 1)]
@@ -194,15 +219,23 @@ def main() -> int:
     for threshold in thresholds:
         accepted = sum(acc["sum_em"] >= threshold
                        for acc in event_accumulator.values())
-        probability = accepted / completed_events
-        rate_hz = (sum(acc["weight_Hz"] for acc in event_accumulator.values()
-                       if acc["sum_em"] >= threshold)
-                   if normalization_mode == 1 else electron_flux_hz * probability)
+        rate_hz = sum(acc["weight_Hz"] for acc in event_accumulator.values()
+                      if acc["sum_em"] >= threshold)
+        variance_hz2 = sum(
+            acc["weight_Hz"] ** 2 for acc in event_accumulator.values()
+            if acc["sum_em"] >= threshold)
+        rate_unc_hz = math.sqrt(variance_hz2)
+        probability = (rate_hz / electron_flux_hz
+                       if normalization_mode in (0, 2)
+                       else accepted / completed_events)
         threshold_rows.append({
             "threshold_GeV": threshold,
             "accepted_events": accepted,
             "sample_fraction": probability,
             "rate_Hz": rate_hz,
+            "rate_stat_unc_Hz": rate_unc_hz,
+            "effective_events": (rate_hz * rate_hz / variance_hz2
+                                 if variance_hz2 > 0.0 else 0.0),
         })
 
     metadata = ROOT.TTree("projection_info", "NPS geometric projection metadata")
@@ -240,14 +273,20 @@ def main() -> int:
     summary = {
         "input": str(args.input_root), "completed_incident_electrons": completed_events,
         "beam_total_energy_GeV": beam_energy, "production_cut_GeV": production_cut,
-        "normalization_mode": ("absolute_Hz_event_weights"
-                               if normalization_mode == 1 else "per_incident_electron"),
+        "normalization_mode": ({0: "per_incident_electron",
+                                1: "absolute_Hz_event_weights",
+                                2: "weighted_electronuclear_per_incident_electron"}
+                               .get(normalization_mode, "unknown")),
         "nps_angle_deg": args.angle_deg, "nps_distance_m": args.distance_m,
         "nps_width_cm": args.width_cm, "nps_height_cm": args.height_cm,
         "current_uA": args.current_uA, "phase_space_rows": int(phase.GetEntries()),
         "forward_plane_intersections": projected_forward,
         "face_particle_hits": face_hits, "face_event_hits": len(event_accumulator),
         "face_particle_rate_Hz": particle_rate_hz, "face_event_rate_Hz": event_rate_hz,
+        "face_event_rate_stat_unc_Hz": math.sqrt(event_rate_variance_hz2),
+        "face_event_effective_events": (
+            event_rate_hz * event_rate_hz / event_rate_variance_hz2
+            if event_rate_variance_hz2 > 0.0 else 0.0),
         "pdg_face_counts": dict(sorted(species.items())),
         "coordinate_convention": {
             "nps_x": "Hall horizontal scattering plane; positive toward larger polar angle",

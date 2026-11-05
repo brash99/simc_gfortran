@@ -220,12 +220,11 @@ passive/sweeper geometry.  The further difference between the raw and
 corrected 3x3 columns is the unresolved inherited `1.04^2` energy convention.
 
 This completes the two-phase calculation for the baseline Wiser-pi0 channel.
-It does **not** complete a fully inclusive GEANT4 target-background generator.
-The unbiased beam-electron target test is computationally stable, but a
-100,000-electron sample produced no useful NPS-intersection statistics because
-the relevant phase space is too rare.  A biased or importance-sampled
-generation scheme, with absolute-weight bookkeeping and a production-cut
-convergence scan, remains required.
+It does **not** by itself complete a fully inclusive GEANT4 target-background
+generator.  That broader calculation is now implemented using weighted
+electronuclear cross-section enhancement in `target_phase_space/`; see that
+directory's README for the first million-electron detector-level result and
+the remaining production-cut convergence test.
 
 ### Charged-pion transport interface
 

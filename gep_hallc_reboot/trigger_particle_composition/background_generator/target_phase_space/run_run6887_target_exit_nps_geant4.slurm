@@ -34,4 +34,5 @@ printf '%s\n%s\n%s\n%s\n' 6887102 108 345678912 987654321 | \
 root -l -b -q \
   'validation/extract_nps_inclusive_geant4_response.C("6887102","target_phase_space/run6887_wiser_pi0_target_exit_nps_response.csv")'
 
-python3 "$phase/analyze_nps_response.py" "$manifest" "$response" "$summary"
+python3 "$phase/analyze_nps_response.py" "$manifest" "$response" "$summary" \
+  --trials 5000000

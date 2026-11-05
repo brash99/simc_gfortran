@@ -1,9 +1,11 @@
 # GEp target phase-space generator
 
 This standalone GEANT4 program separates target-background production from
-downstream NPS transport. It fires unbiased beam electrons through a 10 cm
+downstream NPS transport. It fires beam electrons through a 10 cm
 liquid-hydrogen cell, records particles as they leave the aluminum cell, and
-then kills those tracks. No NPS or beamline geometry is present.
+then kills those tracks. No NPS or beamline geometry is present.  It supports
+both analog transport and statistically weighted enhancement of the primary
+electron's `electronNuclear` cross section.
 
 The target has a 7.5 cm cylindrical liquid section followed by a 2.5 cm-radius
 downstream hemisphere, for a 10.0 cm on-axis liquid path. The aluminum wall and
@@ -20,6 +22,10 @@ downstream exit.
 The `run_info` tree records the number of incident beam electrons and the
 generation configuration. Absolute rates are obtained by dividing selected
 entries by `completed_events` and multiplying by the beam electron flux.
+For cross-section-biased samples, every exiting particle retains its GEANT4
+statistical weight.  `electronuclear_lineage` excludes unrelated ordinary EM
+tracks, while `electronuclear_group` preserves correlated products from the
+same weighted interaction.
 
 Weighted SIMC/Wiser source files use a centered `-5 < z < +5 cm` target
 coordinate. The physical cylinder-plus-hemisphere cell spans approximately
@@ -40,6 +46,8 @@ Build and run on the farm:
 cmake -S . -B build
 cmake --build build -j4
 ./build/gep_target_phase_space output.root 10000 8.456 1.0 12345
+./build/gep_target_phase_space --bias-electronuclear 300000 \
+  biased.root 1000000 8.456 1.0 6887401
 python3 project_phase_space_to_nps.py output.root projected.root \
   --angle-deg 16.57 --distance-m 3.57 --current-uA 29.417
 ```
@@ -64,10 +72,38 @@ Four nonfatal navigation warnings occurred in the inherited
 need to certify the passive/sweeper geometry before treating its edge shadow
 as a measured-configuration acceptance effect.
 
-This is a validation of the separated interface for a weighted Wiser source,
-not a complete inclusive target-background calculation.  An unbiased sample
-of 100,000 beam electrons was computationally stable but produced no useful
-NPS-intersection statistics; the next implementation step is importance
-sampling with explicit absolute-weight bookkeeping and a production-energy
-convergence scan.
+## Electronuclear importance-sampled result
+
+The direct force-collision method was rejected after a smoke test: Geant4
+reported that every primary was deleted while its force-collision bookkeeping
+was still active.  The production calculation instead uses the official GB01
+cross-section-change method, restricted to the incident primary electron.
+Factors of 30,000, 100,000, and 300,000 gave statistically compatible total
+NPS-face rates.  The factor-300,000 production sample contains one million
+incident electrons and used 350 MB in 1 minute 42 seconds.
+
+At the run-6887 current and geometry, the one-million-electron sample gives
+the following full-face rates after the 1 GeV secondary-production cut.  The
+incident-energy column is not a trigger prediction; the other columns are the
+hottest NPS 3x3 response.
+
+| threshold | full-face incident EM | raw GEANT4 3x3 | corrected GEANT4 3x3 |
+| --- | ---: | ---: | ---: |
+| 3.387 GeV | 258 +/- 32 kHz | 60.3 +/- 16.2 kHz | 38.2 +/- 12.8 kHz |
+| 3.629 GeV | 182 +/- 25 kHz | 41.3 +/- 13.2 kHz | 20.5 +/- 8.0 kHz |
+| 3.870 GeV | 144 +/- 23 kHz | 23.0 +/- 8.4 kHz | 5.53 +/- 2.54 kHz |
+
+The measured run-6887 excess above the inclusive-electron calculation is
+48.1, 36.5, and 29.2 kHz.  Thus inclusive electronuclear target production is
+large enough to be relevant and gives the correct broad scale, but the current
+detector-level threshold dependence is too steep.  The inherited raw versus
+corrected energy convention remains unresolved.  Production-cut scans at
+0.5 and 0.25 GeV are in progress because omitted lower-energy particles can
+contribute to a correlated high-energy cluster sum.
+
+Only correlated groups with at least one straight-line NPS-face intersection
+were sent to detector transport.  This is appropriate for the neutral-particle
+question but can miss charged particles that would enter only after magnetic
+deflection.  The calculation also produced one nonfatal navigation warning in
+`SweepingMagnetic_pos`; no event was lost.
 

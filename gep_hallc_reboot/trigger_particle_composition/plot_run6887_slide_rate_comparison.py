@@ -18,11 +18,11 @@ HERE = Path(__file__).resolve().parent
 MEASURED = HERE / "nps_run6887_edtm_threshold_curve.csv"
 RESPONSE = HERE / "nps_run6887_total_vs_geant4_electrons.csv"
 OUTPUT = HERE / "nps_run6887_measured_vs_geant4_electrons_slide"
-PI0_RESPONSE = (
+ELECTRONUCLEAR_RESPONSE = (
     HERE
     / "background_generator"
     / "target_phase_space"
-    / "run6887_wiser_pi0_target_exit_nps_rates.csv"
+    / "run6887_xsbias3e5_1000000_cut0p25_nps_rates_6pt.csv"
 )
 
 
@@ -34,7 +34,7 @@ def read_columns(path: Path) -> list[dict[str, str]]:
 def main() -> None:
     measured_rows = read_columns(MEASURED)
     response_rows = read_columns(RESPONSE)
-    pi0_rows = read_columns(PI0_RESPONSE)
+    electronuclear_rows = read_columns(ELECTRONUCLEAR_RESPONSE)
 
     threshold = np.asarray([float(row["threshold_GeV"]) for row in measured_rows])
     data = np.asarray([float(row["poisson_rate_Hz"]) for row in measured_rows]) / 1000.0
@@ -47,17 +47,35 @@ def main() -> None:
     geant4_error = np.asarray(
         [float(row["geant4_corrected_3x3_mc_error_Hz"]) for row in response_rows]
     ) / 1000.0
-    pi0_threshold = np.asarray([float(row["threshold_GeV"]) for row in pi0_rows])
-    pi0 = np.asarray(
-        [float(row["corrected_3x3_rate_Hz"]) for row in pi0_rows]
+    electronuclear_threshold = np.asarray(
+        [float(row["threshold_GeV"]) for row in electronuclear_rows]
+    )
+    electronuclear_raw = np.asarray(
+        [float(row["raw_3x3_rate_Hz"]) for row in electronuclear_rows]
     ) / 1000.0
-    pi0_error = np.asarray(
-        [float(row["corrected_3x3_mc_error_Hz"]) for row in pi0_rows]
+    electronuclear_raw_error = np.asarray(
+        [float(row["raw_3x3_mc_error_Hz"]) for row in electronuclear_rows]
     ) / 1000.0
-    electron_at_pi0 = np.interp(pi0_threshold, sim_threshold, geant4)
-    electron_error_at_pi0 = np.interp(pi0_threshold, sim_threshold, geant4_error)
-    subtotal = electron_at_pi0 + pi0
-    subtotal_error = np.hypot(electron_error_at_pi0, pi0_error)
+    electronuclear_corrected = np.asarray(
+        [float(row["corrected_3x3_rate_Hz"]) for row in electronuclear_rows]
+    ) / 1000.0
+    electronuclear_corrected_error = np.asarray(
+        [float(row["corrected_3x3_mc_error_Hz"]) for row in electronuclear_rows]
+    ) / 1000.0
+    electron_at_electronuclear = np.interp(
+        electronuclear_threshold, sim_threshold, geant4
+    )
+    electron_error_at_electronuclear = np.interp(
+        electronuclear_threshold, sim_threshold, geant4_error
+    )
+    combined_raw = electron_at_electronuclear + electronuclear_raw
+    combined_raw_error = np.hypot(
+        electron_error_at_electronuclear, electronuclear_raw_error
+    )
+    combined_corrected = electron_at_electronuclear + electronuclear_corrected
+    combined_corrected_error = np.hypot(
+        electron_error_at_electronuclear, electronuclear_corrected_error
+    )
 
     fig, axis = plt.subplots(figsize=(10.0, 5.4))
     axis.errorbar(
@@ -85,27 +103,32 @@ def main() -> None:
         zorder=5,
     )
     axis.errorbar(
-        pi0_threshold,
-        pi0,
-        yerr=pi0_error,
-        fmt="^",
-        ms=7,
-        capsize=3,
-        color="tab:green",
-        label=r"Target-on Wiser $\pi^0$: GEANT4 3x3",
-        zorder=7,
-    )
-    axis.errorbar(
-        pi0_threshold,
-        subtotal,
-        yerr=subtotal_error,
-        fmt="P--",
-        ms=7,
+        electronuclear_threshold,
+        combined_raw,
+        yerr=combined_raw_error,
+        fmt="s--",
+        ms=6.5,
         capsize=3,
         lw=1.8,
-        color="tab:purple",
-        label=r"Modeled subtotal: inclusive $e^-$ + Wiser $\pi^0$",
-        zorder=6,
+        color="#E69F00",
+        label=r"Combined: inclusive $e^-$ + $e$-nuclear (raw 3x3)",
+        zorder=9,
+    )
+    axis.errorbar(
+        electronuclear_threshold,
+        combined_corrected,
+        yerr=combined_corrected_error,
+        fmt="s--",
+        ms=6.5,
+        capsize=3,
+        lw=1.8,
+        mfc="white",
+        mec="#E69F00",
+        mew=1.5,
+        ecolor="#E69F00",
+        color="#E69F00",
+        label=r"Combined: inclusive $e^-$ + $e$-nuclear (corrected 3x3)",
+        zorder=10,
     )
 
     for fraction, value, color in (
@@ -142,7 +165,7 @@ def main() -> None:
     axis.set_ylabel("Rate above threshold (kHz)")
     axis.set_title("NPS run 6887: measured rate and detector-level modeled components")
     axis.grid(True, which="both", alpha=0.25)
-    axis.legend(frameon=False, fontsize=9, loc="upper right")
+    axis.legend(frameon=False, fontsize=8.7, loc="upper right")
     fig.tight_layout()
     fig.savefig(OUTPUT.with_suffix(".png"), dpi=180)
     fig.savefig(OUTPUT.with_suffix(".pdf"))

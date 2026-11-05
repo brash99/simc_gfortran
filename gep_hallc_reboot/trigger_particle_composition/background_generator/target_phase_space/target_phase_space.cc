@@ -2,6 +2,7 @@
 #include "G4Electron.hh"
 #include "G4Event.hh"
 #include "G4EventManager.hh"
+#include "G4GenericBiasingPhysics.hh"
 #include "G4IonTable.hh"
 #include "G4LogicalVolume.hh"
 #include "G4NistManager.hh"
@@ -23,12 +24,16 @@
 #include "G4UserSteppingAction.hh"
 #include "G4VUserDetectorConstruction.hh"
 #include "G4VUserPrimaryGeneratorAction.hh"
+#include "G4VModularPhysicsList.hh"
 #include "Randomize.hh"
 #include "globals.hh"
+
+#include "TargetCrossSectionBiasOperator.hh"
 
 #include "TFile.h"
 #include "TTree.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstdlib>
 #include <exception>
@@ -38,6 +43,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace {
@@ -65,6 +71,9 @@ G4VSolid* MakeCellShape(const G4String& name, G4double radius,
 
 class TargetDetectorConstruction final : public G4VUserDetectorConstruction {
  public:
+  explicit TargetDetectorConstruction(G4double electronNuclearBias = 1.)
+      : electronNuclearBias_(electronNuclearBias) {}
+
   G4VPhysicalVolume* Construct() override {
     auto* nist = G4NistManager::Instance();
     auto* vacuum = nist->FindOrBuildMaterial("G4_Galactic");
@@ -92,12 +101,30 @@ class TargetDetectorConstruction final : public G4VUserDetectorConstruction {
     new G4PVPlacement(nullptr, G4ThreeVector(0., 0., -0.5*kCellThickness),
                       shellLogical, "TargetCell", worldLogical, false, 0, true);
 
-    auto* liquidLogical = new G4LogicalVolume(liquidSolid, liquidHydrogen,
-                                              "TargetLiquid_log");
-    new G4PVPlacement(nullptr, {}, liquidLogical, "TargetLiquid", worldLogical,
+    liquidLogical_ = new G4LogicalVolume(liquidSolid, liquidHydrogen,
+                                         "TargetLiquid_log");
+    new G4PVPlacement(nullptr, {}, liquidLogical_, "TargetLiquid", worldLogical,
                       false, 0, true);
     return world;
   }
+
+  void ConstructSDandField() override {
+    if (electronNuclearBias_ <= 1.) return;
+    if (!liquidLogical_) {
+      G4Exception("TargetDetectorConstruction::ConstructSDandField",
+                  "GEPTARGETBIAS002", FatalException,
+                  "Target liquid logical volume was not constructed");
+    }
+    auto* bias = new TargetCrossSectionBiasOperator(
+        "e-", electronNuclearBias_, "TargetLiquidElectronNuclearXSbias");
+    bias->AttachTo(liquidLogical_);
+    G4cout << "TARGET_BIAS electronNuclear cross-section enhancement="
+           << electronNuclearBias_ << " attached to TargetLiquid_log" << G4endl;
+  }
+
+ private:
+  G4double electronNuclearBias_ = 1.;
+  G4LogicalVolume* liquidLogical_ = nullptr;
 };
 
 class BeamGenerator final : public G4VUserPrimaryGeneratorAction {
@@ -277,6 +304,8 @@ struct PhaseSpaceRow {
   Int_t pdg_id = 0;
   Int_t surface = 0;
   Bool_t is_primary = false;
+  Bool_t electronuclear_lineage = false;
+  Int_t electronuclear_group = -1;
   Double_t weight = 1.;
   Double_t x_cm = 0.;
   Double_t y_cm = 0.;
@@ -300,11 +329,13 @@ class PhaseSpaceWriter final : public G4UserRunAction {
   PhaseSpaceWriter(std::string output, G4double beamEnergy,
                    G4double secondaryCut, Long64_t requestedEvents,
                    G4int normalizationMode = 0,
-                   G4double totalInputRateHz = 0.)
+                   G4double totalInputRateHz = 0.,
+                   G4double electronNuclearBias = 1.)
       : output_(std::move(output)), beamEnergy_(beamEnergy),
         secondaryCut_(secondaryCut), requestedEvents_(requestedEvents),
         normalizationMode_(normalizationMode),
-        totalInputRateHz_(totalInputRateHz) {}
+        totalInputRateHz_(totalInputRateHz),
+        electronNuclearBias_(electronNuclearBias) {}
 
   void BeginOfRunAction(const G4Run*) override {
     file_ = TFile::Open(output_.c_str(), "RECREATE");
@@ -318,6 +349,8 @@ class PhaseSpaceWriter final : public G4UserRunAction {
     tree_->Branch("pdg_id", &row_.pdg_id);
     tree_->Branch("surface", &row_.surface);
     tree_->Branch("is_primary", &row_.is_primary);
+    tree_->Branch("electronuclear_lineage", &row_.electronuclear_lineage);
+    tree_->Branch("electronuclear_group", &row_.electronuclear_group);
     tree_->Branch("weight", &row_.weight);
     tree_->Branch("x_cm", &row_.x_cm);
     tree_->Branch("y_cm", &row_.y_cm);
@@ -336,7 +369,7 @@ class PhaseSpaceWriter final : public G4UserRunAction {
     tree_->Branch("creator_process", &row_.creator_process);
   }
 
-  void Record(const G4Step* step) {
+  void Record(const G4Step* step, G4int electronNuclearGroup) {
     const auto* track = step->GetTrack();
     const auto* post = step->GetPostStepPoint();
     const auto position = post->GetPosition();
@@ -349,6 +382,8 @@ class PhaseSpaceWriter final : public G4UserRunAction {
     row_.parent_id = track->GetParentID();
     row_.pdg_id = definition->GetPDGEncoding();
     row_.is_primary = track->GetParentID() == 0;
+    row_.electronuclear_lineage = electronNuclearGroup >= 0;
+    row_.electronuclear_group = electronNuclearGroup;
     row_.weight = track->GetWeight();
     row_.x_cm = position.x() / CLHEP::cm;
     row_.y_cm = position.y() / CLHEP::cm;
@@ -382,6 +417,7 @@ class PhaseSpaceWriter final : public G4UserRunAction {
     metadata->Branch("secondary_kinetic_cut_GeV", &secondaryCut_);
     metadata->Branch("normalization_mode", &normalizationMode_);
     metadata->Branch("total_input_event_rate_Hz", &totalInputRateHz_);
+    metadata->Branch("electronNuclear_xs_enhancement", &electronNuclearBias_);
     Double_t sourceVertexShiftCm = normalizationMode_ == 1
         ? kCenteredSourceVertexShiftZ / CLHEP::cm : 0.;
     metadata->Branch("source_vertex_z_shift_cm", &sourceVertexShiftCm);
@@ -406,16 +442,78 @@ class PhaseSpaceWriter final : public G4UserRunAction {
   Long64_t requestedEvents_;
   Int_t normalizationMode_;
   Double_t totalInputRateHz_;
+  Double_t electronNuclearBias_;
   Long64_t particlesWritten_ = 0;
   PhaseSpaceRow row_;
   TFile* file_ = nullptr;
   TTree* tree_ = nullptr;
 };
 
+class TrackClassifier final : public G4UserStackingAction {
+ public:
+  explicit TrackClassifier(G4double cut) : cut_(cut) {}
+
+  void PrepareNewEvent() override {
+    trackGroups_.clear();
+    directGroups_.clear();
+  }
+
+  G4ClassificationOfNewTrack ClassifyNewTrack(const G4Track* track) override {
+    const auto* creator = track->GetCreatorProcess();
+    const G4bool directElectronNuclear = creator &&
+        creator->GetProcessName().find("electronNuclear") != std::string::npos;
+    if (directElectronNuclear) {
+      G4int group = -1;
+      for (const auto& candidate : directGroups_) {
+        const G4double scale = std::max(std::fabs(candidate.weight),
+                                        std::fabs(track->GetWeight()));
+        if (candidate.parent == track->GetParentID() &&
+            std::fabs(candidate.weight - track->GetWeight()) <=
+                1.e-12 * std::max(scale, 1.e-300)) {
+          group = candidate.id;
+          break;
+        }
+      }
+      if (group < 0) {
+        group = static_cast<G4int>(directGroups_.size());
+        directGroups_.push_back({track->GetParentID(), track->GetWeight(), group});
+      }
+      trackGroups_[track->GetTrackID()] = group;
+    } else {
+      const auto parent = trackGroups_.find(track->GetParentID());
+      if (parent != trackGroups_.end()) {
+        trackGroups_[track->GetTrackID()] = parent->second;
+      }
+    }
+    if (track->GetParentID() > 0 && track->GetKineticEnergy() < cut_) {
+      return fKill;
+    }
+    return fUrgent;
+  }
+
+  G4int ElectronNuclearGroup(const G4Track* track) const {
+    const auto found = trackGroups_.find(track->GetTrackID());
+    return found == trackGroups_.end() ? -1 : found->second;
+  }
+
+ private:
+  struct DirectGroup {
+    G4int parent;
+    G4double weight;
+    G4int id;
+  };
+  G4double cut_;
+  std::unordered_map<G4int, G4int> trackGroups_;
+  std::vector<DirectGroup> directGroups_;
+};
+
 class BoundaryRecorder final : public G4UserSteppingAction {
  public:
-  BoundaryRecorder(PhaseSpaceWriter* writer, G4double secondaryCut)
-      : writer_(writer), secondaryCut_(secondaryCut) {}
+  BoundaryRecorder(PhaseSpaceWriter* writer, G4double secondaryCut,
+                   const TrackClassifier* classifier,
+                   G4bool killAtTargetExit = true)
+      : writer_(writer), secondaryCut_(secondaryCut), classifier_(classifier),
+        killAtTargetExit_(killAtTargetExit) {}
 
   void UserSteppingAction(const G4Step* step) override {
     auto* track = step->GetTrack();
@@ -427,28 +525,21 @@ class BoundaryRecorder final : public G4UserSteppingAction {
         (preName == "TargetCell" || preName == "TargetLiquid")) {
       if (track->GetParentID() == 0 ||
           step->GetPostStepPoint()->GetKineticEnergy() >= secondaryCut_) {
-        writer_->Record(step);
+        writer_->Record(step, classifier_->ElectronNuclearGroup(track));
       }
-      track->SetTrackStatus(fStopAndKill);
+      // A force-collision branch must leave the biased volume normally so
+      // Geant4 can close its weight bookkeeping. The surrounding world is
+      // small and empty, so allowing those tracks to reach its boundary has
+      // negligible cost. Analog/source modes retain the early kill.
+      if (killAtTargetExit_) track->SetTrackStatus(fStopAndKill);
     }
   }
 
  private:
   PhaseSpaceWriter* writer_;
   G4double secondaryCut_;
-};
-
-class LowEnergySecondaryCut final : public G4UserStackingAction {
- public:
-  explicit LowEnergySecondaryCut(G4double cut) : cut_(cut) {}
-  G4ClassificationOfNewTrack ClassifyNewTrack(const G4Track* track) override {
-    if (track->GetParentID() > 0 && track->GetKineticEnergy() < cut_) {
-      return fKill;
-    }
-    return fUrgent;
-  }
- private:
-  G4double cut_;
+  const TrackClassifier* classifier_;
+  G4bool killAtTargetExit_;
 };
 
 Long64_t ParsePositiveInteger(const char* text, const char* label) {
@@ -477,30 +568,55 @@ double ParsePositiveDouble(const char* text, const char* label,
 
 int main(int argc, char** argv) {
   const bool sourceMode = argc == 6 && std::string(argv[1]) == "--source-events";
-  if (argc != 6) {
+  const bool biasedBeamMode =
+      argc == 8 && std::string(argv[1]) == "--bias-electronuclear";
+  if ((!sourceMode && !biasedBeamMode && argc != 6) ||
+      (sourceMode && argc != 6) || (biasedBeamMode && argc != 8)) {
     std::cerr << "Usage: " << argv[0]
               << " output.root n_events beam_total_energy_GeV"
               << " secondary_kinetic_cut_GeV seed\n"
               << "   or: " << argv[0]
               << " --source-events input.csv output.root"
-              << " secondary_kinetic_cut_GeV seed\n";
+              << " secondary_kinetic_cut_GeV seed\n"
+              << "   or: " << argv[0]
+              << " --bias-electronuclear enhancement output.root n_events"
+              << " beam_total_energy_GeV secondary_kinetic_cut_GeV seed\n";
     return 2;
   }
   try {
-    const std::string output(sourceMode ? argv[3] : argv[1]);
-    Long64_t events = sourceMode ? 0 : ParsePositiveInteger(argv[2], "n_events");
+    const std::string output(sourceMode ? argv[3] :
+                             (biasedBeamMode ? argv[3] : argv[1]));
+    Long64_t events = sourceMode ? 0 : ParsePositiveInteger(
+        biasedBeamMode ? argv[4] : argv[2], "n_events");
     G4double beamEnergy = sourceMode ? 0. :
-        ParsePositiveDouble(argv[3], "beam energy") * CLHEP::GeV;
+        ParsePositiveDouble(biasedBeamMode ? argv[5] : argv[3],
+                            "beam energy") * CLHEP::GeV;
     const G4double cut = ParsePositiveDouble(
-        sourceMode ? argv[4] : argv[4], "secondary cut", true) * CLHEP::GeV;
-    const long seed = ParsePositiveInteger(sourceMode ? argv[5] : argv[5], "seed");
+        biasedBeamMode ? argv[6] : argv[4], "secondary cut", true) * CLHEP::GeV;
+    const long seed = ParsePositiveInteger(
+        biasedBeamMode ? argv[7] : argv[5], "seed");
+    const G4double biasFactor = biasedBeamMode
+        ? ParsePositiveDouble(argv[2], "electronNuclear enhancement") : 1.;
+    if (biasedBeamMode && biasFactor <= 1.) {
+      throw std::runtime_error("electronNuclear enhancement must exceed one");
+    }
     CLHEP::HepRandom::setTheSeed(seed);
 
     auto runManager = std::make_unique<G4RunManager>();
-    runManager->SetUserInitialization(new TargetDetectorConstruction());
+    runManager->SetUserInitialization(
+        new TargetDetectorConstruction(biasFactor));
     G4PhysListFactory factory;
     auto* physics = factory.GetReferencePhysList("QBBC");
     if (!physics) throw std::runtime_error("QBBC physics list is unavailable");
+    if (biasedBeamMode) {
+      auto* modular = dynamic_cast<G4VModularPhysicsList*>(physics);
+      if (!modular) {
+        throw std::runtime_error("QBBC is not a modular physics list");
+      }
+      auto* biasing = new G4GenericBiasingPhysics();
+      biasing->Bias("e-", std::vector<G4String>{"electronNuclear"});
+      modular->RegisterPhysics(biasing);
+    }
     runManager->SetUserInitialization(physics);
     G4VUserPrimaryGeneratorAction* generator = nullptr;
     G4double totalInputRateHz = 0.;
@@ -514,18 +630,24 @@ int main(int argc, char** argv) {
       normalizationMode = 1;
     } else {
       generator = new BeamGenerator(beamEnergy);
+      if (biasedBeamMode) normalizationMode = 2;
     }
     auto* writer = new PhaseSpaceWriter(
         output, beamEnergy / CLHEP::GeV, cut / CLHEP::GeV, events,
-        normalizationMode, totalInputRateHz);
+        normalizationMode, totalInputRateHz, biasFactor);
     runManager->SetUserAction(generator);
     runManager->SetUserAction(writer);
-    runManager->SetUserAction(new BoundaryRecorder(writer, cut));
-    runManager->SetUserAction(new LowEnergySecondaryCut(cut));
+    auto* classifier = new TrackClassifier(cut);
+    runManager->SetUserAction(new BoundaryRecorder(writer, cut, classifier));
+    runManager->SetUserAction(classifier);
     runManager->Initialize();
     G4cout << "PHASE_SPACE_CONFIG beam_total_GeV=" << beamEnergy/CLHEP::GeV
            << " secondary_cut_GeV=" << cut/CLHEP::GeV
            << " events=" << events << " seed=" << seed << G4endl;
+    if (biasedBeamMode) {
+      G4cout << "PHASE_SPACE_NORMALIZATION weighted_per_incident_electron"
+             << " electronNuclear_enhancement=" << biasFactor << G4endl;
+    }
     runManager->BeamOn(events);
   } catch (const std::exception& error) {
     std::cerr << "ERROR: " << error.what() << '\n';
