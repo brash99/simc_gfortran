@@ -1,0 +1,42 @@
+--- a/DVCS_evt_gen/DVCS/src/DetectorConstruction.cc
++++ b/DVCS_evt_gen/DVCS/src/DetectorConstruction.cc
+@@ -1801,6 +1801,10 @@
+   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
++  const char* disableSweeperValue = std::getenv("GEP_DISABLE_SWEEPER");
++  const G4bool disableSweeper = disableSweeperValue &&
++      G4String(disableSweeperValue) != "0";
++  if (!disableSweeper) {
+   //subtracting beam-pipe volume from sweeper-magnet volume
+   G4RotationMatrix *SM_BP_SubRot = new G4RotationMatrix;
+   SM_BP_SubRot->rotateY(-fSweepingMagnet_theta); //Angle in radian
+@@ -1837,10 +1841,6 @@
+ 
+   //Put sweeping magnet ONLY when magnetic field is ON. When OFF there is no physical sweeping magent.
+   //20250415 by Hao: comment out the if argument to put sweeping magnet even when magnetic field is OFF to simulate the shadow of the magnet on the calorimeter
+-  const char* disableSweeperValue = std::getenv("GEP_DISABLE_SWEEPER");
+-  const G4bool disableSweeper = disableSweeperValue &&
+-      G4String(disableSweeperValue) != "0";
+-  if (!disableSweeper) {
+     new G4PVPlacement(ySweepingMagnetRot,
+ 		      G4ThreeVector(fSweepingMagnet_pos*sin(-fSweepingMagnet_arm_theta), fSweepingMagnetSTPcenter_Y, fSweepingMagnet_pos*cos(-fSweepingMagnet_arm_theta)),
+ 		      fLogicMagnetic,
+@@ -1851,9 +1851,6 @@
+ 		      false,
+ 		      0,
+ 		      fCheckOverlaps);
+-  } else {
+-    G4cout << "GEOMETRY_CONFIG inherited sweeper disabled" << G4endl;
+-  }
+ 
+   //
+   //Part 1
+@@ -2512,6 +2509,9 @@
+ 		    0,
+ 		    fCheckOverlaps);
+ 
++  } else {
++    G4cout << "GEOMETRY_CONFIG inherited sweeper construction disabled" << G4endl;
++  }
+   //Coloring
+   G4VisAttributes* CrystalVisAtt = new G4VisAttributes(G4Colour(1.,1.,0.));//yellow

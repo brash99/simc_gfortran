@@ -49,16 +49,18 @@
 namespace {
 
 constexpr G4double kLiquidRadius = 2.5 * CLHEP::cm;
-constexpr G4double kStraightLength = 7.5 * CLHEP::cm;
 constexpr G4double kCellThickness = 0.132 * CLHEP::mm;
-constexpr G4double kHemisphereCenterZ = 0.5 * kStraightLength;
-constexpr G4double kLiquidEntranceZ = -0.5 * kStraightLength;
-constexpr G4double kLiquidExitZ = kHemisphereCenterZ + kLiquidRadius;
 constexpr G4double kCenteredSourceVertexShiftZ = 1.25 * CLHEP::cm;
+G4double gLiquidPath = 10. * CLHEP::cm;
+
+G4double StraightLength() { return gLiquidPath - kLiquidRadius; }
+G4double HemisphereCenterZ() { return 0.5 * StraightLength(); }
+G4double LiquidEntranceZ() { return -0.5 * StraightLength(); }
+G4double LiquidExitZ() { return HemisphereCenterZ() + kLiquidRadius; }
 
 G4VSolid* MakeCellShape(const G4String& name, G4double radius,
                         G4double entranceExtension) {
-  const G4double straightLength = kStraightLength + entranceExtension;
+  const G4double straightLength = StraightLength() + entranceExtension;
   const G4double centerZ = -0.5 * entranceExtension;
   auto* cylinder = new G4Tubs(name + "_cylinder", 0., radius,
                               0.5 * straightLength, 0., CLHEP::twopi);
@@ -66,7 +68,7 @@ G4VSolid* MakeCellShape(const G4String& name, G4double radius,
                                   CLHEP::twopi, 0., 0.5 * CLHEP::pi);
   return new G4UnionSolid(name, cylinder, hemisphere, nullptr,
                           G4ThreeVector(0., 0.,
-                              kHemisphereCenterZ - centerZ));
+                              HemisphereCenterZ() - centerZ));
 }
 
 class TargetDetectorConstruction final : public G4VUserDetectorConstruction {
@@ -137,7 +139,7 @@ class BeamGenerator final : public G4VUserPrimaryGeneratorAction {
     gun_.SetParticleEnergy(kinetic);
     gun_.SetParticleMomentumDirection(G4ThreeVector(0., 0., 1.));
     gun_.SetParticlePosition(G4ThreeVector(
-        0., 0., kLiquidEntranceZ - kCellThickness - 1. * CLHEP::mm));
+        0., 0., LiquidEntranceZ() - kCellThickness - 1. * CLHEP::mm));
   }
 
   void GeneratePrimaries(G4Event* event) override {
@@ -400,8 +402,8 @@ class PhaseSpaceWriter final : public G4UserRunAction {
     row_.time_ns = post->GetGlobalTime() / CLHEP::ns;
     row_.particle = definition->GetParticleName();
     row_.creator_process = creator ? creator->GetProcessName() : "primary";
-    if (position.z() < kLiquidEntranceZ) row_.surface = -1;
-    else if (position.z() > kLiquidExitZ) row_.surface = 1;
+    if (position.z() < LiquidEntranceZ()) row_.surface = -1;
+    else if (position.z() > LiquidExitZ()) row_.surface = 1;
     else row_.surface = 0;
     tree_->Fill();
     ++particlesWritten_;
@@ -421,7 +423,7 @@ class PhaseSpaceWriter final : public G4UserRunAction {
     Double_t sourceVertexShiftCm = normalizationMode_ == 1
         ? kCenteredSourceVertexShiftZ / CLHEP::cm : 0.;
     metadata->Branch("source_vertex_z_shift_cm", &sourceVertexShiftCm);
-    Double_t liquidPathCm = 10.;
+    Double_t liquidPathCm = gLiquidPath / CLHEP::cm;
     Double_t cellThicknessMm = kCellThickness / CLHEP::mm;
     metadata->Branch("liquid_path_cm", &liquidPathCm);
     metadata->Branch("cell_thickness_mm", &cellThicknessMm);
@@ -584,6 +586,14 @@ int main(int argc, char** argv) {
     return 2;
   }
   try {
+    if (const char* targetLength = std::getenv("GEP_TARGET_LENGTH_CM")) {
+      gLiquidPath = ParsePositiveDouble(targetLength, "target length") *
+                    CLHEP::cm;
+    }
+    if (gLiquidPath <= kLiquidRadius) {
+      throw std::runtime_error(
+          "target length must exceed the 2.5 cm downstream-hemisphere radius");
+    }
     const std::string output(sourceMode ? argv[3] :
                              (biasedBeamMode ? argv[3] : argv[1]));
     Long64_t events = sourceMode ? 0 : ParsePositiveInteger(
@@ -642,6 +652,7 @@ int main(int argc, char** argv) {
     runManager->SetUserAction(classifier);
     runManager->Initialize();
     G4cout << "PHASE_SPACE_CONFIG beam_total_GeV=" << beamEnergy/CLHEP::GeV
+           << " target_length_cm=" << gLiquidPath/CLHEP::cm
            << " secondary_cut_GeV=" << cut/CLHEP::GeV
            << " events=" << events << " seed=" << seed << G4endl;
     if (biasedBeamMode) {

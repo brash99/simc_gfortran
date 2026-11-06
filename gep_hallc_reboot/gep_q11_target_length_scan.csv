@@ -1,0 +1,4 @@
+target_length_cm,target_areal_thickness_mg_cm2,simc_trials,accepted_entries,selected_yield_events_per_mC,yield_over_10cm
+10,723.0,1000000,12752,21.0698642731,1.000000
+20,1446.0,1000000,11922,38.9183807373,1.847114
+30,2169.0,1000000,11125,54.1613235474,2.570559

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.6)  5 NOV 2026 13:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.6)  5 NOV 2026 18:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1058,7 +1058,7 @@ File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 File: ../plots/xem2_run17193_hms_dp_simc.png Graphic file (type png)
 <use ../plots/xem2_run17193_hms_dp_simc.png>
 Package pdftex.def Info: ../plots/xem2_run17193_hms_dp_simc.png  used on input 
-line 108.
+line 111.
 (pdftex.def)             Requested size: 251.9123pt x 174.87859pt.
  [3
 
@@ -1068,7 +1068,7 @@ line 108.
 File: ../plots/xem2_hms_paddle_good_edtm.png Graphic file (type png)
 <use ../plots/xem2_hms_paddle_good_edtm.png>
 Package pdftex.def Info: ../plots/xem2_hms_paddle_good_edtm.png  used on input 
-line 137.
+line 140.
 (pdftex.def)             Requested size: 298.54411pt x 193.96434pt.
  [4
 
@@ -1080,10 +1080,10 @@ File: ../plots/nps_inclusive_generator_six_run_validation.png Graphic file (typ
 e png)
 <use ../plots/nps_inclusive_generator_six_run_validation.png>
 Package pdftex.def Info: ../plots/nps_inclusive_generator_six_run_validation.pn
-g  used on input line 167.
+g  used on input line 170.
 (pdftex.def)             Requested size: 276.13591pt x 162.0381pt.
 
-Overfull \hbox (3.22594pt too wide) in paragraph at lines 167--167
+Overfull \hbox (3.22594pt too wide) in paragraph at lines 170--170
  [][] 
  []
 
@@ -1091,13 +1091,13 @@ Overfull \hbox (3.22594pt too wide) in paragraph at lines 167--167
 
  <../plots/nps_inclusive_generator_six_run_validation.png>]
 <../trigger_particle_composition/nps_run6887_measured_vs_geant4_electrons_slide
-.png, id=138, 722.7pt x 390.258pt>
+.png, id=139, 722.7pt x 390.258pt>
 File: ../trigger_particle_composition/nps_run6887_measured_vs_geant4_electrons_
 slide.png Graphic file (type png)
 <use ../trigger_particle_composition/nps_run6887_measured_vs_geant4_electrons_s
 lide.png>
 Package pdftex.def Info: ../trigger_particle_composition/nps_run6887_measured_v
-s_geant4_electrons_slide.png  used on input line 192.
+s_geant4_electrons_slide.png  used on input line 195.
 (pdftex.def)             Requested size: 230.6788pt x 124.56354pt.
  [6
 
@@ -1119,11 +1119,11 @@ not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 25972 strings out of 476025
- 553932 string characters out of 5790018
+ 25974 strings out of 476025
+ 553953 string characters out of 5790018
  1866388 words of memory out of 5000000
- 45892 multiletter control sequences out of 15000+600000
- 564522 words of font info for 64 fonts, out of 8000000 for 9000
+ 45893 multiletter control sequences out of 15000+600000
+ 567299 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,13n,122p,409b,889s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/lo
@@ -1133,18 +1133,19 @@ f-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2023/texmf-dist/font
 s/type1/public/lm/lmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/publ
 ic/lm/lmss10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmss
 12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmss8.pfb></us
-r/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/
-texlive/2023/texmf-dist/fonts/type1/public/lm/lmsso10.pfb></usr/local/texlive/2
-023/texmf-dist/fonts/type1/public/lm/lmsso8.pfb></usr/local/texlive/2023/texmf-
-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts
-/type1/public/lm/lmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/publ
-ic/lm/lmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts
-/symbols/msam10.pfb>
-Output written on gep4_reboot_feasibility_2026-11-04.pdf (6 pages, 664724 bytes
+r/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmss9.pfb></usr/local/tex
+live/2023/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/202
+3/texmf-dist/fonts/type1/public/lm/lmsso10.pfb></usr/local/texlive/2023/texmf-d
+ist/fonts/type1/public/lm/lmsso8.pfb></usr/local/texlive/2023/texmf-dist/fonts/
+type1/public/lm/lmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/publ
+ic/lm/lmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsy7
+.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
+am10.pfb>
+Output written on gep4_reboot_feasibility_2026-11-04.pdf (6 pages, 682408 bytes
 ).
 PDF statistics:
- 234 PDF objects out of 1000 (max. 8388607)
- 134 compressed objects within 2 object streams
+ 239 PDF objects out of 1000 (max. 8388607)
+ 137 compressed objects within 2 object streams
  13 named destinations out of 1000 (max. 500000)
  339 words of extra memory for PDF output out of 10000 (max. 10000000)
 

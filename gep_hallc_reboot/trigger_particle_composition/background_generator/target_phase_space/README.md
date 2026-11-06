@@ -7,6 +7,10 @@ then kills those tracks. No NPS or beamline geometry is present.  It supports
 both analog transport and statistically weighted enhancement of the primary
 electron's `electronNuclear` cross section.
 
+The default liquid path remains 10 cm for exact compatibility with the
+run-6887 validation. Set `GEP_TARGET_LENGTH_CM` to model another on-axis
+liquid path; the selected value is written to `run_info.liquid_path_cm`.
+
 The target has a 7.5 cm cylindrical liquid section followed by a 2.5 cm-radius
 downstream hemisphere, for a 10.0 cm on-axis liquid path. The aluminum wall and
 entrance/downstream windows are 0.132 mm thick.
@@ -48,6 +52,8 @@ cmake --build build -j4
 ./build/gep_target_phase_space output.root 10000 8.456 1.0 12345
 ./build/gep_target_phase_space --bias-electronuclear 300000 \
   biased.root 1000000 8.456 1.0 6887401
+GEP_TARGET_LENGTH_CM=30 ./build/gep_target_phase_space \
+  --bias-electronuclear 300000 gep_q11.root 1000000 10.700 0.25 1100401
 python3 project_phase_space_to_nps.py output.root projected.root \
   --angle-deg 16.57 --distance-m 3.57 --current-uA 29.417
 ```
