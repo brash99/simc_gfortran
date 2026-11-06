@@ -62,7 +62,7 @@ For run 17193, the data/SIMC comparisons are:
 
 The corresponding simulations give:
 
-- 30 cm / 10 cm accepted-yield ratio: 1.8863, not 3.
+- 30 cm / 10 cm HMS-SHMS coincidence accepted-yield ratio: 1.8863. This is not an HMS-only extended-target factor. With SHMS replaced by NPS at 3 m, the existing 30 cm sample gives full-30-cm/central-10-cm = 2.564. A separate matched scan at the Q2 = 11 HMS+NPS setting gives 20 cm/10 cm = 1.847 and 30 cm/10 cm = 2.571; see the [target-length audit](xem2_run17193_target_length_audit.md).
 - NPS / SHMS accepted-yield ratio in a common comparison window: 4.1078.
 - Full displayed NPS / SHMS acceptance ratio: 4.3139.
 
@@ -151,3 +151,9 @@ The numerical inputs are retained in [the seven-run scaler table](xem2_shms_sing
 4. Establish sustainable modern Hall C DAQ rates and deadtime for the relevant event size.
 5. Evaluate whether disabling paddles outside the elastic envelope provides useful rate reduction without harming acceptance.
 6. Optimize the NPS distance. The present 3 m value is a well-motivated design standard, but the preferred placement is the largest distance that still matches the NPS solid angle to the HMS-accepted elastic envelope. The study should track elastic yield and edge losses together with angular resolution, occupancy, and trigger-rate changes.
+
+The first dedicated single-analyzer Hall C polarimeter calculation is now
+documented separately in the [focused FPP FOM summary](fpp_fom_summary.md).
+It establishes an SBS-scale ideal integrated FOM, while the trigger-logic
+compatibility and realistic reconstruction-efficiency questions above remain
+open.

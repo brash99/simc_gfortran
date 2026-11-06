@@ -173,6 +173,6 @@ Run 6151 addresses a different question: how efficiently would a high threshold 
 2. Determine whether HMS S1/S2 3-of-4 logic can be retained with the proposed FPP configuration and measure its elastic efficiency.
 3. Establish sustainable Hall C DAQ rate, event-size dependence, deadtime, and livetime measurement conventions.
 4. Optimize NPS distance, choosing the largest distance consistent with solid-angle matching to the HMS elastic envelope while tracking yield, edge losses, resolution, occupancy, and trigger rate.
-5. Complete the FPP figure-of-merit and final precision projection.
+5. Extend the completed first FPP FOM calculation with realistic chamber and pattern-recognition losses, weighted SIMC phase space, data validation, and HMS spin transport; see [the focused FPP summary](fpp_fom_summary.md).
 
 These questions, rather than further refinement of offline-selected DVCS background rates, control proposal readiness.

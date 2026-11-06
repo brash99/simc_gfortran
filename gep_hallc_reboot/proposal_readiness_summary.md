@@ -2,7 +2,7 @@
 
 **Working point:** Q2 approximately 11 GeV2, 10.7 GeV beam, 75 uA, 30 cm LH2, positive-polarity HMS proton arm, NPS electron arm at 3 m
 
-**Updated:** 4 November 2026
+**Updated:** 5 November 2026
 
 ## Executive summary
 
@@ -14,6 +14,7 @@ The present evidence supports the physics reach of an HMS-plus-NPS GEp measureme
 - Run 6887 directly demonstrates a substantial non-electron component.  Its measured total rates are 95.1, 73.7, and 57.7 kHz at the three reference thresholds, while GEANT4-folded inclusive electrons give 47.0, 37.2, and 28.4 kHz.  A completed target-on Wiser-pi0 chain adds only 2.55, 1.09, and 0.46 kHz in the working corrected-3x3 convention; pi-minus is negligible.  The fully inclusive neutral-background calculation is not yet complete.
 - Accidental rates computed from the 7--14 kHz electron component alone are lower bounds, not final trigger predictions.  Until the total NPS rate is established, the trigger design should retain explicit 0.1, 0.3, and 1.0 MHz NPS scenarios.
 - The HMS 3-of-4 trigger scales to approximately 2.90 kHz. If it can be implemented with high elastic efficiency in the FPP configuration, the corresponding nominal 70%-threshold accidental contribution falls below 1 Hz at 20 ns, or approximately 1.7 Hz at 40 ns.
+- A new single-analyzer Hall C FPP GEANT4 calculation gives a useful-pT efficiency of 26.264%, an effective analyzing power of 0.06311, and an intrinsic FOM of 0.001046 per incident proton. Approximately 76% of the FOM lies below 5 degrees, while a 1-degree lower cut retains 97.3%. Applying the provisional NPS-response-reduced yield gives a polarized FOM of approximately 5,670--5,820, comparable to and modestly above the approximately 5,350 SBS best-case planning baseline. This is an ideal truth-associated reconstruction result, not yet a final precision projection.
 
 Earlier DVCS-based studies remain useful for validating the analysis chain, calorimeter response, occupancy, and selected physics backgrounds. Their few-hertz accidental estimates described events surviving restrictive selections and must not be used as predictions of the raw online accidental rate. Those notes are preserved in the [DVCS benchmark archive](archive/dvcs_benchmark_exploration_2026-10-24/README.md).
 
@@ -163,7 +164,7 @@ Paddle masking outside the elastic envelope may help, but it should remain an op
 
 Run 17193 supplies the data normalization: 800 selected elastic events in 150.465 mC on 10 cm LH2. The matched SIMC studies give:
 
-- Accepted-yield ratio for 30 cm versus 10 cm target: 1.8863.
+- HMS-SHMS coincidence accepted-yield ratio for 30 cm versus 10 cm target: 1.8863. This is not an HMS-only extended-target factor. A direct matched scan at the Q2 = 11 HMS+NPS setting gives 20 cm/10 cm = 1.847 and 30 cm/10 cm = 2.571; see the [target-length audit](xem2_run17193_target_length_audit.md).
 - NPS versus SHMS yield ratio in a common comparison window: 4.1078.
 - Full displayed NPS versus SHMS acceptance ratio: 4.3139.
 
@@ -226,6 +227,48 @@ The proton-arm elastic consistency is shown independently in the GEp-III-style v
 
 *Run 17193 data and SIMC in the proton momentum-consistency variable used in the GEp-III analysis.*
 
+### First Hall C FPP figure-of-merit projection
+
+The new public Hall C FPP GEANT4 calculation replaces the earlier assumed
+20% polarimeter efficiency with a first integrated, analyzing-power-weighted
+result.  For a single 55.88 cm polyethylene analyzer, four Hall C FPP drift
+chambers, and 6.7 GeV/c incident protons, the ideal truth-associated
+calculation gives:
+
+| Quantity | Result |
+|---|---:|
+| Useful-pT efficiency | 26.264% |
+| Effective analyzing power within the useful sample | 0.06311 |
+| Intrinsic FOM per incident proton | 0.001046 |
+| Polarized FOM per incident proton at Pe = 0.85 | 0.0007558 |
+
+Approximately 76% of the intrinsic FOM lies below 5 degrees.  A one-degree
+lower polar-angle cut nevertheless retains 97.3%, identifying one degree as a
+practical initial lower limit and establishing why four-chamber tracking is
+important at small angle.
+
+![Single-analyzer Hall C FPP FOM and angular contribution](https://raw.githubusercontent.com/brash99/gep4_fpp_geant4/main/plots/single_55p88cm_fom.png)
+
+Using the provisional NPS-response-reduced yield of 7.5--7.7 million events
+gives an integrated polarized FOM of approximately 5,670--5,820 and an
+approximate single-component uncertainty of 0.0188--0.0185.  The corresponding
+SBS best-case planning baseline, constructed from 9.3 million events, a 20%
+useful FPP efficiency, the same effective analyzing power, and 85% beam
+polarization, is approximately 5,350 with a component uncertainty of 0.0193.
+Thus the present Hall C result is competitive and perhaps modestly better, but
+the difference is only 6--9% in FOM and 3--4% in component uncertainty.
+
+The Hall C result is still idealized: hits are truth-associated, exact drift
+distances are used, and chamber inefficiency, resolution, noise, dead regions,
+and multi-track pattern recognition are absent.  The four-chamber closure plot
+therefore validates the geometry, wire mapping, left/right enumeration, and
+fit algebra; it is not a prediction of experimental angular resolution.
+
+![Ideal four-chamber small-angle reconstruction closure](https://raw.githubusercontent.com/brash99/gep4_fpp_geant4/main/plots/single_55p88cm_four_chamber_reco_closure.png)
+
+The full assumptions, angular-cut scan, SBS comparison, and remaining work are
+collected in the [focused FPP FOM summary](fpp_fom_summary.md).
+
 ## 4. What the DVCS/NPS studies established
 
 NPS E12-13-010 runs 6151 and 2875 were valuable development samples. They established that real hcana data can be compared with SIMC events transported through the NPS GEANT4 model; that run 6151 is dominantly elastic; that the elastic peak is much less dominant at the higher-Q2 run 2875 setting; and that NPS response, occupancy, pileup, and correlated pi0 backgrounds can be studied with the existing pipeline.
@@ -255,7 +298,7 @@ Two modeling cautions remain relevant:
 | Hall C DAQ capacity? | Relevant event-size limit and deadtime need confirmation | Critical path |
 | Optimal NPS distance? | 3 m is a reasonable design standard but has not been optimized | Important design study |
 | Selected NPS backgrounds and response? | Substantial data-plus-GEANT4 groundwork exists | Supporting evidence |
-| FPP precision projection? | Not yet consolidated here | Critical physics item |
+| FPP precision projection? | First single-analyzer calculation gives an SBS-scale integrated FOM; ideal four-chamber tracking closes below 5 degrees, but detector realism, data validation, SIMC phase space, and spin transport remain | Encouraging; no longer an unquantified feasibility assumption |
 
 ## 7. Immediate next steps
 
@@ -264,7 +307,7 @@ Two modeling cautions remain relevant:
 3. Test S1/S2 3-of-4 logic, including FPP compatibility and elastic efficiency across the extended target.
 4. Obtain the Hall C DAQ sustainable-rate and deadtime specification for the expected event size.
 5. Optimize the NPS distance by finding the largest target-to-calorimeter distance that still provides the required solid-angle matching to the HMS elastic acceptance; quantify elastic yield, edge losses, angular resolution, occupancy, and trigger-rate consequences versus distance.
-6. Complete the FPP analyzing-power, efficiency, figure-of-merit, and statistical-precision projection.
+6. Extend the first FPP FOM calculation with chamber response and pattern-recognition losses, weighted GEp-4 SIMC phase space, GEp-III/2gamma data validation, hadronic-model variations, and event-by-event HMS spin transport.
 
 ## Current supporting documentation
 
@@ -273,3 +316,5 @@ Two modeling cautions remain relevant:
 - [Active NPS trigger-particle-composition investigation](trigger_particle_composition/README.md)
 - [Archived NPS and SIMC-GEANT4 development record](archive/nps_simulation_development_2026-10-25/README.md)
 - [Archived DVCS benchmark exploration](archive/dvcs_benchmark_exploration_2026-10-24/README.md)
+- [Focused Hall C FPP figure-of-merit summary](fpp_fom_summary.md)
+- [Public GEANT4 FPP implementation](https://github.com/brash99/gep4_fpp_geant4)
