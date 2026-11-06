@@ -231,7 +231,7 @@ The proton-arm elastic consistency is shown independently in the GEp-III-style v
 
 The new public Hall C FPP GEANT4 calculation replaces the earlier assumed
 20% polarimeter efficiency with a first integrated, analyzing-power-weighted
-result.  For a single 55.88 cm polyethylene analyzer, four Hall C FPP drift
+result.  For a single legacy 22-inch (55.88 cm) polyethylene analyzer, four Hall C FPP drift
 chambers, and 6.7 GeV/c incident protons, the ideal truth-associated
 calculation gives:
 
@@ -263,6 +263,11 @@ distances are used, and chamber inefficiency, resolution, noise, dead regions,
 and multi-track pattern recognition are absent.  The four-chamber closure plot
 therefore validates the geometry, wire mapping, left/right enumeration, and
 fit algebra; it is not a prediction of experimental angular resolution.
+
+The 22-inch analyzer is the legacy constructed hardware baseline rather than
+an optimized GEp-4 thickness.  The simplified geometry can accommodate the
+60 cm scan point, but the actual analyzer frame and chamber clearances must be
+checked before treating any thickness beyond the legacy module as available.
 
 ![Ideal four-chamber small-angle reconstruction closure](https://raw.githubusercontent.com/brash99/gep4_fpp_geant4/main/plots/single_55p88cm_four_chamber_reco_closure.png)
 

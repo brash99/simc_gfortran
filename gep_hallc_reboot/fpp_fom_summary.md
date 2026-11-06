@@ -25,7 +25,7 @@ degree offers little additional statistical return.
 The calculation uses the public
 [`gep4_fpp_geant4`](https://github.com/brash99/gep4_fpp_geant4) implementation:
 
-- one polyethylene analyzer with thickness 55.88 cm;
+- one legacy 22-inch polyethylene analyzer, represented exactly as 55.88 cm;
 - four Hall C FPP drift chambers, each represented by its U/X/V wire planes;
 - 6.7 GeV/c monoenergetic incident protons;
 - GEANT4 `FTFP_BERT` hadronic transport;
@@ -38,6 +38,17 @@ The current track reconstruction is an ideal closure calculation.  Hits are
 truth-associated and use exact unsigned drift distances.  Chamber efficiency,
 drift resolution, noise, competing tracks, dead regions, and full pattern
 recognition have not yet been included.
+
+The 55.88 cm value is a hardware baseline, not a thickness obtained by
+optimizing the GEp-4 FOM.  It is exactly 22 inches and was carried over from
+each of the two legacy GEp-III analyzer modules.  In the ported geometry, the
+distance from the first analyzer's upstream face to the first FPP chamber
+entrance is 61.38 cm, so the 22-inch polyethylene leaves approximately 5.50 cm
+for clearance and surrounding structure.  This strongly suggests that the
+legacy length reflects the constructed analyzer/frame package.  The simulated
+60 cm point fits inside the simplified longitudinal geometry, but it should
+not be described as mechanically available until the existing frame and
+chamber layout are checked.
 
 ## Analyzing power and FOM convention
 
@@ -73,7 +84,7 @@ sigma_component = sqrt(2 / (N * FOM_polarized)).
 This is not yet the uncertainty in `mu_p GE/GM`; the latter requires
 event-by-event HMS spin transport and the polarization likelihood/covariance.
 
-## 55.88 cm single-analyzer result
+## Legacy 22-inch single-analyzer result
 
 For the full useful angular region:
 

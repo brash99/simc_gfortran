@@ -32,7 +32,7 @@
 \subtitle{Data anchors, present assessment, and critical-path questions}
 \author{Edward J. Brash}
 \institute{Christopher Newport University and Jefferson Lab}
-\date{Updated 5 November 2026}
+\date{Updated 6 November 2026}
 
 \begin{document}
 
@@ -192,6 +192,164 @@
     \textbf{The background is now at the required scale}; the high-threshold
     deficit and 3x3 energy convention remain open.
   \end{block}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{A single analyzer preserves the small-angle FPP acceptance}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.50\textwidth}
+      \includegraphics[width=\linewidth]{figures/single_55p88cm_hybrid_theta_switch.png}
+
+    \column{0.48\textwidth}
+      \small
+      \begin{itemize}
+        \item Legacy FPP frame: one 22-inch CH$_2$ analyzer.
+        \item $\theta_{\rm polar}<12^\circ$: reconstruct with FPP1--FPP4;
+        four chambers constrain the left/right ambiguity.
+        \item $\theta_{\rm polar}>12^\circ$: reconstruct with FPP1 and FPP2;
+        the larger deflection resolves the ambiguity and avoids downstream
+        cone-test loss.
+        \item Truth efficiency peaks near the
+        \alert{$12^\circ$ transition}.
+      \end{itemize}
+
+      \begin{block}{Four-chamber closure}
+        All 59,113 truth-selected events from $0^\circ$ to $10^\circ$
+        reconstruct in the ideal fit, with no large angular outliers.
+      \end{block}
+  \end{columns}
+
+  \vspace{-0.04cm}
+  {\tiny\alert{Ideal closure:} truth-associated hits and exact drifts;
+  efficiency, resolution, noise, and pattern recognition remain.}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Hall C chamber geometry and wire-level tracking}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.34\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{figures/single_55p88cm_accepted_efficiency_0_10deg.png}
+    \column{0.33\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{figures/single_55p88cm_theta_zclose.png}
+    \column{0.33\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{figures/single_55p88cm_sclose.png}
+  \end{columns}
+
+  \vspace{-0.12cm}
+  {\scriptsize
+  \begin{itemize}
+    \item Ported the four measured chamber positions and twelve U/X/V planes
+    from the GEp-III parameters: 104/83/104 wires per chamber with 2 cm pitch.
+    \item Digitize plane and wire number plus unsigned drift distance; enumerate
+    the left/right signs and retain the minimum reduced-$\chi^2$ $x(z),y(z)$ fit.
+    \item Calculate the FPP observables relative to the HMS track and apply the
+    cone test.  The efficiency density at left includes the analyzer-volume,
+    cone-test, reconstruction, and 1 cm $s_{\rm close}$ requirements.
+  \end{itemize}}
+
+  \vspace{-0.02cm}
+  {\tiny\alert{Ideal closure:} truth-associated hits and exact drifts; the fit
+  receives neither the truth coordinate nor its sign. Detector response and
+  multi-track recognition remain.}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{FPP acceptance and intrinsic figure of merit}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.56\textwidth}
+      \includegraphics[width=\linewidth,height=0.58\textheight,keepaspectratio]{figures/single_55p88cm_fom.png}
+      \par
+      \vspace{-0.12cm}
+      {\scriptsize 6.7 GeV/$c$, legacy 22-inch CH$_2$, GEp-III $A_y$ model,
+      $0.07<p_T<1.0$ GeV/$c$.}
+
+      \vspace{0.10cm}
+      {\tiny The $A_y$ parameterization comes from GEp-III/GEp-2$\gamma$ and
+      was later used in SBS planning; its use at 6.7 GeV/$c$ is an
+      extrapolation, not an SBS data validation.  The quoted
+      $A_{y,\mathrm{eff}}=0.06311$ is the $A_y^2$-weighted RMS over accepted
+      useful-$p_T$ events, not the peak or an ordinary mean.}
+
+    \column{0.42\textwidth}
+      \small
+      \begin{block}{Intrinsic polarimeter result}
+        \centering
+        \scriptsize
+        \begin{tabular}{@{}lr@{}}
+          \toprule
+          Useful-$p_T$ efficiency & 26.264\% \\
+          Effective $A_y$ & 0.06311 \\
+          FOM / incident proton & 0.001046 \\
+          FOM / proton, $P_e=0.85$ & 0.0007558 \\
+          \bottomrule
+        \end{tabular}
+      \end{block}
+
+      \begin{block}{Angular content}
+        \scriptsize
+        About 76\% of the FOM lies below $5^\circ$.  A $1^\circ$ lower cut
+        retains 97.3\% of the integrated FOM.
+      \end{block}
+
+      \begin{block}{Tracking status}
+        \tiny
+        \textbf{Implemented:} actual chamber and wire geometry, unsigned drift
+        distances, left/right enumeration, simultaneous $x(z),y(z)$ fits,
+        minimum-$\chi^2$ selection, reconstructed observables, and the cone test.
+        \textbf{Still idealized:} truth-associated hits and exact drifts; no
+        chamber inefficiency, resolution, noise, or multi-track recognition.
+      \end{block}
+  \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{FPP figure of merit and projected component precision}
+  \small
+  Define the beam-polarization-weighted FOM per incident elastic proton as
+  \[
+    \mathrm{FOM}=\epsilon_{\rm FPP}\,(P_e A_y)^2,
+    \qquad
+    \sigma_{\rm component}=\sqrt{\frac{2}{N\,\mathrm{FOM}}}.
+  \]
+
+  \begin{columns}[T,onlytextwidth]
+    \column{0.49\textwidth}
+      \begin{block}{SBS planning benchmark}
+        \scriptsize
+        \begin{align*}
+          \mathrm{FOM}_{\rm SBS}
+            &=(0.20)(0.85\times0.06311)^2\\
+            &=5.75\times10^{-4}\ \text{per incident proton},\\[2pt]
+          \sigma_{\rm component}
+            &=\sqrt{\frac{2}{(9.3\times10^6)(5.75\times10^{-4})}}\\
+            &\simeq \alert{0.0193}.
+        \end{align*}
+      \end{block}
+
+    \column{0.49\textwidth}
+      \begin{block}{Current Hall C projection}
+        \scriptsize
+        \begin{align*}
+          \mathrm{FOM}_{\rm Hall\ C} &= 7.558\times10^{-4}
+          \ \text{per incident proton},\\
+          N &= 7.5\text{--}7.7\times10^6,\\[2pt]
+          \sigma_{\rm component}
+            &=\sqrt{\frac{2}{N\,\mathrm{FOM}_{\rm Hall\ C}}}\\
+            &=\alert{0.0188\text{--}0.0185}.
+        \end{align*}
+      \end{block}
+
+      \begin{block}{Interpretation}
+        \scriptsize
+        FOM is a dimensionless weight per incident proton; $N\,\mathrm{FOM}$
+        is the total statistical weight for one polarization component.  It is
+        \textbf{not} the uncertainty in $\mu_pG_E/G_M$.  For SBS, the 20\%
+        efficiency is an assumed effective reconstructed efficiency.
+      \end{block}
+  \end{columns}
 \end{frame}
 
 \end{document}

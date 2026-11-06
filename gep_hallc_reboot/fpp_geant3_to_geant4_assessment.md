@@ -44,13 +44,13 @@ elastic ep or generated focal-plane phase space
   HMS DC1 -> HMS DC2 -> S1 -> S2
                     |
                     v
-          55.88 cm CH2 analyzer 1
+       legacy 22-inch CH2 analyzer 1
                     |
                     v
           FPP DC1 -> FPP DC2
                     |
                     v
-          55.88 cm CH2 analyzer 2
+       legacy 22-inch CH2 analyzer 2
                     |
                     v
           FPP DC3 -> FPP DC4
@@ -64,6 +64,14 @@ FPP chamber transverse half-sizes are 83 cm by 67 cm.  Most downstream
 elements are offset horizontally by 5.08 cm relative to the HMS chambers.
 These numbers should be checked against the GEp-III engineering survey before
 being treated as the proposed GEp-4 geometry.
+
+The analyzer thickness of 55.88 cm is exactly 22 inches.  It represents the
+legacy constructed analyzer module rather than a GEp-4 optimization result.
+The ported coordinates provide 61.38 cm between the analyzer upstream face
+and the nominal entrance to FPP1, leaving approximately 5.50 cm beyond the
+polyethylene for clearance and frame structure.  Although a 60 cm block fits
+inside the simplified GEANT4 spacing, its mechanical compatibility with the
+existing frame has not been established.
 
 ### Event generation and HMS transport
 
@@ -172,7 +180,7 @@ Do not initially port:
 - the commented polarization-rejection code.
 
 This phase now supplies a first momentum- and geometry-dependent replacement
-for the assumed constant 20% FPP efficiency.  For a 55.88 cm analyzer and
+for the assumed constant 20% FPP efficiency.  For the legacy 22-inch analyzer and
 6.7 GeV/c central-ray protons, the ideal useful-pT efficiency is 26.264% and
 the intrinsic FOM per incident proton is 0.001046.  Analyzer-thickness and
 detector-realism studies remain.
