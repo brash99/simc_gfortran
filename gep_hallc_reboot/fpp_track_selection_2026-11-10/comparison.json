@@ -1,0 +1,97 @@
+{
+  "source_sha256": {
+    "src/EventAction.cc": "c4ccb7db9406e10270d58c87476967b90ef189eff2af6afed14157135d476108",
+    "src/RunAction.cc": "f87e9a7b889ccc96968a1c9ece25a370f36d96db027695fba1a8593269ddb9f9",
+    "analysis/track_selection.py": "23ca583af7e6ace87b197422cffc0628af01209e0b62ea38f6c93b10af82117f",
+    "analysis/compare_track_selection.py": "2f6937a022196ed5afffa14f72cc77b4219963a6d4c8ddb252b47983c70a86d1",
+    "analysis/analyzing_power.py": "b44452fb77fc3ab5cdeb9ab54eedc5116af24e3cc75fdabdba0958afe07ab85c"
+  },
+  "input_file": "/w/hallc-scshelf2102/gep/brash/gep4_fpp_geant4/runs/track_selection_14574698/transport.root",
+  "events": 100000,
+  "incident_weight": 100000.0,
+  "candidate_rows": 240057,
+  "front_multiplicity": {
+    "0": 2682,
+    "1": 51876,
+    "2": 12664,
+    "3": 8652,
+    "4": 7729,
+    "5": 6026,
+    "6": 4195,
+    "7": 2665,
+    "8": 1623,
+    "9": 882,
+    "10": 482,
+    "11": 254,
+    "12": 147,
+    "13": 60,
+    "14": 32,
+    "15": 16,
+    "16": 6,
+    "17": 5,
+    "19": 3,
+    "20": 1
+  },
+  "policies": {
+    "legacy": {
+      "accepted_events": 68178,
+      "useful_events": 26264,
+      "accepted_weight": 68178.0,
+      "useful_weight": 26264.0,
+      "ay2_weight": 104.61343187738582,
+      "multi_useful_events": 13772,
+      "multi_ay2_weight": 61.723907642908316,
+      "useful_efficiency": 0.26264,
+      "intrinsic_fom": 0.0010461343187738582,
+      "polarized_fom": 0.0007558320453141124,
+      "effective_Ay": 0.0631121957236699,
+      "useful_efficiency_mc_se": 0.0013916185914251073,
+      "intrinsic_fom_mc_se": 6.727282795438174e-06
+    },
+    "single": {
+      "accepted_events": 41104,
+      "useful_events": 12492,
+      "accepted_weight": 41104.0,
+      "useful_weight": 12492.0,
+      "ay2_weight": 42.889524234477875,
+      "multi_useful_events": 0,
+      "multi_ay2_weight": 0.0,
+      "useful_efficiency": 0.12492,
+      "intrinsic_fom": 0.00042889524234477873,
+      "polarized_fom": 0.00030987681259410263,
+      "effective_Ay": 0.058594874252813275,
+      "useful_efficiency_mc_se": 0.0010455381083442153,
+      "intrinsic_fom_mc_se": 4.43576589472971e-06
+    },
+    "min_angle": {
+      "accepted_events": 69666,
+      "useful_events": 28939,
+      "accepted_weight": 69666.0,
+      "useful_weight": 28939.0,
+      "ay2_weight": 117.79701082835734,
+      "multi_useful_events": 16447,
+      "multi_ay2_weight": 74.90748659387967,
+      "useful_efficiency": 0.28939,
+      "intrinsic_fom": 0.0011779701082835735,
+      "polarized_fom": 0.0008510834032348818,
+      "effective_Ay": 0.06380068993209861,
+      "useful_efficiency_mc_se": 0.001434027293673311,
+      "intrinsic_fom_mc_se": 7.070940940998055e-06
+    }
+  },
+  "useful_overlap": {
+    "legacy0_min_angle0": 70465,
+    "legacy1_min_angle1": 25668,
+    "legacy0_min_angle1": 3271,
+    "legacy1_min_angle0": 596
+  },
+  "baseline_physics_branches_exact": true,
+  "baseline_excluded_metadata": [
+    "event_id",
+    "weight",
+    "incident_p_GeV"
+  ],
+  "candidate_baseline_exact": true,
+  "beam_polarization": 0.85,
+  "convention": "Ideal truth-associated tracks; count all front-pair tracks before cuts; smallest-angle choice before cuts; multi-track Ay unvalidated"
+}

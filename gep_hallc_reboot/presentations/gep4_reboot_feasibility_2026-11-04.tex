@@ -32,7 +32,7 @@
 \subtitle{Data anchors, present assessment, and critical-path questions}
 \author{Edward J. Brash}
 \institute{Christopher Newport University and Jefferson Lab}
-\date{Updated 6 November 2026}
+\date{Updated 10 November 2026}
 
 \begin{document}
 
@@ -247,7 +247,7 @@
     the left/right signs and retain the minimum reduced-$\chi^2$ $x(z),y(z)$ fit.
     \item Calculate the FPP observables relative to the HMS track and apply the
     cone test.  The efficiency density at left includes the analyzer-volume,
-    cone-test, reconstruction, and 1 cm $s_{\rm close}$ requirements.
+    cone-test and 1 cm $s_{\rm close}$ requirements on truth-associated candidates.
   \end{itemize}}
 
   \vspace{-0.02cm}
@@ -257,99 +257,212 @@
 \end{frame}
 
 % -----------------------------------------------------------------------------
-\begin{frame}{FPP acceptance and intrinsic figure of merit}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.56\textwidth}
-      \includegraphics[width=\linewidth,height=0.58\textheight,keepaspectratio]{figures/single_55p88cm_fom.png}
-      \par
-      \vspace{-0.12cm}
-      {\scriptsize 6.7 GeV/$c$, legacy 22-inch CH$_2$, GEp-III $A_y$ model,
-      $0.07<p_T<1.0$ GeV/$c$.}
-
-      \vspace{0.10cm}
-      {\tiny The $A_y$ parameterization comes from GEp-III/GEp-2$\gamma$ and
-      was later used in SBS planning; its use at 6.7 GeV/$c$ is an
-      extrapolation, not an SBS data validation.  The quoted
-      $A_{y,\mathrm{eff}}=0.06311$ is the $A_y^2$-weighted RMS over accepted
-      useful-$p_T$ events, not the peak or an ordinary mean.}
-
-    \column{0.42\textwidth}
-      \small
-      \begin{block}{Intrinsic polarimeter result}
-        \centering
-        \scriptsize
-        \begin{tabular}{@{}lr@{}}
-          \toprule
-          Useful-$p_T$ efficiency & 26.264\% \\
-          Effective $A_y$ & 0.06311 \\
-          FOM / incident proton & 0.001046 \\
-          FOM / proton, $P_e=0.85$ & 0.0007558 \\
-          \bottomrule
-        \end{tabular}
-      \end{block}
-
-      \begin{block}{Angular content}
-        \scriptsize
-        About 76\% of the FOM lies below $5^\circ$.  A $1^\circ$ lower cut
-        retains 97.3\% of the integrated FOM.
-      \end{block}
-
-      \begin{block}{Tracking status}
-        \tiny
-        \textbf{Implemented:} actual chamber and wire geometry, unsigned drift
-        distances, left/right enumeration, simultaneous $x(z),y(z)$ fits,
-        minimum-$\chi^2$ selection, reconstructed observables, and the cone test.
-        \textbf{Still idealized:} truth-associated hits and exact drifts; no
-        chamber inefficiency, resolution, noise, or multi-track recognition.
-      \end{block}
-  \end{columns}
+\begin{frame}{Single-track vs. Multi-track FOM}
+  \small
+  Use the same beam-polarization-weighted normalization per incident proton:
+  \[
+    \mathrm{FOM}=P_e^2\,\epsilon_{\rm FPP}\langle A_y^2\rangle,
+    \qquad P_e=0.85.
+  \]
+  \vspace{-0.25cm}
+  \begin{center}
+    \renewcommand{\arraystretch}{1.35}
+    \begin{tabular}{@{}lccc@{}}
+      \toprule
+      Estimate / selection & Useful efficiency & $A_y$ input & FOM / proton \\
+      \midrule
+      Andrew's planning estimate & 20\% assumed & $\sim$0.050 & $\sim3.60\times10^{-4}$ \\
+      Hall C: single tracks (no $1^\circ$ cut) & 12.492\% & 0.05859 RMS & $3.10\times10^{-4}$ \\
+      Hall C: smallest angle $>1^\circ$ & 25.892\% & 0.06704 RMS & $8.41\times10^{-4}$\rlap{$^{*}$} \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{-0.1cm}
+  \begin{block}{What explains the initial discrepancy}
+    \small
+    Our original $7.56\times10^{-4}$ included multi-track events.
+    Restricting to single tracks gives a result only \textbf{14\% below Andrew's}
+    $3.6\times10^{-4}$ estimate, with the GEp-III $A_y$ parametrization.
+  \end{block}
+  {\scriptsize Andrew uses an estimated average $A_y$; the simulation integrates
+  $A_y^2$ event by event. FOM agreement does not imply identical efficiency or cuts.\\[2pt]
+  $^{*}$Multi-track FOM is provisional: it assumes the single-track $A_y$ model applies.}
+  \note{Andrew Puckett email to Ed Brash, 10 November 2026, 11:30 AM, pp. 2--3 of andrew.pdf.
+  Andrew quotes 3.6e-4 per incident proton; 20 percent and Ay approximately 0.05 give
+  0.20*(0.85*0.05)^2=3.6125e-4. Hall C numbers: comparison_gt1.json,
+  run track_selection_14574698 in /work/hallc/gep/brash/gep4_fpp_geant4/runs.
+  100,000 central-ray 6.7 GeV/c protons, FTFP_BERT, 55.88 cm CH2.
+  Exclusive-single-track row retains the original useful-pT window without an explicit
+  one-degree cut. Smallest-angle row restricts candidates to theta strictly above
+  one degree before ranking. Both are ideal truth-associated selections.}
 \end{frame}
 
 % -----------------------------------------------------------------------------
-\begin{frame}{FPP figure of merit and projected component precision}
+\begin{frame}{Analyzing-power parametrization and FOM weighting}
   \small
-  Define the beam-polarization-weighted FOM per incident elastic proton as
+  The same construction appears in the SBS planning code and Andrew's description:
   \[
-    \mathrm{FOM}=\epsilon_{\rm FPP}\,(P_e A_y)^2,
-    \qquad
-    \sigma_{\rm component}=\sqrt{\frac{2}{N\,\mathrm{FOM}}}.
+    A_y(p,p_T)=\left(0.0342+\frac{0.348}{p}\right)
+      \sqrt{2eb}\,p_Te^{-bp_T^2},
+    \qquad b=2.42614689.
   \]
+  {\scriptsize $b$: inverse-variance-weighted mean of the three high-$Q^2$ fits;
+  $A_y^{\max}=0.0342+0.348/p$. Use $p_T=p\sin\theta$, with $p,p_T$ in GeV/$c$.}
 
-  \begin{columns}[T,onlytextwidth]
-    \column{0.49\textwidth}
-      \begin{block}{SBS planning benchmark}
-        \scriptsize
-        \begin{align*}
-          \mathrm{FOM}_{\rm SBS}
-            &=(0.20)(0.85\times0.06311)^2\\
-            &=5.75\times10^{-4}\ \text{per incident proton},\\[2pt]
-          \sigma_{\rm component}
-            &=\sqrt{\frac{2}{(9.3\times10^6)(5.75\times10^{-4})}}\\
-            &\simeq \alert{0.0193}.
-        \end{align*}
-      \end{block}
+  \vspace{0.12cm}
+  \textbf{Same exclusive single-track sample:}
+  $p=6.7$ GeV/$c$, $\epsilon=12.492\%$, $P_e=0.85$.
+  \begin{center}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{@{}lcc@{}}
+      \toprule
+      Averaging convention & Effective $A_y$ & FOM / incident proton \\
+      \midrule
+      Square of mean: $P_e^2\epsilon\langle A_y\rangle^2$
+        & 0.05484 & $2.714\times10^{-4}$ \\
+      Mean square: $P_e^2\epsilon\langle A_y^2\rangle$
+        & 0.05859 RMS & $3.099\times10^{-4}$ \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{-0.10cm}
+  \textbf{Event-by-event weighting gives 14.2\% more FOM}, not a factor of two.
+  No parametrization mismatch was found.
 
-    \column{0.49\textwidth}
-      \begin{block}{Current Hall C projection}
-        \scriptsize
-        \begin{align*}
-          \mathrm{FOM}_{\rm Hall\ C} &= 7.558\times10^{-4}
-          \ \text{per incident proton},\\
-          N &= 7.5\text{--}7.7\times10^6,\\[2pt]
-          \sigma_{\rm component}
-            &=\sqrt{\frac{2}{N\,\mathrm{FOM}_{\rm Hall\ C}}}\\
-            &=\alert{0.0188\text{--}0.0185}.
-        \end{align*}
-      \end{block}
+  \vspace{0.18cm}
+  {\scriptsize Table VII's $\bar A_y$ is an asymmetry-calibrated effective average,
+  not an RMS. Its $0.06\le p_T\le1.2$ GeV/$c$ range also differs from our
+  $0.07\le p_T\le1.0$ GeV/$c$ selection (no explicit $1^\circ$ cut here).}
+  \note{Sources: Puckett et al., Phys. Rev. C 96, 055203 (2017),
+  Sec. III.B.7 and Table VII; https://arxiv.org/html/1707.08587 .
+  Local primary code: /Users/brash/g4sbs/root_macros/GEP_FOM_quick_and_dirty.C,
+  lines 95--131, 467--468 and 502--504. Our analysis/analyzing_power.py has
+  identical constants and functional form. Numerical comparison at 1,407
+  momentum/angle combinations gave maximum relative discrepancy 9.5e-16.
+  Andrew's current private source was not inspected; his email description
+  and the locally available SBS macro match our implementation.
+  b uses (2.376 +/- 0.189), (2.776 +/- 0.212), (2.292 +/- 0.145).
+  At p=6.7 GeV/c the peak Ay is 0.0861403, at pT=0.453969 GeV/c,
+  theta=3.88514 degrees; neither the mean nor RMS is the peak.
+  Means were recomputed from the 12,492 useful single-track events in
+  comparison_gt1_events.csv from run track_selection_14574698.
+  Mean Ay=0.054839906861449884; RMS Ay=0.058594874252813275.
+  The FOM ratio is 1.141631218. This is a comparison of averaging conventions
+  for identical simulated events, not a comparison of different acceptances.
+  Full form-factor uncertainty still requires event-dependent spin transport.}
+\end{frame}
 
-      \begin{block}{Interpretation}
-        \scriptsize
-        FOM is a dimensionless weight per incident proton; $N\,\mathrm{FOM}$
-        is the total statistical weight for one polarization component.  It is
-        \textbf{not} the uncertainty in $\mu_pG_E/G_M$.  For SBS, the 20\%
-        efficiency is an assumed effective reconstructed efficiency.
-      \end{block}
-  \end{columns}
+% -----------------------------------------------------------------------------
+\begin{frame}{SBS asymmetry supports the analyzing-power scale}
+  \small
+  Andrew's preliminary $Q^2=11$ GeV$^2$ data give a sine amplitude
+  $|s|=0.02971\pm0.00403$. In the leading dipole approximation,
+  \[
+    A_{y,\mathrm{eff}}\simeq
+      \frac{|s|}{P_eP_\ell|\sin\chi|},
+    \qquad P_e\simeq0.87.
+  \]
+  {\scriptsize Illustrative Born kinematics: $E=10.7$ GeV,
+  $Q^2=11$ GeV$^2$, $\mu_pG_E/G_M=0.2$ give $\epsilon=0.684$,
+  $P_\ell=0.729$, $P_t=-0.027$ for a fully polarized beam.}
+
+  \vspace{0.12cm}
+  \begin{center}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{@{}lc@{}}
+      \toprule
+      Estimate / assumption & Effective average $A_y$ \\
+      \midrule
+      SBS data, $|\sin\chi|=1$ & $0.0468\pm0.0064$ \\
+      SBS data, $\chi=1.3$ rad & $0.0486\pm0.0066$ \\
+      Our simulated single-track mean & 0.05484 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{-0.10cm}
+  \textbf{The estimates agree within roughly one statistical standard deviation.}
+  Varying $\mu_pG_E/G_M$ from 0 to 0.4 changes $P_\ell$ by less than 0.5\%.
+
+  \vspace{0.15cm}
+  {\scriptsize Errors shown propagate the plotted asymmetry uncertainty only.
+  This estimate uses approximate central kinematics and spin precession;
+  acceptance averaging and background dilution are not determined here.
+  It estimates a mean $A_y$, not the RMS, and does not validate multi-track FOM.\\[2pt]
+  Source: A. Puckett, SBS Collaboration Meeting, 2 March 2026, slides 9, 10, 36.}
+  \note{Primary source: Andrew Puckett, GEP Analysis Status, 2 March 2026,
+  https://indico.jlab.org/event/1009/contributions/18155/attachments/13773/22270/PuckettGEP.pdf .
+  Slide 36 data fit: c1=0.001119 +/- 0.003662, s1=-0.02971 +/- 0.00403;
+  simulated fit: c1=0.004153 +/- 0.002613, s1=-0.03147 +/- 0.00261.
+  Absolute sine amplitudes are used to avoid coordinate-sign ambiguity.
+  Data/simulation sine-amplitude ratio=0.944 +/- 0.150, assuming independent
+  fit errors; its interpretation as an Ay scale ratio additionally assumes
+  matching beam polarization, spin transport, and accepted kinematics.
+  Slide 9 locates the SBS high-Q2 precession near maximal longitudinal-to-
+  transverse conversion; chi=1.3 rad is illustrative, not a measured mean.
+  Slide 10 gives approximate beam polarization of 87 percent.
+  Born polarization formulas: Puckett et al., Phys. Rev. C 96, 055203 (2017),
+  Sec. III.B.7, https://arxiv.org/html/1707.08587 .
+  With epsilon=0.6836690815 and tau=3.1237416342, R=0.2 gives
+  Pl=0.7289739740, Pt=-0.0266174758. Pl is normalized to Pe=1, so Pe enters
+  the asymmetry conversion once. R=0--0.4 gives Pl=0.729792--0.726530.
+  The comparison value 0.0548399069 is our ordinary single-track mean, not
+  our RMS 0.0585948743. Different experimental and simulated acceptances
+  prevent interpreting this rough consistency check as a calibrated extraction.}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Smallest-angle selection recovers useful multi-track events}
+  \begin{center}
+    \includegraphics[width=0.98\linewidth,height=0.68\textheight,keepaspectratio]{figures/fpp_track_selection_gt1_2026-11-10.png}
+  \end{center}
+  \vspace{-0.20cm}
+  {\scriptsize
+  \textbf{Rule:} choose the smallest polar angle strictly above $1^\circ$, then
+  apply the existing chamber, cone, closest-approach, and useful-$p_T$ cuts.\\[2pt]
+  \textbf{Result:} 25,892 useful events, including 16,229 multi-track events,
+  per 100,000 protons; 98.79\% of the previous FOM retained.}
+  \note{Plot: comparison_gt1.png, generated from the same saved 100,000-event
+  transport file used in the prior study; output provenance in comparison_gt1.json.
+  All tracks crossing FPP1--FPP2 are counted before cuts. The chosen track must
+  also cross FPP3--FPP4 below 12 degrees. The angle filter precedes ranking;
+  a track at or below one degree does not veto another eligible track.
+  No outgoing momentum is used in this choice. A chosen track that fails a
+  remaining cut is not replaced. The exclusive-single-track blue reference
+  retains no explicit one-degree bound; it is labeled accordingly in the plot.}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Multi-track recovery could improve the FPP statistical reach}
+  \small
+  The single-track calculation supports Andrew's FOM scale. The simulation
+  suggests that retaining some multi-track events could do better.
+  \[
+    \sigma_{\rm component}=\sqrt{\frac{2}{N\,\mathrm{FOM}}},
+    \qquad N=7.5\text{--}7.7\times10^6.
+  \]
+  \begin{center}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{@{}lcc@{}}
+      \toprule
+      FPP selection & FOM / incident proton & $\sigma_{\rm component}$ \\
+      \midrule
+      Exclusive single tracks & $3.10\times10^{-4}$ & 0.0293--0.0290 \\
+      Smallest angle $>1^\circ$, including multi-track & $8.41\times10^{-4}$ & 0.0178--0.0176\rlap{$^{*}$} \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{-0.10cm}
+  {\scriptsize $^{*}$Provisional: GEp-III single-track $A_y$ applied to ideal,
+  truth-associated multi-track events. Detector efficiency, resolution, noise,
+  and multi-track pattern recognition remain to be included. These are
+  polarization-component uncertainties, not uncertainties in $\mu_pG_E/G_M$.}
+  \note{N=7.5--7.7 million is the pre-existing provisional Hall C elastic yield
+  after NPS response, not a new yield determination. Component uncertainties
+  use Pe=0.85 exactly once through polarized_fom. Full values for single tracks:
+  FOM=0.00030987681259410263. For smallest angle strictly above one degree:
+  FOM=0.0008407773650280434. Multiple-track analyzing power is not validated.
+  Treat the single-track result as the baseline and multi-track recovery
+  as a potential improvement.}
 \end{frame}
 
 \end{document}

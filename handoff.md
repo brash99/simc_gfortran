@@ -1,5 +1,13 @@
 # SIMC repository handoff
 
+## Latest GEp-4 / Andrew handoff (10 November 2026)
+
+Read [the dated Andrew discussion handoff](gep_hallc_reboot/CODEX_HANDOFF_ANDREW_2026-11-10.md)
+for the current FPP track-selection results, analyzing-power checks, 13-slide
+presentation, farm source snapshots, and laptop transfer instructions. It
+supersedes the older FPP conclusions in these historical notes. The current
+presentation and study changes remain uncommitted; no pushes were made.
+
 Reviewed 2026-10-22. This document records the initial repository orientation and static review; it is not a physics certification.
 
 ## Latest GEp-IV hybrid status (2026-10-23)
