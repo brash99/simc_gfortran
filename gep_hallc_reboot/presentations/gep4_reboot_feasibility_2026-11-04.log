@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.6)  6 NOV 2026 12:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.6)  11 NOV 2026 15:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -817,9 +817,9 @@ Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
 \ar@cellbox=\box85
 ))
 Package translations Info: No language package found. I am going to use `englis
-h' as default language. on input line 37.
+h' as default language. on input line 35.
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 3
-7.
+5.
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
@@ -832,24 +832,24 @@ File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 (./gep4_reboot_feasibility_2026-11-04.aux)
 \openout1 = `gep4_reboot_feasibility_2026-11-04.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -907,7 +907,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 37.
+Package hyperref Info: Link coloring OFF on input line 35.
 
 (./gep4_reboot_feasibility_2026-11-04.out)
 (./gep4_reboot_feasibility_2026-11-04.out)
@@ -915,51 +915,51 @@ Package hyperref Info: Link coloring OFF on input line 37.
 \openout5 = `gep4_reboot_feasibility_2026-11-04.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 37.
+(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 35.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 37.
+(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 35.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 37.
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 35.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 37.
+(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 35.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 37.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 37.
+(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 35.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 37.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 37.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 37.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 35.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 37.
+(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 37.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 37.
+(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 35.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 37.
+(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 37.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 37.
+(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 35.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 37.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 37.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 35.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 37.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 35.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 37.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 37.
+(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 37.
+(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 37.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 37.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 35.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 37.
+(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 35.
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/translator/translator-basic-dicti
 onary-English.dict
@@ -991,62 +991,62 @@ File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 37.
+or `english'. on input line 35.
  (./gep4_reboot_feasibility_2026-11-04.nav)
 LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
-48.
+46.
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 4
-8.
+6.
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-48.
+46.
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-48.
+46.
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 48.
+(Font)              <10> on input line 46.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 48.
+(Font)              <7> on input line 46.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 48.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 48.
+(Font)              <5> on input line 46.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 46.
 
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 48.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 46.
 
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 48.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 46.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 48.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 46.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 48.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 46.
  [1
 
 {/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
 al/texlive/2023/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/202
 3/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}]
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 77
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 75
 .
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/lm/t1lmr.fd
@@ -1058,7 +1058,7 @@ File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 File: ../plots/xem2_run17193_hms_dp_simc.png Graphic file (type png)
 <use ../plots/xem2_run17193_hms_dp_simc.png>
 Package pdftex.def Info: ../plots/xem2_run17193_hms_dp_simc.png  used on input 
-line 111.
+line 109.
 (pdftex.def)             Requested size: 251.9123pt x 174.87859pt.
  [3
 
@@ -1068,7 +1068,7 @@ line 111.
 File: ../plots/xem2_hms_paddle_good_edtm.png Graphic file (type png)
 <use ../plots/xem2_hms_paddle_good_edtm.png>
 Package pdftex.def Info: ../plots/xem2_hms_paddle_good_edtm.png  used on input 
-line 140.
+line 138.
 (pdftex.def)             Requested size: 298.54411pt x 193.96434pt.
  [4
 
@@ -1080,10 +1080,10 @@ File: ../plots/nps_inclusive_generator_six_run_validation.png Graphic file (typ
 e png)
 <use ../plots/nps_inclusive_generator_six_run_validation.png>
 Package pdftex.def Info: ../plots/nps_inclusive_generator_six_run_validation.pn
-g  used on input line 170.
+g  used on input line 168.
 (pdftex.def)             Requested size: 276.13591pt x 162.0381pt.
 
-Overfull \hbox (3.22594pt too wide) in paragraph at lines 170--170
+Overfull \hbox (3.22594pt too wide) in paragraph at lines 168--168
  [][] 
  []
 
@@ -1097,7 +1097,7 @@ slide.png Graphic file (type png)
 <use ../trigger_particle_composition/nps_run6887_measured_vs_geant4_electrons_s
 lide.png>
 Package pdftex.def Info: ../trigger_particle_composition/nps_run6887_measured_v
-s_geant4_electrons_slide.png  used on input line 195.
+s_geant4_electrons_slide.png  used on input line 193.
 (pdftex.def)             Requested size: 230.6788pt x 124.56354pt.
  [6
 
@@ -1108,16 +1108,16 @@ t>
 File: figures/single_55p88cm_hybrid_theta_switch.png Graphic file (type png)
 <use figures/single_55p88cm_hybrid_theta_switch.png>
 Package pdftex.def Info: figures/single_55p88cm_hybrid_theta_switch.png  used o
-n input line 225.
+n input line 223.
 (pdftex.def)             Requested size: 217.62202pt x 159.99814pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 225.
+(Font)              <9> on input line 223.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 225.
+(Font)              <6> on input line 223.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 225.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 223.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 225.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 223.
 
 [7
 
@@ -1128,35 +1128,103 @@ File: figures/single_55p88cm_accepted_efficiency_0_10deg.png Graphic file (type
  png)
 <use figures/single_55p88cm_accepted_efficiency_0_10deg.png>
 Package pdftex.def Info: figures/single_55p88cm_accepted_efficiency_0_10deg.png
-  used on input line 257.
+  used on input line 255.
 (pdftex.def)             Requested size: 147.98137pt x 102.72461pt.
 <figures/single_55p88cm_theta_zclose.png, id=181, 899.36pt x 624.3325pt>
 File: figures/single_55p88cm_theta_zclose.png Graphic file (type png)
 <use figures/single_55p88cm_theta_zclose.png>
 Package pdftex.def Info: figures/single_55p88cm_theta_zclose.png  used on input
- line 257.
+ line 255.
 (pdftex.def)             Requested size: 143.63133pt x 99.70471pt.
 <figures/single_55p88cm_sclose.png, id=182, 899.36pt x 624.3325pt>
 File: figures/single_55p88cm_sclose.png Graphic file (type png)
 <use figures/single_55p88cm_sclose.png>
 Package pdftex.def Info: figures/single_55p88cm_sclose.png  used on input line 
-257.
+255.
 (pdftex.def)             Requested size: 143.63133pt x 99.70471pt.
  [8
 
  <./figures/single_55p88cm_accepted_efficiency_0_10deg.png> <./figures/single_5
-5p88cm_theta_zclose.png> <./figures/single_55p88cm_sclose.png>]
-<figures/single_55p88cm_fom.png, id=190, 1501.61pt x 1076.02pt>
-File: figures/single_55p88cm_fom.png Graphic file (type png)
-<use figures/single_55p88cm_fom.png>
-Package pdftex.def Info: figures/single_55p88cm_fom.png  used on input line 306
-.
-(pdftex.def)             Requested size: 198.3552pt x 142.13687pt.
- [9
+5p88cm_theta_zclose.png> <./figures/single_55p88cm_sclose.png>] [9
 
- <./figures/single_55p88cm_fom.png>] [10
+] [10
+
+] [11
+
+] [12
+
+] [13
 
 ]
+<figures/fpp_track_selection_gt1_2026-11-10.png, id=247, 1501.61pt x 724.7075pt
+>
+File: figures/fpp_track_selection_gt1_2026-11-10.png Graphic file (type png)
+<use figures/fpp_track_selection_gt1_2026-11-10.png>
+Package pdftex.def Info: figures/fpp_track_selection_gt1_2026-11-10.png  used o
+n input line 523.
+(pdftex.def)             Requested size: 345.2943pt x 166.64604pt.
+ [14
+
+ <./figures/fpp_track_selection_gt1_2026-11-10.png>] [15
+
+]
+<figures/thickness_efficiency_panel_corrected.png, id=258, 2049.6575pt x 1505.6
+25pt>
+File: figures/thickness_efficiency_panel_corrected.png Graphic file (type png)
+<use figures/thickness_efficiency_panel_corrected.png>
+Package pdftex.def Info: figures/thickness_efficiency_panel_corrected.png  used
+ on input line 599.
+(pdftex.def)             Requested size: 186.80685pt x 137.22345pt.
+ [16
+
+ <./figures/thickness_efficiency_panel_corrected.png>]
+<figures/thickness_multiplicity_panel_corrected.png, id=277, 2049.6575pt x 1505
+.625pt>
+File: figures/thickness_multiplicity_panel_corrected.png Graphic file (type png
+)
+<use figures/thickness_multiplicity_panel_corrected.png>
+Package pdftex.def Info: figures/thickness_multiplicity_panel_corrected.png  us
+ed on input line 637.
+(pdftex.def)             Requested size: 190.1533pt x 139.68166pt.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 637.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 637.
+ [17
+
+ <./figures/thickness_multiplicity_panel_corrected.png>]
+<figures/thickness_event_diagnostics_bottom_corrected.png, id=309, 4099.315pt x
+ 1411.2725pt>
+File: figures/thickness_event_diagnostics_bottom_corrected.png Graphic file (ty
+pe png)
+<use figures/thickness_event_diagnostics_bottom_corrected.png>
+Package pdftex.def Info: figures/thickness_event_diagnostics_bottom_corrected.p
+ng  used on input line 661.
+(pdftex.def)             Requested size: 426.53139pt x 146.84209pt.
+ [18
+
+ <./figures/thickness_event_diagnostics_bottom_corrected.png>]
+<figures/thickness_mechanism_decomposition_top_corrected.png, id=316, 4099.315p
+t x 1505.625pt>
+File: figures/thickness_mechanism_decomposition_top_corrected.png Graphic file 
+(type png)
+<use figures/thickness_mechanism_decomposition_top_corrected.png>
+Package pdftex.def Info: figures/thickness_mechanism_decomposition_top_correcte
+d.png  used on input line 684.
+(pdftex.def)             Requested size: 393.62985pt x 144.57512pt.
+
+[19
+
+ <./figures/thickness_mechanism_decomposition_top_corrected.png>]
+<figures/thickness_fom_panel_corrected.png, id=336, 2049.6575pt x 1411.2725pt>
+File: figures/thickness_fom_panel_corrected.png Graphic file (type png)
+<use figures/thickness_fom_panel_corrected.png>
+Package pdftex.def Info: figures/thickness_fom_panel_corrected.png  used on inp
+ut line 719.
+(pdftex.def)             Requested size: 170.82523pt x 117.6201pt.
+ [20
+
+ <./figures/thickness_fom_panel_corrected.png>]
 \tf@nav=\write6
 \openout6 = `gep4_reboot_feasibility_2026-11-04.nav'.
 
@@ -1166,46 +1234,49 @@ Package pdftex.def Info: figures/single_55p88cm_fom.png  used on input line 306
 \tf@snm=\write8
 \openout8 = `gep4_reboot_feasibility_2026-11-04.snm'.
 
- (./gep4_reboot_feasibility_2026-11-04.aux)
+
+(./gep4_reboot_feasibility_2026-11-04.aux)
 Package rerunfilecheck Info: File `gep4_reboot_feasibility_2026-11-04.out' has 
 not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 26106 strings out of 476025
- 558188 string characters out of 5790018
- 1871388 words of memory out of 5000000
- 46003 multiletter control sequences out of 15000+600000
- 592027 words of font info for 81 fonts, out of 8000000 for 9000
+ 26206 strings out of 476025
+ 561123 string characters out of 5790018
+ 1866388 words of memory out of 5000000
+ 46075 multiletter control sequences out of 15000+600000
+ 607149 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,17n,122p,409b,889s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,13n,122p,409b,889s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/lo
 cal/texlive/2023/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texliv
 e/2023/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/local/texlive/2023/texm
-f-dist/fonts/type1/public/lm/lmmi7.pfb></usr/local/texlive/2023/texmf-dist/font
-s/type1/public/lm/lmmi9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/pub
-lic/lm/lmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr5
-.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/l
-ocal/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive
-/2023/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2023/texmf-
-dist/fonts/type1/public/lm/lmss10.pfb></usr/local/texlive/2023/texmf-dist/fonts
-/type1/public/lm/lmss12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/pub
-lic/lm/lmss8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmss
-9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></
-usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsso10.pfb></usr/local
-/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsso8.pfb></usr/local/texlive/2
-023/texmf-dist/fonts/type1/public/lm/lmsso9.pfb></usr/local/texlive/2023/texmf-
-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts
-/type1/public/lm/lmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/publ
-ic/lm/lmsy6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsy7
-.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
-am10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbol
-s/msam7.pfb>
-Output written on gep4_reboot_feasibility_2026-11-04.pdf (10 pages, 900987 byte
-s).
+f-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2023/texmf-dist/font
+s/type1/public/lm/lmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/pub
+lic/lm/lmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmmi
+9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr
+/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/local/texli
+ve/2023/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2023/texm
+f-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts
+/type1/public/lm/lmr9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/publi
+c/lm/lmss10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmss1
+2.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmss8.pfb></usr
+/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmss9.pfb></usr/local/texl
+ive/2023/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2023
+/texmf-dist/fonts/type1/public/lm/lmsso10.pfb></usr/local/texlive/2023/texmf-di
+st/fonts/type1/public/lm/lmsso8.pfb></usr/local/texlive/2023/texmf-dist/fonts/t
+ype1/public/lm/lmsso9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/publi
+c/lm/lmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsy5
+.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/
+local/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texli
+ve/2023/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></usr/local/texlive/2023/tex
+mf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2023
+/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb>
+Output written on gep4_reboot_feasibility_2026-11-04.pdf (20 pages, 1773114 byt
+es).
 PDF statistics:
- 395 PDF objects out of 1000 (max. 8388607)
- 224 compressed objects within 3 object streams
- 21 named destinations out of 1000 (max. 500000)
- 616 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 489 PDF objects out of 1000 (max. 8388607)
+ 286 compressed objects within 3 object streams
+ 41 named destinations out of 1000 (max. 500000)
+ 677 words of extra memory for PDF output out of 10000 (max. 10000000)
 

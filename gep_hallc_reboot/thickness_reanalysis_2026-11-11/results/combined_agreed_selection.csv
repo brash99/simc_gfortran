@@ -1,0 +1,6 @@
+label,thickness_cm,accepted_efficiency,useful_efficiency,zero_track_fraction,single_track_fraction,multi_track_fraction,primary_elastic_efficiency,secondary_elastic_efficiency,primary_inelastic_efficiency,secondary_inelastic_efficiency,primary_other_efficiency,secondary_other_efficiency,primary_killed_fraction,multiple_interaction_fraction
+compact_30,30.0,0.23387,0.19123,0.02799,0.69791,0.2741,0.04753,0.0,0.0,0.14309,0.00014,0.00047,0.30815,0.31137
+compact_55p88,55.88,0.31617,0.25492,0.03912,0.55297,0.40791,0.06264,0.0,0.0,0.19149,0.00018,0.00061,0.49003,0.51197
+compact_70,70.0,0.33229,0.2681,0.04358,0.4882,0.46822,0.06589,0.0,0.0,0.20134,0.00021,0.00066,0.57005,0.60004
+compact_85,85.0,0.32498,0.26212,0.04656,0.43249,0.52095,0.06325,0.0,0.0,0.19797,0.00019,0.00071,0.63655,0.67379
+compact_90,90.0,0.32066,0.25858,0.04525,0.41511,0.53964,0.063,0.0,1e-05,0.19457,0.0002,0.0008,0.65703,0.69564

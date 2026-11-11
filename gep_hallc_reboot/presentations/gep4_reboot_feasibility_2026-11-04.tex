@@ -30,9 +30,7 @@
 
 \title{GEp-4 Reboot Feasibility Study}
 \subtitle{Data anchors, present assessment, and critical-path questions}
-\author{Edward J. Brash}
-\institute{Christopher Newport University and Jefferson Lab}
-\date{Updated 10 November 2026}
+\date{Updated 11 November 2026}
 
 \begin{document}
 
@@ -258,7 +256,7 @@
 
 % -----------------------------------------------------------------------------
 \begin{frame}{Single-track vs. Multi-track FOM}
-  \small
+  \scriptsize
   Use the same beam-polarization-weighted normalization per incident proton:
   \[
     \mathrm{FOM}=P_e^2\,\epsilon_{\rm FPP}\langle A_y^2\rangle,
@@ -411,6 +409,99 @@
 \end{frame}
 
 % -----------------------------------------------------------------------------
+\begin{frame}{SBS detailed yield accounting}
+  \small
+  Andrew's reconstruction study supplies the missing definition of the SBS
+  ``best case'' sample:
+  \[
+    \underbrace{12\ \mathrm{M}}_{\substack{\mathrm{digi+recon,\ trigger,}\
+      \mathrm{exclusivity,\ FT/FPP\ tracks}}}
+    \times\underbrace{0.70}_{\mathrm{global\ performance}}
+    \simeq\underbrace{9\ \mathrm{M}}_{\mathrm{selected}}
+    \times\underbrace{0.33}_{\mathrm{useful\ polarimetry}}
+    \simeq\underbrace{2.9\ \mathrm{M}}_{\mathrm{useful\ events}}.
+  \]
+
+  \begin{center}
+    \renewcommand{\arraystretch}{1.22}
+    \begin{tabular}{@{}lcc@{}}
+      \toprule
+      SBS estimate & Useful events & Projected $\sigma(\mu_pG_E/G_M)$ \\
+      \midrule
+      Andrew's stated quick-spreadsheet estimate & 5.1 M & $\simeq0.10$ \\
+      Detailed reconstruction and cuts & 2.9 M & $\simeq0.13$ \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{-0.08cm}
+  The uncertainty follows the expected count scaling:
+  $0.10\sqrt{5.1/2.9}=0.133$.
+
+  \vspace{0.12cm}
+  {\scriptsize The 2.9 M count already includes the useful-polarimetry fraction;
+  another 20\% or 33\% efficiency would double count it. The SBS generator is
+  Born-only, so Andrew estimates that the useful yield remains 10--15\% high.}
+  \note{Primary source: Andrew Puckett email to Ed Brash, 10 November 2026,
+  page 5 of gep_hallc_reboot/andrew.pdf. Andrew states that the g4sbs sample
+  passes digitization and reconstruction, ECAL and HCAL trigger-like cuts,
+  dx, dy, and dpp exclusivity cuts, FT and FPP track requirements, and
+  FPP sclose below 3 mm. About 12 million events pass before the 70 percent
+  global factor. The useful-polarimetry fraction relative to the resulting
+  approximately 9 million events is about 33 percent, giving 2.9 million.
+  His quick spreadsheet uses 5.1 million useful events and projects about
+  0.10 absolute statistical uncertainty in mu_p GE/GM. He obtains about
+  0.13 after naive square-root count scaling. The detailed SBS generator is
+  Born-only; Andrew estimates a further 10--15 percent yield reduction when
+  comparing with the fully radiated Hall C SIMC calculation.}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Hall C and SBS FOM on a common basis}
+  \small
+  Using Andrew's $A_y=0.05$ and $P_e=0.85$, the detailed SBS sample gives
+  \[
+    \mathrm{FOM}_{\rm SBS}=2.9\times10^6(0.85\times0.05)^2=5238.
+  \]
+  \begin{center}
+    \renewcommand{\arraystretch}{1.20}
+    \begin{tabular}{@{}lcc@{}}
+      \toprule
+      Scenario & Total polarized FOM & $\sigma_{\rm component}$ \\
+      \midrule
+      SBS detailed, Born yield & 5,238 & 0.0195 \\
+      SBS with 10--15\% radiative reduction & 4,452--4,714 & 0.0212--0.0206 \\
+      Hall C, exclusive single track & 2,324--2,386 & 0.0293--0.0290 \\
+      Hall C, smallest angle $>1^\circ$ & 6,306--6,474 & 0.0178--0.0176$^{*}$ \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{-0.08cm}
+  {\scriptsize $^{*}$The Hall C multi-track result remains provisional. It applies the
+  GEp-III single-track $A_y$ model to ideal truth-associated multi-track events.}
+
+  \vspace{0.12cm}
+  \begin{block}{Resolution of question 3}
+    The former quick SBS construction gave nearly the correct aggregate FOM,
+    but Andrew's 2.9 M ledger supplies the defensible interpretation. Hall C
+    becomes modestly stronger only if useful multi-track events survive realistic
+    reconstruction and retain the assumed analyzing power.
+  \end{block}
+  {\scriptsize Component errors are comparable feasibility metrics. A Hall C
+  form-factor-ratio uncertainty still requires event-by-event spin transport
+  and the polarization covariance.}
+  \note{SBS calculations: 2.9e6*(0.85*0.05)^2=5238.125 and
+  sigma_component=sqrt(2/FOM)=0.0195401. Reducing the SBS useful count by
+  10 percent gives FOM=4714.31 and sigma=0.0205971; reducing by 15 percent
+  gives FOM=4452.41 and sigma=0.0211942. Hall C uses N=7.5--7.7 million
+  incident protons after the provisional NPS response. Exclusive-single-track
+  polarized FOM per incident proton is 0.0003098768126. Smallest-angle-above-
+  one-degree polarized FOM is 0.0008407773650. The older slide construction,
+  9.3 million times 20 percent times (0.85*0.06311)^2, gave total FOM near
+  5350, numerically close to Andrew's detailed 5238 despite different factors.
+  Do not identify sigma_component with sigma(mu_p GE/GM).}
+\end{frame}
+
+% -----------------------------------------------------------------------------
 \begin{frame}{Smallest-angle selection recovers useful multi-track events}
   \begin{center}
     \includegraphics[width=0.98\linewidth,height=0.68\textheight,keepaspectratio]{figures/fpp_track_selection_gt1_2026-11-10.png}
@@ -463,6 +554,168 @@
   FOM=0.0008407773650280434. Multiple-track analyzing power is not validated.
   Treat the single-track result as the baseline and multi-track recovery
   as a potential improvement.}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Selected-track yield per incident proton}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.53\textwidth}
+      \includegraphics[width=\linewidth,height=0.56\textheight,keepaspectratio]{figures/thickness_efficiency_panel_corrected.png}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \scriptsize
+      \begin{block}{Denominator for every point}
+        100,000 unit-weight, 6.7 GeV/$c$ protons incident on the analyzer.
+      \end{block}
+      \textcolor{blue}{\textbf{Blue numerator: passes the agreed track cuts}}
+      \begin{itemize}
+        \item Among charged tracks crossing FPP1 and FPP2, retain angles
+          strictly above $1^\circ$ and choose the smallest angle.
+        \item Require that chosen track to cross all four chambers and pass
+          the all-four cone test, $z_{\rm close}$ inside CH$_2$, and
+          $s_{\rm close}\le1$ cm.
+        \item If it fails, do not replace it with another track. Outgoing
+          momentum never enters the choice.
+      \end{itemize}
+      \textcolor{red}{\textbf{Red numerator: useful-$p_T$ events}}
+      \begin{itemize}
+        \item Start with the blue events and require
+          $0.07\le p_{\rm inc}\sin\theta\le1.00$ GeV/$c$, with
+          $p_{\rm inc}=6.7$ GeV/$c$.
+        \item The selected track may be the primary proton or a charged secondary.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{-0.12cm}
+  {\scriptsize
+  \textbf{70 cm example:} Blue: $33{,}229/100{,}000=33.229\%$; red:
+  $26{,}810/100{,}000=26.810\%$.\\
+  The conditional ratio $26{,}810/33{,}229=80.68\%$ is not plotted.}
+  \note{Both plotted quantities are absolute efficiencies per incident proton,
+  not efficiencies conditional on passing the agreed track cuts. This analysis
+  uses the same smallest-angle-strictly-above-one-degree policy as slide 15.
+  The 55.88 cm result independently reproduces the slide-15 workflow:
+  useful efficiency 0.25492 and intrinsic FOM 0.00114463792389906.}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Charged-track multiplicity before analysis cuts}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.56\textwidth}
+      \includegraphics[width=\linewidth,height=0.57\textheight,keepaspectratio]{figures/thickness_multiplicity_panel_corrected.png}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \footnotesize
+      \begin{block}{What is counted}
+        Every charged candidate crossing both FPP1 and FPP2, before track
+        ranking or any cone, closest-approach, angle, or $p_T$ cut.
+      \end{block}
+      Each curve uses the same denominator of 100,000 incident protons.
+      \vspace{0.12cm}
+
+      \textcolor{gray}{\textbf{Gray:}} no front-pair candidate.\\[3pt]
+      \textcolor{green!60!black}{\textbf{Green:}} exactly one front-pair candidate.\\[3pt]
+      \textcolor{orange}{\textbf{Orange:}} two or more front-pair candidates.
+
+      \vspace{0.18cm}
+      These three mutually exclusive categories sum to 100\% at each thickness.
+    \end{column}
+  \end{columns}
+  \vspace{-0.05cm}
+  \begin{block}{70 cm example}
+    \footnotesize
+    Gray: $4{,}358/100{,}000=4.358\%$. \quad
+    Green: $48{,}820/100{,}000=48.820\%$.\\
+    Orange: $46{,}822/100{,}000=46.822\%$. \quad
+    Total: 100,000 events.
+  \end{block}
+  \note{Multiplicity is measured before the agreed selection chooses a track.
+  A front-pair candidate need not cross FPP3 or FPP4 and need not pass the cone,
+  z-close, s-close, angle, or useful-pT requirements. The selected-track yield
+  on the preceding slide is therefore not a simple copy of the green or orange
+  population.}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Primary loss grows rapidly with analyzer thickness}
+  \begin{center}
+    \includegraphics[width=0.98\linewidth,height=0.65\textheight,keepaspectratio]{figures/thickness_event_diagnostics_bottom_corrected.png}
+  \end{center}
+  \vspace{-0.18cm}
+  \small
+  \begin{itemize}
+    \item The fraction of incident primaries killed in the analyzer grows from
+      30.8\% at 30 cm to 65.7\% at 90 cm.
+    \item Events with multiple recorded hadronic interactions grow from 31.1\%
+      to 69.6\% over the same range.
+    \item Added material initially creates more useful scattering. Beyond about
+      70 cm, absorption and acceptance losses offset that gain.
+  \end{itemize}
+  \note{Primary-killed fractions are 30.815, 49.003, 57.005, 63.655, and
+  65.703 percent. Multiple-interaction fractions are 31.137, 51.197, 60.004,
+  67.379, and 69.564 percent. The simulation records every analyzer hadronic
+  interaction, particle identity and charge, candidate lineage, and the
+  incident-primary exit fate. The last bullet is an interpretation of the
+  combined efficiency and fate diagnostics rather than a direct tag of a
+  single loss mechanism.}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Useful yield is dominated by secondary-inelastic tracks}
+  \begin{center}
+    \includegraphics[width=0.98\linewidth,height=0.59\textheight,keepaspectratio]{figures/thickness_mechanism_decomposition_top_corrected.png}
+  \end{center}
+  \vspace{-0.18cm}
+  \begin{block}{At the 70 cm maximum}
+    \small
+    The 26.81\% useful efficiency contains 6.59\% primary-elastic and 20.13\%
+    secondary-inelastic contributions. Raw single-candidate and
+    multiple-candidate events contribute 11.21\% and 15.60\%, respectively.
+  \end{block}
+  {\scriptsize The larger secondary-inelastic channel cannot inherit a
+  single-proton analyzing-power model without dedicated validation.}
+  \note{Primary-elastic useful efficiencies are 4.753, 6.264, 6.589, 6.325,
+  and 6.300 percent. Secondary-inelastic useful efficiencies are 14.309,
+  19.149, 20.134, 19.797, and 19.457 percent. Primary-inelastic and
+  secondary-elastic contributions are essentially zero. Other contributions
+  are below 0.1 percent. At 70 cm the useful single-candidate and
+  multiple-candidate efficiencies are 11.212 and 15.598 percent. These classes
+  refer to the raw front-pair multiplicity before selection.}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Question 4: thickness-study assessment}
+  \begin{center}
+    \includegraphics[width=0.88\linewidth,height=0.48\textheight,keepaspectratio]{figures/thickness_fom_panel_corrected.png}
+  \end{center}
+  \vspace{-0.18cm}
+  \scriptsize
+  \begin{itemize}
+    \item Single-candidate, multiple-candidate, and combined FOM all have a
+      broad maximum near 70 cm.
+      Extending to 85--90 cm provides no statistical gain in this scan.
+    \item At 70 cm, the intrinsic contributions per incident proton are
+      $4.745\times10^{-4}$ from single-candidate events and
+      $7.254\times10^{-4}$ from multiple-candidate events.
+    \item Their sum is $1.200\times10^{-3}$. The multiple-candidate term remains
+      provisional because it uses the GEp-III single-track $A_y$ model.
+  \end{itemize}
+  \vspace{-0.06cm}
+  \begin{block}{Current answer}
+    Mechanically plausible, but 70 cm is the next design point. Final choice
+    requires channel-specific polarimetry and realistic reconstruction.
+  \end{block}
+  \note{The corrected combined intrinsic FOM values are 0.000854355,
+  0.001144638, 0.001199898, 0.001183199, and 0.001162563 for 30, 55.88, 70,
+  85, and 90 cm. At 70 cm, the single-candidate and multiple-candidate
+  contributions are 0.000474496 and 0.000725402, which sum exactly to the
+  combined value in the saved output.
+  The 90 cm analyzer leaves about 26.3 cm to the assumed upstream face of the
+  first FPP chamber structure in this compact layout. Reconstruction closure
+  is excellent in the ideal simulation. The conclusion is therefore not that
+  85--90 cm is geometrically impossible. It is that extra thickness does not
+  improve the present physics metric and introduces substantially more event
+  complexity.}
 \end{frame}
 
 \end{document}

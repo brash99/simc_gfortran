@@ -1,0 +1,489 @@
+{
+  "samples": [
+    {
+      "accepted_efficiency": 0.23387,
+      "channel_efficiency": {
+        "primary_elastic": 0.04753,
+        "primary_inelastic": 0.0,
+        "primary_other": 0.00014,
+        "secondary_elastic": 0.0,
+        "secondary_inelastic": 0.14309,
+        "secondary_other": 0.00047
+      },
+      "event_interaction_fraction": {
+        "multiple": 0.31137,
+        "one": 0.11842,
+        "zero": 0.57021
+      },
+      "fom_by_multiplicity": {
+        "combined": {
+          "effective_Ay": 0.0668407423447217,
+          "intrinsic_fom": 0.000854355371416508,
+          "intrinsic_fom_mc_se": 6.311863496736289e-06,
+          "useful_efficiency": 0.19123
+        },
+        "multi": {
+          "effective_Ay": 0.0683863667282005,
+          "intrinsic_fom": 0.0005096662379138626,
+          "intrinsic_fom_mc_se": 5.137081489526034e-06,
+          "useful_efficiency": 0.10898
+        },
+        "single": {
+          "effective_Ay": 0.06473599727738198,
+          "intrinsic_fom": 0.00034468913350264526,
+          "intrinsic_fom_mc_se": 4.1186821739292626e-06,
+          "useful_efficiency": 0.08225
+        }
+      },
+      "incident_weight": 100000.0,
+      "label": "compact_30",
+      "mean_interactions_by_particle_per_incident": {
+        "neutral": 12.61818,
+        "other_secondary_charged": 0.40491,
+        "primary_proton": 0.43455,
+        "secondary_proton": 0.29124
+      },
+      "mean_interactions_per_incident": {
+        "primary_elastic": 0.12638,
+        "primary_inelastic": 0.30817,
+        "secondary_elastic": 12.51254,
+        "secondary_inelastic": 0.70503
+      },
+      "multiplicity_fraction": {
+        "multi": 0.2741,
+        "single": 0.69791,
+        "zero": 0.02799
+      },
+      "primary_exit_fraction": {
+        "downstream": 0.66316,
+        "killed": 0.30815,
+        "side": 0.0,
+        "unknown": 0.02869,
+        "upstream": 0.0
+      },
+      "root_file": "runs/thickness_mechanisms_14622069/compact_30/transport.root",
+      "selection_contract": {
+        "candidate_population": "charged tracks crossing FPP1 and FPP2",
+        "chosen_track_must_cross_all_four_chambers": true,
+        "cone": "all-four-chamber legacy cone test",
+        "multiplicity": "all front-pair candidates before angle or analysis cuts",
+        "outgoing_momentum_used": false,
+        "pt_GeV": [
+          0.07,
+          1.0
+        ],
+        "pt_momentum": "known incident-proton momentum",
+        "ranking": "smallest scattering angle; track ID breaks exact ties",
+        "replacement_after_failed_cut": false,
+        "sclose_max_cm": 1.0,
+        "strict_minimum_angle_deg": 1.0,
+        "zclose": "inside the physical CH2 analyzer interval"
+      },
+      "thickness_cm": 30.0,
+      "useful_efficiency": 0.19123,
+      "useful_interaction_efficiency": {
+        "multiple": 0.13387,
+        "one": 0.05678,
+        "zero": 0.00058
+      },
+      "useful_multiplicity_efficiency": {
+        "multi": 0.10898,
+        "single": 0.08225
+      },
+      "useful_selected_track_history_efficiency": {
+        "elastic_on_selected_track": 0.05636,
+        "inelastic_on_selected_track": 0.0002,
+        "mixed_elastic_inelastic": 2e-05,
+        "no_hadronic_on_selected_track": 0.13465
+      }
+    },
+    {
+      "accepted_efficiency": 0.31617,
+      "channel_efficiency": {
+        "primary_elastic": 0.06264,
+        "primary_inelastic": 0.0,
+        "primary_other": 0.00018,
+        "secondary_elastic": 0.0,
+        "secondary_inelastic": 0.19149,
+        "secondary_other": 0.00061
+      },
+      "event_interaction_fraction": {
+        "multiple": 0.51197,
+        "one": 0.12678,
+        "zero": 0.36125
+      },
+      "fom_by_multiplicity": {
+        "combined": {
+          "effective_Ay": 0.0670088416374935,
+          "intrinsic_fom": 0.0011446379238990564,
+          "intrinsic_fom_mc_se": 7.075710800799852e-06,
+          "useful_efficiency": 0.25492
+        },
+        "multi": {
+          "effective_Ay": 0.06842891072948452,
+          "intrinsic_fom": 0.0006934805934786793,
+          "intrinsic_fom_mc_se": 5.8742958532898995e-06,
+          "useful_efficiency": 0.1481
+        },
+        "single": {
+          "effective_Ay": 0.06498868093950123,
+          "intrinsic_fom": 0.00045115733042037703,
+          "intrinsic_fom_mc_se": 4.670728918447351e-06,
+          "useful_efficiency": 0.10682
+        }
+      },
+      "incident_weight": 100000.0,
+      "label": "compact_55p88",
+      "mean_interactions_by_particle_per_incident": {
+        "neutral": 35.03551,
+        "other_secondary_charged": 1.01397,
+        "primary_proton": 0.69235,
+        "secondary_proton": 0.72706
+      },
+      "mean_interactions_per_incident": {
+        "primary_elastic": 0.20226,
+        "primary_inelastic": 0.49009,
+        "secondary_elastic": 34.67485,
+        "secondary_inelastic": 1.83909
+      },
+      "multiplicity_fraction": {
+        "multi": 0.40791,
+        "single": 0.55297,
+        "zero": 0.03912
+      },
+      "primary_exit_fraction": {
+        "downstream": 0.48101,
+        "killed": 0.49003,
+        "side": 0.0,
+        "unknown": 0.02896,
+        "upstream": 0.0
+      },
+      "root_file": "runs/thickness_mechanisms_14622069/compact_55p88/transport.root",
+      "selection_contract": {
+        "candidate_population": "charged tracks crossing FPP1 and FPP2",
+        "chosen_track_must_cross_all_four_chambers": true,
+        "cone": "all-four-chamber legacy cone test",
+        "multiplicity": "all front-pair candidates before angle or analysis cuts",
+        "outgoing_momentum_used": false,
+        "pt_GeV": [
+          0.07,
+          1.0
+        ],
+        "pt_momentum": "known incident-proton momentum",
+        "ranking": "smallest scattering angle; track ID breaks exact ties",
+        "replacement_after_failed_cut": false,
+        "sclose_max_cm": 1.0,
+        "strict_minimum_angle_deg": 1.0,
+        "zclose": "inside the physical CH2 analyzer interval"
+      },
+      "thickness_cm": 55.88,
+      "useful_efficiency": 0.25492,
+      "useful_interaction_efficiency": {
+        "multiple": 0.19231,
+        "one": 0.06188,
+        "zero": 0.00073
+      },
+      "useful_multiplicity_efficiency": {
+        "multi": 0.1481,
+        "single": 0.10682
+      },
+      "useful_selected_track_history_efficiency": {
+        "elastic_on_selected_track": 0.08146,
+        "inelastic_on_selected_track": 0.00044,
+        "mixed_elastic_inelastic": 0.0,
+        "no_hadronic_on_selected_track": 0.17302
+      }
+    },
+    {
+      "accepted_efficiency": 0.33229,
+      "channel_efficiency": {
+        "primary_elastic": 0.06589,
+        "primary_inelastic": 0.0,
+        "primary_other": 0.00021,
+        "secondary_elastic": 0.0,
+        "secondary_inelastic": 0.20134,
+        "secondary_other": 0.00066
+      },
+      "event_interaction_fraction": {
+        "multiple": 0.60004,
+        "one": 0.12007,
+        "zero": 0.27989
+      },
+      "fom_by_multiplicity": {
+        "combined": {
+          "effective_Ay": 0.06689964098422667,
+          "intrinsic_fom": 0.0011998981624997186,
+          "intrinsic_fom_mc_se": 7.196120553187587e-06,
+          "useful_efficiency": 0.2681
+        },
+        "multi": {
+          "effective_Ay": 0.06819536440039178,
+          "intrinsic_fom": 0.0007254017930550328,
+          "intrinsic_fom_mc_se": 5.984085544394097e-06,
+          "useful_efficiency": 0.15598
+        },
+        "single": {
+          "effective_Ay": 0.06505413436659223,
+          "intrinsic_fom": 0.0004744963694446857,
+          "intrinsic_fom_mc_se": 4.781096271489206e-06,
+          "useful_efficiency": 0.11212
+        }
+      },
+      "incident_weight": 100000.0,
+      "label": "compact_70",
+      "mean_interactions_by_particle_per_incident": {
+        "neutral": 48.90064,
+        "other_secondary_charged": 1.38336,
+        "primary_proton": 0.80809,
+        "secondary_proton": 1.00993
+      },
+      "mean_interactions_per_incident": {
+        "primary_elastic": 0.23794,
+        "primary_inelastic": 0.57015,
+        "secondary_elastic": 48.38754,
+        "secondary_inelastic": 2.5397
+      },
+      "multiplicity_fraction": {
+        "multi": 0.46822,
+        "single": 0.4882,
+        "zero": 0.04358
+      },
+      "primary_exit_fraction": {
+        "downstream": 0.40266,
+        "killed": 0.57005,
+        "side": 0.0,
+        "unknown": 0.02729,
+        "upstream": 0.0
+      },
+      "root_file": "runs/thickness_mechanisms_14622069/compact_70/transport.root",
+      "selection_contract": {
+        "candidate_population": "charged tracks crossing FPP1 and FPP2",
+        "chosen_track_must_cross_all_four_chambers": true,
+        "cone": "all-four-chamber legacy cone test",
+        "multiplicity": "all front-pair candidates before angle or analysis cuts",
+        "outgoing_momentum_used": false,
+        "pt_GeV": [
+          0.07,
+          1.0
+        ],
+        "pt_momentum": "known incident-proton momentum",
+        "ranking": "smallest scattering angle; track ID breaks exact ties",
+        "replacement_after_failed_cut": false,
+        "sclose_max_cm": 1.0,
+        "strict_minimum_angle_deg": 1.0,
+        "zclose": "inside the physical CH2 analyzer interval"
+      },
+      "thickness_cm": 70.0,
+      "useful_efficiency": 0.2681,
+      "useful_interaction_efficiency": {
+        "multiple": 0.20831,
+        "one": 0.05906,
+        "zero": 0.00073
+      },
+      "useful_multiplicity_efficiency": {
+        "multi": 0.15598,
+        "single": 0.11212
+      },
+      "useful_selected_track_history_efficiency": {
+        "elastic_on_selected_track": 0.08807,
+        "inelastic_on_selected_track": 0.00052,
+        "mixed_elastic_inelastic": 6e-05,
+        "no_hadronic_on_selected_track": 0.17945
+      }
+    },
+    {
+      "accepted_efficiency": 0.32498,
+      "channel_efficiency": {
+        "primary_elastic": 0.06325,
+        "primary_inelastic": 0.0,
+        "primary_other": 0.00019,
+        "secondary_elastic": 0.0,
+        "secondary_inelastic": 0.19797,
+        "secondary_other": 0.00071
+      },
+      "event_interaction_fraction": {
+        "multiple": 0.67379,
+        "one": 0.10901,
+        "zero": 0.2172
+      },
+      "fom_by_multiplicity": {
+        "combined": {
+          "effective_Ay": 0.0671860185356743,
+          "intrinsic_fom": 0.0011831994800395053,
+          "intrinsic_fom_mc_se": 7.189088238729422e-06,
+          "useful_efficiency": 0.26212
+        },
+        "multi": {
+          "effective_Ay": 0.06826174354509051,
+          "intrinsic_fom": 0.0007135811948562573,
+          "intrinsic_fom_mc_se": 5.950361732008559e-06,
+          "useful_efficiency": 0.15314
+        },
+        "single": {
+          "effective_Ay": 0.06564461376547304,
+          "intrinsic_fom": 0.00046961828518324794,
+          "intrinsic_fom_mc_se": 4.793579091225468e-06,
+          "useful_efficiency": 0.10898
+        }
+      },
+      "incident_weight": 100000.0,
+      "label": "compact_85",
+      "mean_interactions_by_particle_per_incident": {
+        "neutral": 64.41878,
+        "other_secondary_charged": 1.78455,
+        "primary_proton": 0.89981,
+        "secondary_proton": 1.32402
+      },
+      "mean_interactions_per_incident": {
+        "primary_elastic": 0.26319,
+        "primary_inelastic": 0.63662,
+        "secondary_elastic": 63.70824,
+        "secondary_inelastic": 3.3404
+      },
+      "multiplicity_fraction": {
+        "multi": 0.52095,
+        "single": 0.43249,
+        "zero": 0.04656
+      },
+      "primary_exit_fraction": {
+        "downstream": 0.3354,
+        "killed": 0.63655,
+        "side": 0.0,
+        "unknown": 0.02805,
+        "upstream": 0.0
+      },
+      "root_file": "runs/thickness_mechanisms_14622069/compact_85/transport.root",
+      "selection_contract": {
+        "candidate_population": "charged tracks crossing FPP1 and FPP2",
+        "chosen_track_must_cross_all_four_chambers": true,
+        "cone": "all-four-chamber legacy cone test",
+        "multiplicity": "all front-pair candidates before angle or analysis cuts",
+        "outgoing_momentum_used": false,
+        "pt_GeV": [
+          0.07,
+          1.0
+        ],
+        "pt_momentum": "known incident-proton momentum",
+        "ranking": "smallest scattering angle; track ID breaks exact ties",
+        "replacement_after_failed_cut": false,
+        "sclose_max_cm": 1.0,
+        "strict_minimum_angle_deg": 1.0,
+        "zclose": "inside the physical CH2 analyzer interval"
+      },
+      "thickness_cm": 85.0,
+      "useful_efficiency": 0.26212,
+      "useful_interaction_efficiency": {
+        "multiple": 0.20779,
+        "one": 0.05352,
+        "zero": 0.00081
+      },
+      "useful_multiplicity_efficiency": {
+        "multi": 0.15314,
+        "single": 0.10898
+      },
+      "useful_selected_track_history_efficiency": {
+        "elastic_on_selected_track": 0.08865,
+        "inelastic_on_selected_track": 0.00052,
+        "mixed_elastic_inelastic": 7e-05,
+        "no_hadronic_on_selected_track": 0.17288
+      }
+    },
+    {
+      "accepted_efficiency": 0.32066,
+      "channel_efficiency": {
+        "primary_elastic": 0.063,
+        "primary_inelastic": 1e-05,
+        "primary_other": 0.0002,
+        "secondary_elastic": 0.0,
+        "secondary_inelastic": 0.19457,
+        "secondary_other": 0.0008
+      },
+      "event_interaction_fraction": {
+        "multiple": 0.69564,
+        "one": 0.10567,
+        "zero": 0.19869
+      },
+      "fom_by_multiplicity": {
+        "combined": {
+          "effective_Ay": 0.06705185333614799,
+          "intrinsic_fom": 0.0011625630188403448,
+          "intrinsic_fom_mc_se": 7.122893007535475e-06,
+          "useful_efficiency": 0.25858
+        },
+        "multi": {
+          "effective_Ay": 0.06800920491610023,
+          "intrinsic_fom": 0.0006987368125880691,
+          "intrinsic_fom_mc_se": 5.876898695717022e-06,
+          "useful_efficiency": 0.15107
+        },
+        "single": {
+          "effective_Ay": 0.06568303477407339,
+          "intrinsic_fom": 0.0004638262062522758,
+          "intrinsic_fom_mc_se": 4.7623014831180075e-06,
+          "useful_efficiency": 0.10751
+        }
+      },
+      "incident_weight": 100000.0,
+      "label": "compact_90",
+      "mean_interactions_by_particle_per_incident": {
+        "neutral": 69.6485,
+        "other_secondary_charged": 1.93488,
+        "primary_proton": 0.92956,
+        "secondary_proton": 1.43332
+      },
+      "mean_interactions_per_incident": {
+        "primary_elastic": 0.27247,
+        "primary_inelastic": 0.65709,
+        "secondary_elastic": 68.87973,
+        "secondary_inelastic": 3.62536
+      },
+      "multiplicity_fraction": {
+        "multi": 0.53964,
+        "single": 0.41511,
+        "zero": 0.04525
+      },
+      "primary_exit_fraction": {
+        "downstream": 0.31569,
+        "killed": 0.65703,
+        "side": 0.0,
+        "unknown": 0.02728,
+        "upstream": 0.0
+      },
+      "root_file": "runs/thickness_mechanisms_14622069/compact_90/transport.root",
+      "selection_contract": {
+        "candidate_population": "charged tracks crossing FPP1 and FPP2",
+        "chosen_track_must_cross_all_four_chambers": true,
+        "cone": "all-four-chamber legacy cone test",
+        "multiplicity": "all front-pair candidates before angle or analysis cuts",
+        "outgoing_momentum_used": false,
+        "pt_GeV": [
+          0.07,
+          1.0
+        ],
+        "pt_momentum": "known incident-proton momentum",
+        "ranking": "smallest scattering angle; track ID breaks exact ties",
+        "replacement_after_failed_cut": false,
+        "sclose_max_cm": 1.0,
+        "strict_minimum_angle_deg": 1.0,
+        "zclose": "inside the physical CH2 analyzer interval"
+      },
+      "thickness_cm": 90.0,
+      "useful_efficiency": 0.25858,
+      "useful_interaction_efficiency": {
+        "multiple": 0.20591,
+        "one": 0.05189,
+        "zero": 0.00078
+      },
+      "useful_multiplicity_efficiency": {
+        "multi": 0.15107,
+        "single": 0.10751
+      },
+      "useful_selected_track_history_efficiency": {
+        "elastic_on_selected_track": 0.08921,
+        "inelastic_on_selected_track": 0.00046,
+        "mixed_elastic_inelastic": 0.00012,
+        "no_hadronic_on_selected_track": 0.16879
+      }
+    }
+  ]
+}
